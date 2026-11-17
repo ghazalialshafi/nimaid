@@ -1,0 +1,16 @@
+flowchart TB
+    subgraph Cloud["Cloud Platform"]
+        direction TB
+        subgraph Net[Network]
+            LB[Load Balancer] --> W1[Web 1]
+            LB --> W2[Web 2]
+        end
+        subgraph Data[Data Tier]
+            DB[(Primary)] --> R[(Replica)]
+        end
+        W1 --> DB
+        W2 --> DB
+    end
+    User((User)) --> LB
+    Admin --> Cloud
+    Cloud --> Mon[Monitoring]

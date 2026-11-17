@@ -1,0 +1,6494 @@
+[
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle a nodes and edges",
+  "aliases": {},
+  "chart": "graph TD;\nA-->B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle angle bracket ' > ' as direction LR",
+  "aliases": {},
+  "chart": "graph >;A-->B;",
+  "expect": [
+   {
+    "lhs": "direction",
+    "op": "toBe",
+    "rhs": "LR"
+   },
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle angle bracket ' < ' as direction RL",
+  "aliases": {},
+  "chart": "graph <;A-->B;",
+  "expect": [
+   {
+    "lhs": "direction",
+    "op": "toBe",
+    "rhs": "RL"
+   },
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle caret ' ^ ' as direction BT",
+  "aliases": {},
+  "chart": "graph ^;A-->B;",
+  "expect": [
+   {
+    "lhs": "direction",
+    "op": "toBe",
+    "rhs": "BT"
+   },
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle lower-case 'v' as direction TB",
+  "aliases": {},
+  "chart": "graph v;A-->B;",
+  "expect": [
+   {
+    "lhs": "direction",
+    "op": "toBe",
+    "rhs": "TB"
+   },
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle a nodes and edges and a space between link and node",
+  "aliases": {},
+  "chart": "graph TD;A --> B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle a nodes and edges, a space between link and node and each line ending without semicolon",
+  "aliases": {},
+  "chart": "graph TD\nA --> B\n style e red",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle statements ending without semicolon",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nB-->C",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle double edged nodes and edges",
+  "aliases": {},
+  "chart": "graph TD;\nA<-->B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "double_arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle double edged nodes with text",
+  "aliases": {},
+  "chart": "graph TD;\nA<-- text -->B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "double_arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text"
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle double edged nodes and edges on thick arrows",
+  "aliases": {},
+  "chart": "graph TD;\nA<==>B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "double_arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "thick"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle double edged nodes with text on thick arrows",
+  "aliases": {},
+  "chart": "graph TD;\nA<== text ==>B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "double_arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text"
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "thick"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle double edged nodes and edges on dotted arrows",
+  "aliases": {},
+  "chart": "graph TD;\nA<-.->B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "double_arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "dotted"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-arrows.spec.js",
+  "name": "should handle double edged nodes with text on dotted arrows",
+  "aliases": {},
+  "chart": "graph TD;\nA<-. text .->B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "double_arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text"
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "dotted"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle comments",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle comments at the start",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle comments at the end",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle comments at the end no trailing newline",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle comments at the end many trailing newlines",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle no trailing newlines",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle many trailing newlines",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle a comment with blank rows in-between",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-comments.spec.js",
+  "name": "should handle a comment with mermaid flowchart code in them",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-direction.spec.js",
+  "name": "should use default direction from top level",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "flowchart TB\n    subgraph A\n      a --> b\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "b"
+   },
+   {
+    "lhs": "subgraph.nodes[1]",
+    "op": "toBe",
+    "rhs": "a"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "subgraph.dir",
+    "op": "toBe",
+    "rhs": null
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-direction.spec.js",
+  "name": "should handle a subgraph with a direction",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "flowchart TB\n    subgraph A\n      direction BT\n      a --> b\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "b"
+   },
+   {
+    "lhs": "subgraph.nodes[1]",
+    "op": "toBe",
+    "rhs": "a"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "subgraph.dir",
+    "op": "toBe",
+    "rhs": "BT"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-direction.spec.js",
+  "name": "should use the last defined direction",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "flowchart TB\n    subgraph A\n      direction BT\n      a --> b\n      direction RL\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "b"
+   },
+   {
+    "lhs": "subgraph.nodes[1]",
+    "op": "toBe",
+    "rhs": "a"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "subgraph.dir",
+    "op": "toBe",
+    "rhs": "RL"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-direction.spec.js",
+  "name": "should handle nested subgraphs 1",
+  "aliases": {
+   "subgraphA": "A",
+   "subgraphB": "B"
+  },
+  "chart": "flowchart TB\n    subgraph A\n      direction RL\n      b-->B\n      a\n    end\n    a-->c\n    subgraph B\n      direction LR\n      c\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraphB.nodes[0]",
+    "op": "toBe",
+    "rhs": "c"
+   },
+   {
+    "lhs": "subgraphB.dir",
+    "op": "toBe",
+    "rhs": "LR"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "B"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "b"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "a"
+   },
+   {
+    "lhs": "subgraphA.nodes).not.toContain('c');expect(subgraphA.dir",
+    "op": "toBe",
+    "rhs": "RL"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle open ended edges",
+  "aliases": {},
+  "chart": "graph TD;A---B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_open"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle cross ended edges",
+  "aliases": {},
+  "chart": "graph TD;A--xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle open ended edges",
+  "aliases": {},
+  "chart": "graph TD;A--oB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_circle"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle ${edgeType.stroke} ${edgeType.type} with no text",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle ${edgeType.stroke} ${edgeType.type} with text",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle normal edges where you also have a node with metadata",
+  "aliases": {},
+  "chart": "flowchart LR\nA id1@-->B\nA@{ shape: 'rect' }\n",
+  "expect": [
+   {
+    "lhs": "edges[0].id",
+    "op": "toBe",
+    "rhs": "id1"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle ${edgeType.stroke} ${edgeType.type} with  text",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should parse and set the edge id to e1: ${name} [${graph}]",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle a chain of shape data nodes with edge ids",
+  "aliases": {},
+  "chart": "flowchart TD\nA@{shape:circle} e1@--> B@{shape:circle} e2@--> C",
+  "expect": [
+   {
+    "lhs": "nodes.map((n)=>n.id).sort()",
+    "op": "toEqual",
+    "rhs": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].id",
+    "op": "toBe",
+    "rhs": "e1"
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].id",
+    "op": "toBe",
+    "rhs": "e2"
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle a shape data node followed by trailing spaces",
+  "aliases": {},
+  "chart": "flowchart TD\nA@{shape:circle}   ",
+  "expect": [
+   {
+    "lhs": "nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "nodes[0].id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should keep the shape data of nodes followed by spaces",
+  "aliases": {},
+  "chart": "flowchart TD\nA@{shape: circle} e1@--> B@{shape: circle} e2@--> C",
+  "expect": [
+   {
+    "lhs": "nodes.find((n)=>n.id==='A').shape",
+    "op": "toBe",
+    "rhs": "circle"
+   },
+   {
+    "lhs": "nodes.find((n)=>n.id==='B').shape",
+    "op": "toBe",
+    "rhs": "circle"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].id",
+    "op": "toBe",
+    "rhs": "e1"
+   },
+   {
+    "lhs": "edges[1].id",
+    "op": "toBe",
+    "rhs": "e2"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should keep the shape data of a node at the end of a line with trailing spaces",
+  "aliases": {},
+  "chart": "flowchart TD\nA@{shape: circle}   ",
+  "expect": [
+   {
+    "lhs": "nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "nodes[0].id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "nodes[0].shape",
+    "op": "toBe",
+    "rhs": "circle"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should reject an edge id containing ${chars} [${graph}]",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle ${edgeType.stroke} ${edgeType.type} with no text",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle ${edgeType.stroke} ${edgeType.type} with text",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle multiple edges",
+  "aliases": {},
+  "chart": "graph TD;A---|This is the 123 s text|B;\nA---|This is the second edge|B;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_open"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "This is the 123 s text"
+   },
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[0].length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_open"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": "This is the second edge"
+   },
+   {
+    "lhs": "edges[1].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   },
+   {
+    "lhs": "edges[1].length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle normal edges with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle normal labelled edges with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle normal edges with arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle normal labelled edges with arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle normal edges with double arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle normal labelled edges with double arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle thick edges with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle thick labelled edges with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle thick edges with arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle thick labelled edges with arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle thick edges with double arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle thick labelled edges with double arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle dotted edges with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle dotted labelled edges with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle dotted edges with arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle dotted labelled edges with arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle dotted edges with double arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-edges.spec.js",
+  "name": "should handle dotted edges with double arrows with length ${length}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should be possible to use click to a callback",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A callback",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should be possible to use click to a click and call callback",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A call callback()",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should be possible to use click to a callback with tooltip",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A callback \"tooltip\"",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should be possible to use click to a click and call callback with tooltip",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A call callback() \"tooltip\"",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should be possible to use click to a callback with an arbitrary number of args",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A call callback(\"test0\", test1, test2)",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a link",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A \"click.html\"",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a click and href link",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A href \"click.html\"",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a link with tooltip",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A \"click.html\" \"tooltip\"",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a click and href link with tooltip",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A href \"click.html\" \"tooltip\"",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a link with target",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A \"click.html\" _blank",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a click and href link with target",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A href \"click.html\" _blank",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a link with tooltip and target",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A \"click.html\" \"tooltip\" _blank",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-interactions.spec.js",
+  "name": "should handle interaction - click to a click and href link with tooltip and target",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclick A href \"click.html\" \"tooltip\" _blank",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle line interpolation default definitions",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nlinkStyle default interpolate basis",
+  "expect": [
+   {
+    "lhs": "edges.defaultInterpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle line interpolation numbered definitions",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nA-->C\nlinkStyle 0 interpolate basis\nlinkStyle 1 interpolate cardinal",
+  "expect": [
+   {
+    "lhs": "edges[0].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   },
+   {
+    "lhs": "edges[1].interpolate",
+    "op": "toBe",
+    "rhs": "cardinal"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle edge curve properties using edge ID",
+  "aliases": {},
+  "chart": "graph TD\nA e1@-->B\nA uniqueName@-->C\ne1@{curve: basis}\nuniqueName@{curve: cardinal}",
+  "expect": [
+   {
+    "lhs": "edges[0].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   },
+   {
+    "lhs": "edges[1].interpolate",
+    "op": "toBe",
+    "rhs": "cardinal"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle edge curve properties using edge ID but without overriding default",
+  "aliases": {},
+  "chart": "graph TD\nA e1@-->B\nA-->C\nlinkStyle default interpolate linear\ne1@{curve: stepAfter}",
+  "expect": [
+   {
+    "lhs": "edges[0].interpolate",
+    "op": "toBe",
+    "rhs": "stepAfter"
+   },
+   {
+    "lhs": "edges.defaultInterpolate",
+    "op": "toBe",
+    "rhs": "linear"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle edge curve properties using edge ID mixed with line interpolation",
+  "aliases": {},
+  "chart": "graph TD\nA e1@-->B-->D\nA-->C e4@-->D-->E\nlinkStyle default interpolate linear\nlinkStyle 1 interpolate basis\ne1@{curve: monotoneX}\ne4@{curve: stepBefore}",
+  "expect": [
+   {
+    "lhs": "edges[0].interpolate",
+    "op": "toBe",
+    "rhs": "monotoneX"
+   },
+   {
+    "lhs": "edges[1].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   },
+   {
+    "lhs": "edges.defaultInterpolate",
+    "op": "toBe",
+    "rhs": "linear"
+   },
+   {
+    "lhs": "edges[3].interpolate",
+    "op": "toBe",
+    "rhs": "stepBefore"
+   },
+   {
+    "lhs": "edges.defaultInterpolate",
+    "op": "toBe",
+    "rhs": "linear"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle line interpolation multi-numbered definitions",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nA-->C\nlinkStyle 0,1 interpolate basis",
+  "expect": [
+   {
+    "lhs": "edges[0].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   },
+   {
+    "lhs": "edges[1].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle line interpolation default with style",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nlinkStyle default interpolate basis stroke-width:1px;",
+  "expect": [
+   {
+    "lhs": "edges.defaultInterpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle line interpolation numbered with style",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nA-->C\nlinkStyle 0 interpolate basis stroke-width:1px;\nlinkStyle 1 interpolate cardinal stroke-width:1px;",
+  "expect": [
+   {
+    "lhs": "edges[0].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   },
+   {
+    "lhs": "edges[1].interpolate",
+    "op": "toBe",
+    "rhs": "cardinal"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle line interpolation multi-numbered with style",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nA-->C\nlinkStyle 0,1 interpolate basis stroke-width:1px;",
+  "expect": [
+   {
+    "lhs": "edges[0].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   },
+   {
+    "lhs": "edges[1].interpolate",
+    "op": "toBe",
+    "rhs": "basis"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle regular lines",
+  "aliases": {},
+  "chart": "graph TD;A-->B;",
+  "expect": [
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle dotted lines",
+  "aliases": {},
+  "chart": "graph TD;A-.->B;",
+  "expect": [
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "dotted"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-lines.spec.js",
+  "name": "should handle dotted lines",
+  "aliases": {},
+  "chart": "graph TD;A==>B;",
+  "expect": [
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "thick"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-md-string.spec.js",
+  "name": "markdown formatting in nodes and labels",
+  "aliases": {},
+  "chart": "flowchart\nA[\"`The cat in **the** hat`\"]-- \"`The *bat* in the chat`\" -->B[\"The dog in the hog\"] -- \"The rat in the mat\" -->C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "The cat in **the** hat"
+   },
+   {
+    "lhs": "vert.get('A').labelType",
+    "op": "toBe",
+    "rhs": "markdown"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('B').text",
+    "op": "toBe",
+    "rhs": "The dog in the hog"
+   },
+   {
+    "lhs": "vert.get('B').labelType",
+    "op": "toBe",
+    "rhs": "string"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "The *bat* in the chat"
+   },
+   {
+    "lhs": "edges[0].labelType",
+    "op": "toBe",
+    "rhs": "markdown"
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": "The rat in the mat"
+   },
+   {
+    "lhs": "edges[1].labelType",
+    "op": "toBe",
+    "rhs": "string"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-md-string.spec.js",
+  "name": "markdown formatting in subgraphs",
+  "aliases": {
+   "subgraph": 0,
+   "subgraph2": 1
+  },
+  "chart": "flowchart LR\nsubgraph \"One\"\n  a(\"`The **cat**\n  in the hat`\") -- \"1o\" --> b{{\"`The **dog** in the hog`\"}}\nend\nsubgraph \"`**Two**`\"\n  c(\"`The **cat**\n  in the hat`\") -- \"`1o **ipa**`\" --> d(\"The dog in the hog\")\nend",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "One"
+   },
+   {
+    "lhs": "subgraph.labelType",
+    "op": "toBe",
+    "rhs": "text"
+   },
+   {
+    "lhs": "subgraph2.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph2.title",
+    "op": "toBe",
+    "rhs": "**Two**"
+   },
+   {
+    "lhs": "subgraph2.labelType",
+    "op": "toBe",
+    "rhs": "markdown"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded}",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded }",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements with &",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded } & E",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "E"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle shape data statements with edges",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded } --> E",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "E"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements with amp and edges 1",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded } & E --> F",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 3
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "E"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements with amp and edges 2",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded } & E@{ shape: rounded } --> F",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 3
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "E"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements with amp and edges 3",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded } & E@{ shape: rounded } --> F & G@{ shape: rounded }",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 4
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "E"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements with amp and edges 4",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded } & E@{ shape: rounded } --> F@{ shape: rounded } & G@{ shape: rounded }",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 4
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "E"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle basic shape data statements with amp and edges 5, trailing space",
+  "aliases": {},
+  "chart": "flowchart TB\n         D@{ shape: rounded } & E@{ shape: rounded } --> F{ shape: rounded } & G{ shape: rounded }    ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 4
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "E"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should no matter of there are no leading spaces",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{shape: rounded}",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should no matter of there are many leading spaces",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{       shape: rounded}",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be forgiving with many spaces before the end",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded         }",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "D"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to add multiple properties on the same line",
+  "aliases": {},
+  "chart": "flowchart TB\n      D@{ shape: rounded , label: \"DD\"}",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "rounded"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "DD"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to link to a node with more data",
+  "aliases": {},
+  "chart": "flowchart TB\n      A --> D@{\n        shape: circle\n        other: \"clock\"\n     }\n\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "A"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "D"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].shape",
+    "op": "toEqual",
+    "rhs": "circle"
+   },
+   {
+    "lhs": "data4Layout.edges.length",
+    "op": "toBe",
+    "rhs": 1
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should not disturb adding multiple nodes after each other",
+  "aliases": {},
+  "chart": "flowchart TB\n      A[hello]\n      B@{\n        shape: circle\n        other: \"clock\"\n     }\n      C[Hello]@{\n        shape: circle\n        other: \"clock\"\n     }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 3
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "hello"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].shape",
+    "op": "toEqual",
+    "rhs": "circle"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "B"
+   },
+   {
+    "lhs": "data4Layout.nodes[2].shape",
+    "op": "toEqual",
+    "rhs": "circle"
+   },
+   {
+    "lhs": "data4Layout.nodes[2].label",
+    "op": "toEqual",
+    "rhs": "Hello"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should use handle bracket end (}) character inside the shape data",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{\n        label: \"This is }\"\n        other: \"clock\"\n     }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "This is }"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should error on nonexistent shape",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{ shape: this-shape-does-not-exist }\n      ",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should error on internal-only shape",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{ shape: rect_left_inv_arrow }\n      ",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "Diamond shapes should work as usual",
+  "aliases": {},
+  "chart": "flowchart TB\n      A{This is a label}\n",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "diamond"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "This is a label"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "Multi line strings should be supported",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{\n        label: |\n          This is a\n          multiline string\n        other: \"clock\"\n     }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "This is a\nmultiline string\n"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "Multi line strings should be supported",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{\n        label: \"This is a\n          multiline string\"\n        other: \"clock\"\n     }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "This is a<br/>multiline string"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to use } in strings",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{\n        label: \"This is a string with }\"\n        other: \"clock\"\n     }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "This is a string with }"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to use @ in strings",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{\n        label: \"This is a string with @\"\n        other: \"clock\"\n     }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "This is a string with @"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to use @ in strings",
+  "aliases": {},
+  "chart": "flowchart TB\n      A@{\n        label: \"This is a string with}\"\n        other: \"clock\"\n     }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "data4Layout.nodes[0].shape",
+    "op": "toEqual",
+    "rhs": "squareRect"
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "This is a string with}"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to use @  syntax to add labels on multi nodes",
+  "aliases": {},
+  "chart": "flowchart TB\n       n2[\"label for n2\"] &   n4@{ label: \"label for n4\"}   & n5@{ label: \"label for n5\"}\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 3
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "label for n2"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "label for n4"
+   },
+   {
+    "lhs": "data4Layout.nodes[2].label",
+    "op": "toEqual",
+    "rhs": "label for n5"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to use @  syntax to add labels on multi nodes with edge/link",
+  "aliases": {},
+  "chart": "flowchart TD\n    A[\"A\"] --> B[\"for B\"] &    C@{ label: \"for c\"} & E@{label : \"for E\"}\n    D@{label: \"for D\"}\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 5
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "A"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "for B"
+   },
+   {
+    "lhs": "data4Layout.nodes[2].label",
+    "op": "toEqual",
+    "rhs": "for c"
+   },
+   {
+    "lhs": "data4Layout.nodes[3].label",
+    "op": "toEqual",
+    "rhs": "for E"
+   },
+   {
+    "lhs": "data4Layout.nodes[4].label",
+    "op": "toEqual",
+    "rhs": "for D"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should be possible to use @  syntax in labels",
+  "aliases": {},
+  "chart": "flowchart TD\n    A[\"@A@\"] --> B[\"@for@ B@\"] & C@{ label: \"@for@ c@\"} & E{\"`@for@ E@`\"} & D((\"@for@ D@\"))\n      H1{{\"@for@ H@\"}}\n      H2{{\"`@for@ H@`\"}}\n      Q1{\"@for@ Q@\"}\n      Q2{\"`@for@ Q@`\"}\n      AS1>\"@for@ AS@\"]\n      AS2>\"`@for@ AS@`\"]\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 11
+   },
+   {
+    "lhs": "data4Layout.nodes[0].label",
+    "op": "toEqual",
+    "rhs": "@A@"
+   },
+   {
+    "lhs": "data4Layout.nodes[1].label",
+    "op": "toEqual",
+    "rhs": "@for@ B@"
+   },
+   {
+    "lhs": "data4Layout.nodes[2].label",
+    "op": "toEqual",
+    "rhs": "@for@ c@"
+   },
+   {
+    "lhs": "data4Layout.nodes[3].label",
+    "op": "toEqual",
+    "rhs": "@for@ E@"
+   },
+   {
+    "lhs": "data4Layout.nodes[4].label",
+    "op": "toEqual",
+    "rhs": "@for@ D@"
+   },
+   {
+    "lhs": "data4Layout.nodes[5].label",
+    "op": "toEqual",
+    "rhs": "@for@ H@"
+   },
+   {
+    "lhs": "data4Layout.nodes[6].label",
+    "op": "toEqual",
+    "rhs": "@for@ H@"
+   },
+   {
+    "lhs": "data4Layout.nodes[7].label",
+    "op": "toEqual",
+    "rhs": "@for@ Q@"
+   },
+   {
+    "lhs": "data4Layout.nodes[8].label",
+    "op": "toEqual",
+    "rhs": "@for@ Q@"
+   },
+   {
+    "lhs": "data4Layout.nodes[9].label",
+    "op": "toEqual",
+    "rhs": "@for@ AS@"
+   },
+   {
+    "lhs": "data4Layout.nodes[10].label",
+    "op": "toEqual",
+    "rhs": "@for@ AS@"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle unique edge creation with using @ and &",
+  "aliases": {},
+  "chart": "flowchart TD\n     A & B e1@--> C & D\n        A1 e2@--> C1 & D1\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 7
+   },
+   {
+    "lhs": "data4Layout.edges.length",
+    "op": "toBe",
+    "rhs": 6
+   },
+   {
+    "lhs": "data4Layout.edges[0].id",
+    "op": "toEqual",
+    "rhs": "L_A_C_0"
+   },
+   {
+    "lhs": "data4Layout.edges[1].id",
+    "op": "toEqual",
+    "rhs": "L_A_D_0"
+   },
+   {
+    "lhs": "data4Layout.edges[2].id",
+    "op": "toEqual",
+    "rhs": "e1"
+   },
+   {
+    "lhs": "data4Layout.edges[3].id",
+    "op": "toEqual",
+    "rhs": "L_B_D_0"
+   },
+   {
+    "lhs": "data4Layout.edges[4].id",
+    "op": "toEqual",
+    "rhs": "e2"
+   },
+   {
+    "lhs": "data4Layout.edges[5].id",
+    "op": "toEqual",
+    "rhs": "L_A1_D1_0"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle redefine same edge ids again",
+  "aliases": {},
+  "chart": "flowchart TD\n     A & B e1@--> C & D\n        A1 e1@--> C1 & D1\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 7
+   },
+   {
+    "lhs": "data4Layout.edges.length",
+    "op": "toBe",
+    "rhs": 6
+   },
+   {
+    "lhs": "data4Layout.edges[0].id",
+    "op": "toEqual",
+    "rhs": "L_A_C_0"
+   },
+   {
+    "lhs": "data4Layout.edges[1].id",
+    "op": "toEqual",
+    "rhs": "L_A_D_0"
+   },
+   {
+    "lhs": "data4Layout.edges[2].id",
+    "op": "toEqual",
+    "rhs": "e1"
+   },
+   {
+    "lhs": "data4Layout.edges[3].id",
+    "op": "toEqual",
+    "rhs": "L_B_D_0"
+   },
+   {
+    "lhs": "data4Layout.edges[4].id",
+    "op": "toEqual",
+    "rhs": "L_A1_C1_0"
+   },
+   {
+    "lhs": "data4Layout.edges[5].id",
+    "op": "toEqual",
+    "rhs": "L_A1_D1_0"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should handle overriding edge animate again",
+  "aliases": {},
+  "chart": "flowchart TD\n     A e1@--> B\n     C e2@--> D\n     E e3@--> F\n    e1@{ animate: true }\n    e2@{ animate: false }\n    e3@{ animate: true }\n    e3@{ animate: false }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.nodes.length",
+    "op": "toBe",
+    "rhs": 6
+   },
+   {
+    "lhs": "data4Layout.edges.length",
+    "op": "toBe",
+    "rhs": 3
+   },
+   {
+    "lhs": "data4Layout.edges[0].id",
+    "op": "toEqual",
+    "rhs": "e1"
+   },
+   {
+    "lhs": "data4Layout.edges[0].animate",
+    "op": "toEqual",
+    "rhs": true
+   },
+   {
+    "lhs": "data4Layout.edges[1].id",
+    "op": "toEqual",
+    "rhs": "e2"
+   },
+   {
+    "lhs": "data4Layout.edges[1].animate",
+    "op": "toEqual",
+    "rhs": false
+   },
+   {
+    "lhs": "data4Layout.edges[2].id",
+    "op": "toEqual",
+    "rhs": "e3"
+   },
+   {
+    "lhs": "data4Layout.edges[2].animate",
+    "op": "toEqual",
+    "rhs": false
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should order edges for the step animation",
+  "aliases": {},
+  "chart": "flowchart LR\n     A e1@--> B\n     B e2@--> C\n     B e3@--> D\n     C e4@--> E\n    e1@{ step: 1 }\n    e2@{ step: 2 }\n    e3@{ step: 2 }\n      ",
+  "expect": [],
+  "unparsed": 1,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should give step edges the default step duration",
+  "aliases": {},
+  "chart": "flowchart LR\n     A e1@--> B\n     B e2@--> C\n    e1@{ step: 1 }\n      ",
+  "expect": [
+   {
+    "lhs": "stepped.stepDuration",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "'stepDuration'inplain",
+    "op": "toBe",
+    "rhs": false
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should take the step duration from the flowchart config",
+  "aliases": {},
+  "chart": "flowchart LR\n     A e1@--> B\n    e1@{ step: 1 }\n      ",
+  "expect": [
+   {
+    "lhs": "edge.stepDuration",
+    "op": "toBe",
+    "rhs": 0.5
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should mark step edges for a number badge only when stepNumbers is on",
+  "aliases": {},
+  "chart": "flowchart LR\n     A e1@--> B\n     B e2@--> C\n    e1@{ step: 1 }\n      ",
+  "expect": [
+   {
+    "lhs": "stepped.showStepNumber",
+    "op": "toBe",
+    "rhs": true
+   },
+   {
+    "lhs": "'showStepNumber'inplain",
+    "op": "toBe",
+    "rhs": false
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should leave step edges without a number badge by default",
+  "aliases": {},
+  "chart": "flowchart LR\n     A e1@--> B\n    e1@{ step: 1 }\n      ",
+  "expect": [
+   {
+    "lhs": "'showStepNumber'inedge",
+    "op": "toBe",
+    "rhs": false
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should ignore a step that is not a positive integer",
+  "aliases": {},
+  "chart": "flowchart LR\n     A e1@--> B\n     B e2@--> C\n    e1@{ step: 0 }\n    e2@{ step: 1.5 }\n      ",
+  "expect": [
+   {
+    "lhs": "data4Layout.edges.every((edge)=>!('step'inedge)&&!('stepCount'inedge))",
+    "op": "toBe",
+    "rhs": true
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-node-data.spec.js",
+  "name": "should leave edges without a step free of step data",
+  "aliases": {},
+  "chart": "flowchart LR\n     A e1@--> B\n    e1@{ animate: true }\n      ",
+  "expect": [
+   {
+    "lhs": "'step'inedge",
+    "op": "toBe",
+    "rhs": false
+   },
+   {
+    "lhs": "'stepCount'inedge",
+    "op": "toBe",
+    "rhs": false
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node",
+  "aliases": {},
+  "chart": "graph TD;A;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('A').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node with white space after it (SN1)",
+  "aliases": {},
+  "chart": "graph TD;A ;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('A').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single square node",
+  "aliases": {},
+  "chart": "graph TD;a[A];",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "square"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single round square node",
+  "aliases": {},
+  "chart": "graph TD;a[A];",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "square"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single circle node",
+  "aliases": {},
+  "chart": "graph TD;a((A));",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "circle"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single round node",
+  "aliases": {},
+  "chart": "graph TD;a(A);",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "round"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single odd node",
+  "aliases": {},
+  "chart": "graph TD;a>A];",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "odd"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single diamond node",
+  "aliases": {},
+  "chart": "graph TD;a{A};",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "diamond"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single diamond node with whitespace after it",
+  "aliases": {},
+  "chart": "graph TD;a{A}   ;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "diamond"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single diamond node with html in it (SN3)",
+  "aliases": {},
+  "chart": "graph TD;a{A <br> end};",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "diamond"
+   },
+   {
+    "lhs": "vert.get('a').text",
+    "op": "toBe",
+    "rhs": "A <br> end"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single hexagon node",
+  "aliases": {},
+  "chart": "graph TD;a{{A}};",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "hexagon"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single hexagon node with html in it",
+  "aliases": {},
+  "chart": "graph TD;a{{A <br> end}};",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "hexagon"
+   },
+   {
+    "lhs": "vert.get('a').text",
+    "op": "toBe",
+    "rhs": "A <br> end"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single round node with html in it",
+  "aliases": {},
+  "chart": "graph TD;a(A <br> end);",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "round"
+   },
+   {
+    "lhs": "vert.get('a').text",
+    "op": "toBe",
+    "rhs": "A <br> end"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single double circle node",
+  "aliases": {},
+  "chart": "graph TD;a(((A)));",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "doublecircle"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single double circle node with whitespace after it",
+  "aliases": {},
+  "chart": "graph TD;a(((A)))   ;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "doublecircle"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single double circle node with html in it (SN3)",
+  "aliases": {},
+  "chart": "graph TD;a(((A <br> end)));",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('a').type",
+    "op": "toBe",
+    "rhs": "doublecircle"
+   },
+   {
+    "lhs": "vert.get('a').text",
+    "op": "toBe",
+    "rhs": "A <br> end"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node with alphanumerics starting on a char",
+  "aliases": {},
+  "chart": "graph TD;id1;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('id1').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node with a single digit",
+  "aliases": {},
+  "chart": "graph TD;1;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('1').text",
+    "op": "toBe",
+    "rhs": "1"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node with a single digit in a subgraph",
+  "aliases": {},
+  "chart": "graph TD;subgraph \"hello\";1;end;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('1').text",
+    "op": "toBe",
+    "rhs": "1"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node with alphanumerics starting on a num",
+  "aliases": {},
+  "chart": "graph TD;1id;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('1id').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node with alphanumerics containing a minus sign",
+  "aliases": {},
+  "chart": "graph TD;i-d;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('i-d').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-singlenode.spec.js",
+  "name": "should handle a single node with alphanumerics containing a underscore sign",
+  "aliases": {},
+  "chart": "graph TD;i_d;",
+  "expect": [
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('i_d').styles.length",
+    "op": "toBe",
+    "rhs": 0
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle styles for vertices",
+  "aliases": {},
+  "chart": "graph TD;style Q background:#fff;",
+  "expect": [
+   {
+    "lhs": "vert.get('Q').styles.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "vert.get('Q').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#fff"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle multiple styles for a vortex",
+  "aliases": {},
+  "chart": "graph TD;style R background:#fff,border:1px solid red;",
+  "expect": [
+   {
+    "lhs": "vert.get('R').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "vert.get('R').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#fff"
+   },
+   {
+    "lhs": "vert.get('R').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle multiple styles in a graph",
+  "aliases": {},
+  "chart": "graph TD;style S background:#aaa;\nstyle T background:#bbb,border:1px solid red;",
+  "expect": [
+   {
+    "lhs": "vert.get('S').styles.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "vert.get('T').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "vert.get('S').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#aaa"
+   },
+   {
+    "lhs": "vert.get('T').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "vert.get('T').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle styles and graph definitions in a graph",
+  "aliases": {},
+  "chart": "graph TD;S-->T;\nstyle S background:#aaa;\nstyle T background:#bbb,border:1px solid red;",
+  "expect": [
+   {
+    "lhs": "vert.get('S').styles.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "vert.get('T').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "vert.get('S').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#aaa"
+   },
+   {
+    "lhs": "vert.get('T').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "vert.get('T').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle styles and graph definitions in a graph",
+  "aliases": {},
+  "chart": "graph TD;style T background: #bbb;",
+  "expect": [
+   {
+    "lhs": "vert.get('T').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "vert.get('T').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "vert.get('T').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": true
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should keep node label text (if already defined) when a style is applied",
+  "aliases": {},
+  "chart": "graph TD;A(( ));B((Test));C;style A background:#fff;style D border:1px solid red;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "vert.get('B').text",
+    "op": "toBe",
+    "rhs": "Test"
+   },
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "vert.get('D').text",
+    "op": "toBe",
+    "rhs": "D"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to declare a class",
+  "aliases": {},
+  "chart": "graph TD;style T background: #bbb;",
+  "expect": [
+   {
+    "lhs": "classes.get('exClass').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "classes.get('exClass').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "classes.get('exClass').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": true
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to declare multiple classes",
+  "aliases": {},
+  "chart": "graph TD;classDef firstClass,secondClass background:#bbb,border:1px solid red;",
+  "expect": [
+   {
+    "lhs": "classes.get('firstClass').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "classes.get('firstClass').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "classes.get('firstClass').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   },
+   {
+    "lhs": "classes.get('secondClass').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "classes.get('secondClass').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "classes.get('secondClass').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to declare a class with a dot in the style",
+  "aliases": {},
+  "chart": "graph TD;style T background: #bbb;",
+  "expect": [
+   {
+    "lhs": "classes.get('exClass').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "classes.get('exClass').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "classes.get('exClass').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1.5px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": true
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to declare a class with a space in the style",
+  "aliases": {},
+  "chart": "graph TD;style T background  :  #bbb;",
+  "expect": [
+   {
+    "lhs": "classes.get('exClass').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "classes.get('exClass').styles[0]",
+    "op": "toBe",
+    "rhs": "background:  #bbb"
+   },
+   {
+    "lhs": "classes.get('exClass').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1.5px solid red"
+   }
+  ],
+  "unparsed": 0,
+  "multi": true
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to apply a class to a vertex",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to apply a class to a vertex with an id containing _",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to apply a class to a vertex directly",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to apply a class to a vertex directly : usecase A[text].class ",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to apply a class to a vertex directly : usecase A[text].class-->B[test2] ",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to apply a class to a vertex directly 2",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should be possible to apply a class to a comma separated list of vertices",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle style definitions with more then 1 digit in a row",
+  "aliases": {},
+  "chart": "graph TD\nA-->B1\nA-->B2\nA-->B3\nA-->B4\nA-->B5\nA-->B6\nA-->B7\nA-->B8\nA-->B9\nA-->B10\nA-->B11\nlinkStyle 10 stroke-width:1px;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle style definitions within number of edges",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle style definitions within number of edges",
+  "aliases": {},
+  "chart": "graph TD\n    A-->B\n    linkStyle 0 stroke-width:1px;",
+  "expect": [
+   {
+    "lhs": "edges[0].style[0]",
+    "op": "toBe",
+    "rhs": "stroke-width:1px"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle multi-numbered style definitions with more then 1 digit in a row",
+  "aliases": {},
+  "chart": "graph TD\nA-->B1\nA-->B2\nA-->B3\nA-->B4\nA-->B5\nA-->B6\nA-->B7\nA-->B8\nA-->B9\nA-->B10\nA-->B11\nA-->B12\nlinkStyle 10,11 stroke-width:1px;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle classDefs with style in classes",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclassDef exClass font-style:bold;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle classDefs with % in classes",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nclassDef exClass fill:#f96,stroke:#333,stroke-width:4px,font-size:50%,font-style:bold;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should warn when style targets a non-existent node",
+  "aliases": {},
+  "chart": "graph TD;\nAA-->BB;\nstyle A fill:#f00;",
+  "expect": [
+   {
+    "lhs": "vert.get('A')).toBeDefined();expect(vert.get('A').styles[0]",
+    "op": "toBe",
+    "rhs": "fill:#f00"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-style.spec.js",
+  "name": "should handle multiple vertices with style",
+  "aliases": {},
+  "chart": "\n    graph TD\n      classDef C1 stroke-dasharray:4\n      classDef C2 stroke-dasharray:6\n      A & B:::C1 & D:::C1 --> E:::C2\n    ",
+  "expect": [
+   {
+    "lhs": "vert.get('A').classes.length",
+    "op": "toBe",
+    "rhs": 0
+   },
+   {
+    "lhs": "vert.get('B').classes[0]",
+    "op": "toBe",
+    "rhs": "C1"
+   },
+   {
+    "lhs": "vert.get('D').classes[0]",
+    "op": "toBe",
+    "rhs": "C1"
+   },
+   {
+    "lhs": "vert.get('E').classes[0]",
+    "op": "toBe",
+    "rhs": "C2"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text without space",
+  "aliases": {},
+  "chart": "graph TD;A--x|textNoSpace|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle with space",
+  "aliases": {},
+  "chart": "graph TD;A--x|text including space|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text with /",
+  "aliases": {},
+  "chart": "graph TD;A--x|text with / should work|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text with / should work"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and space between vertices and link",
+  "aliases": {},
+  "chart": "graph TD;A --x|textNoSpace| B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and CAPS",
+  "aliases": {},
+  "chart": "graph TD;A--x|text including CAPS space|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and dir",
+  "aliases": {},
+  "chart": "graph TD;A--x|text including URL space|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including URL space"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and send",
+  "aliases": {},
+  "chart": "graph TD;A--text including URL space and send-->B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including URL space and send"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and send",
+  "aliases": {},
+  "chart": "graph TD;A-- text including URL space and send -->B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including URL space and send"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and dir (TD)",
+  "aliases": {},
+  "chart": "graph TD;A--x|text including R TD space|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including R TD space"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle `",
+  "aliases": {},
+  "chart": "graph TD;A--x|text including `|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including `"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle v in node ids only v",
+  "aliases": {},
+  "chart": "graph TD;A--xv(my text);",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "vert.get('v').text",
+    "op": "toBe",
+    "rhs": "my text"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle v in node ids v at end",
+  "aliases": {},
+  "chart": "graph TD;A--xcsv(my text);",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "vert.get('csv').text",
+    "op": "toBe",
+    "rhs": "my text"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle v in node ids v in middle",
+  "aliases": {},
+  "chart": "graph TD;A--xava(my text);",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "vert.get('ava').text",
+    "op": "toBe",
+    "rhs": "my text"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle v in node ids, v at start",
+  "aliases": {},
+  "chart": "graph TD;A--xva(my text);",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "vert.get('va').text",
+    "op": "toBe",
+    "rhs": "my text"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle keywords",
+  "aliases": {},
+  "chart": "graph TD;A--x|text including graph space|B;",
+  "expect": [
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including graph space"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle keywords",
+  "aliases": {},
+  "chart": "graph TD;V-->a[v]",
+  "expect": [
+   {
+    "lhs": "vert.get('a').text",
+    "op": "toBe",
+    "rhs": "v"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle quoted text",
+  "aliases": {},
+  "chart": "graph TD;V-- \"test string()\" -->a[v]",
+  "expect": [
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "test string()"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle normal text on lines",
+  "aliases": {},
+  "chart": "graph TD;A-- test text with == -->B;",
+  "expect": [
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "normal"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle dotted text on lines (TD3)",
+  "aliases": {},
+  "chart": "graph TD;A-. test text with == .->B;",
+  "expect": [
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "dotted"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle thick text on lines",
+  "aliases": {},
+  "chart": "graph TD;A== test text with - ==>B;",
+  "expect": [
+   {
+    "lhs": "edges[0].stroke",
+    "op": "toBe",
+    "rhs": "thick"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text without space",
+  "aliases": {},
+  "chart": "graph TD;A-- textNoSpace --xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text with multiple leading space",
+  "aliases": {},
+  "chart": "graph TD;A--    textNoSpace --xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle with space",
+  "aliases": {},
+  "chart": "graph TD;A-- text including space --xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text with /",
+  "aliases": {},
+  "chart": "graph TD;A -- text with / should work --x B;",
+  "expect": [
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text with / should work"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and space between vertices and link",
+  "aliases": {},
+  "chart": "graph TD;A -- textNoSpace --x B;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and CAPS",
+  "aliases": {},
+  "chart": "graph TD;A-- text including CAPS space --xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and dir",
+  "aliases": {},
+  "chart": "graph TD;A-- text including URL space --xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including URL space"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space and dir (TD2)",
+  "aliases": {},
+  "chart": "graph TD;A-- text including R TD space --xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_cross"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including R TD space"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle keywords",
+  "aliases": {},
+  "chart": "graph TD;A-- text including graph space and v --xB;",
+  "expect": [
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including graph space and v"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle keywords",
+  "aliases": {},
+  "chart": "graph TD;A-- text including graph space and v --xB[blav]",
+  "expect": [
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text including graph space and v"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle space",
+  "aliases": {},
+  "chart": "graph TD;A-->C(Chimpansen hoppar);",
+  "expect": [
+   {
+    "lhs": "vert.get('C').type",
+    "op": "toBe",
+    "rhs": "round"
+   },
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "Chimpansen hoppar"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle edge case for odd vertex with node id ending with minus",
+  "aliases": {},
+  "chart": "graph TD;A_node-->odd->Vertex Text];",
+  "expect": [
+   {
+    "lhs": "vert.get('odd-').type",
+    "op": "toBe",
+    "rhs": "odd"
+   },
+   {
+    "lhs": "vert.get('odd-').text",
+    "op": "toBe",
+    "rhs": "Vertex Text"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should allow forward slashes in lean_right vertices",
+  "aliases": {},
+  "chart": "graph TD;A_node-->B[/This node has a / as text/];",
+  "expect": [
+   {
+    "lhs": "vert.get('B').type",
+    "op": "toBe",
+    "rhs": "lean_right"
+   },
+   {
+    "lhs": "vert.get('B').text",
+    "op": "toBe",
+    "rhs": "This node has a / as text"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should allow back slashes in lean_left vertices",
+  "aliases": {},
+  "chart": "graph TD;A_node-->B[\\This node has a \\ as text\\];",
+  "expect": [
+   {
+    "lhs": "vert.get('B').type",
+    "op": "toBe",
+    "rhs": "lean_left"
+   },
+   {
+    "lhs": "vert.get('B').text",
+    "op": "toBe",
+    "rhs": "This node has a \\ as text"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle \u00e5\u00e4\u00f6 and minus",
+  "aliases": {},
+  "chart": "graph TD;A-->C{Chimpansen hoppar \u00e5\u00e4\u00f6-\u00c5\u00c4\u00d6};",
+  "expect": [
+   {
+    "lhs": "vert.get('C').type",
+    "op": "toBe",
+    "rhs": "diamond"
+   },
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "Chimpansen hoppar \u00e5\u00e4\u00f6-\u00c5\u00c4\u00d6"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle with \u00e5\u00e4\u00f6, minus and space and br",
+  "aliases": {},
+  "chart": "graph TD;A-->C(Chimpansen hoppar \u00e5\u00e4\u00f6  <br> -  \u00c5\u00c4\u00d6);",
+  "expect": [
+   {
+    "lhs": "vert.get('C').type",
+    "op": "toBe",
+    "rhs": "round"
+   },
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "Chimpansen hoppar \u00e5\u00e4\u00f6  <br> -  \u00c5\u00c4\u00d6"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle unicode chars",
+  "aliases": {},
+  "chart": "graph TD;A-->C(\u041d\u0430\u0447\u0430\u043b\u043e);",
+  "expect": [
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "\u041d\u0430\u0447\u0430\u043b\u043e"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle backslash",
+  "aliases": {},
+  "chart": "graph TD;A-->C(c:\\windows);",
+  "expect": [
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "c:\\windows"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle CAPS",
+  "aliases": {},
+  "chart": "graph TD;A-->C(some CAPS);",
+  "expect": [
+   {
+    "lhs": "vert.get('C').type",
+    "op": "toBe",
+    "rhs": "round"
+   },
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "some CAPS"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle directions",
+  "aliases": {},
+  "chart": "graph TD;A-->C(some URL);",
+  "expect": [
+   {
+    "lhs": "vert.get('C').type",
+    "op": "toBe",
+    "rhs": "round"
+   },
+   {
+    "lhs": "vert.get('C').text",
+    "op": "toBe",
+    "rhs": "some URL"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle multi-line text",
+  "aliases": {},
+  "chart": "graph TD;A--o|text space|B;\n B-->|more text with space|C;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_circle"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "text space"
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": "more text with space"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in vertices with space",
+  "aliases": {},
+  "chart": "graph TD;A[chimpansen hoppar]-->C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').type",
+    "op": "toBe",
+    "rhs": "square"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "chimpansen hoppar"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in vertices with space with spaces between vertices and link",
+  "aliases": {},
+  "chart": "graph TD;A[chimpansen hoppar] --> C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').type",
+    "op": "toBe",
+    "rhs": "square"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "chimpansen hoppar"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text including _ in vertices",
+  "aliases": {},
+  "chart": "graph TD;A[chimpansen_hoppar] --> C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').type",
+    "op": "toBe",
+    "rhs": "square"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "chimpansen_hoppar"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle quoted text in vertices ",
+  "aliases": {},
+  "chart": "graph TD;A[\"chimpansen hoppar ()[]\"] --> C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').type",
+    "op": "toBe",
+    "rhs": "square"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "chimpansen hoppar ()[]"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in circle vertices with space",
+  "aliases": {},
+  "chart": "graph TD;A((chimpansen hoppar))-->C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').type",
+    "op": "toBe",
+    "rhs": "circle"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "chimpansen hoppar"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in ellipse vertices",
+  "aliases": {},
+  "chart": "graph TD\nA(-this is an ellipse-)-->B",
+  "expect": [
+   {
+    "lhs": "vert.get('A').type",
+    "op": "toBe",
+    "rhs": "ellipse"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "this is an ellipse"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should not freeze when ellipse text has a `(`",
+  "aliases": {},
+  "chart": "graph\nX(- My Text (",
+  "expect": [],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in diamond vertices with space",
+  "aliases": {},
+  "chart": "graph TD;A(chimpansen hoppar)-->C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').type",
+    "op": "toBe",
+    "rhs": "round"
+   },
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "chimpansen hoppar"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in with ?",
+  "aliases": {},
+  "chart": "graph TD;A(?)-->|?|C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "?"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "?"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in with \u00e9\u00e8\u00ea\u00e0\u00e7\u00f4",
+  "aliases": {},
+  "chart": "graph TD;A(\u00e9\u00e8\u00ea\u00e0\u00e7\u00f4)-->|\u00e9\u00e8\u00ea\u00e0\u00e7\u00f4|C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": "\u00e9\u00e8\u00ea\u00e0\u00e7\u00f4"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "\u00e9\u00e8\u00ea\u00e0\u00e7\u00f4"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should handle text in with ,.?!+-*",
+  "aliases": {},
+  "chart": "graph TD;A(,.?!+-*)-->|,.?!+-*|C;",
+  "expect": [
+   {
+    "lhs": "vert.get('A').text",
+    "op": "toBe",
+    "rhs": ",.?!+-*"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ",.?!+-*"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should throw error at nested set of brackets",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should throw error for strings and text at the same time",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should throw error for escaping quotes in text state",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should throw error for nested quotation marks",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-text.spec.js",
+  "name": "should throw error",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow-vertice-chaining.spec.js",
+  "name": "should handle chaining of vertices",
+  "aliases": {},
+  "chart": "\n    graph TD\n      A-->B-->C;\n    ",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": ""
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-vertice-chaining.spec.js",
+  "name": "should handle chaining of vertices",
+  "aliases": {},
+  "chart": "\n    graph TD\n      A & B --> C;\n    ",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": ""
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-vertice-chaining.spec.js",
+  "name": "should multiple vertices in link statement in the beginning",
+  "aliases": {},
+  "chart": "\n    graph TD\n      A-->B & C;\n    ",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": ""
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-vertice-chaining.spec.js",
+  "name": "should multiple vertices in link statement at the end",
+  "aliases": {},
+  "chart": "\n    graph TD\n      A & B--> C & D;\n    ",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "vert.get('D').id",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 4
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[2].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[2].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[2].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[2].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[3].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[3].end",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges[3].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[3].text",
+    "op": "toBe",
+    "rhs": ""
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-vertice-chaining.spec.js",
+  "name": "should handle chaining of vertices at both ends at once",
+  "aliases": {},
+  "chart": "\n    graph TD\n      A & B--> C & D;\n    ",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "vert.get('D').id",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 4
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[2].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[2].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[2].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[2].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[3].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[3].end",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges[3].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[3].text",
+    "op": "toBe",
+    "rhs": ""
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-vertice-chaining.spec.js",
+  "name": "should handle chaining and multiple nodes in link statement FVC ",
+  "aliases": {},
+  "chart": "\n    graph TD\n      A --> B & B2 & C --> D2;\n    ",
+  "expect": [
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('B2').id",
+    "op": "toBe",
+    "rhs": "B2"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "vert.get('D2').id",
+    "op": "toBe",
+    "rhs": "D2"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 6
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "B2"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[2].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[2].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[2].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[2].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[3].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[3].end",
+    "op": "toBe",
+    "rhs": "D2"
+   },
+   {
+    "lhs": "edges[3].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[3].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[4].start",
+    "op": "toBe",
+    "rhs": "B2"
+   },
+   {
+    "lhs": "edges[4].end",
+    "op": "toBe",
+    "rhs": "D2"
+   },
+   {
+    "lhs": "edges[4].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[4].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[5].start",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[5].end",
+    "op": "toBe",
+    "rhs": "D2"
+   },
+   {
+    "lhs": "edges[5].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[5].text",
+    "op": "toBe",
+    "rhs": ""
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow-vertice-chaining.spec.js",
+  "name": "should handle chaining and multiple nodes in link statement with extra info in statements",
+  "aliases": {},
+  "chart": "\n    graph TD\n      A[ h ] -- hello --> B[\" test \"]:::exClass & C --> D;\n      classDef exClass background:#bbb,border:1px solid red;\n    ",
+  "expect": [
+   {
+    "lhs": "classes.get('exClass').styles.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "classes.get('exClass').styles[0]",
+    "op": "toBe",
+    "rhs": "background:#bbb"
+   },
+   {
+    "lhs": "classes.get('exClass').styles[1]",
+    "op": "toBe",
+    "rhs": "border:1px solid red"
+   },
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "vert.get('B').classes[0]",
+    "op": "toBe",
+    "rhs": "exClass"
+   },
+   {
+    "lhs": "vert.get('C').id",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "vert.get('D').id",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 4
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[0].text",
+    "op": "toBe",
+    "rhs": "hello"
+   },
+   {
+    "lhs": "edges[1].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[1].end",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[1].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[1].text",
+    "op": "toBe",
+    "rhs": "hello"
+   },
+   {
+    "lhs": "edges[2].start",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges[2].end",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges[2].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[2].text",
+    "op": "toBe",
+    "rhs": ""
+   },
+   {
+    "lhs": "edges[3].start",
+    "op": "toBe",
+    "rhs": "C"
+   },
+   {
+    "lhs": "edges[3].end",
+    "op": "toBe",
+    "rhs": "D"
+   },
+   {
+    "lhs": "edges[3].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   },
+   {
+    "lhs": "edges[3].text",
+    "op": "toBe",
+    "rhs": ""
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should handle a trailing whitespaces after statements",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should accept swimlane-beta as a graph keyword",
+  "aliases": {},
+  "chart": "swimlane-beta LR;A-->B;",
+  "expect": [
+   {
+    "lhs": "flow.parser.yy.getDirection()",
+    "op": "toBe",
+    "rhs": "LR"
+   },
+   {
+    "lhs": "vert.get('A').id",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "vert.get('B').id",
+    "op": "toBe",
+    "rhs": "B"
+   },
+   {
+    "lhs": "edges.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "B"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should handle node names with \"end\" substring",
+  "aliases": {},
+  "chart": "graph TD\nendpoint --> sender",
+  "expect": [
+   {
+    "lhs": "vert.get('endpoint').id",
+    "op": "toBe",
+    "rhs": "endpoint"
+   },
+   {
+    "lhs": "vert.get('sender').id",
+    "op": "toBe",
+    "rhs": "sender"
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "endpoint"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "sender"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should handle node names ending with keywords",
+  "aliases": {},
+  "chart": "graph TD\nblend --> monograph",
+  "expect": [
+   {
+    "lhs": "vert.get('blend').id",
+    "op": "toBe",
+    "rhs": "blend"
+   },
+   {
+    "lhs": "vert.get('monograph').id",
+    "op": "toBe",
+    "rhs": "monograph"
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "blend"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "monograph"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should allow default in the node name/id",
+  "aliases": {},
+  "chart": "graph TD\ndefault --> monograph",
+  "expect": [
+   {
+    "lhs": "vert.get('default').id",
+    "op": "toBe",
+    "rhs": "default"
+   },
+   {
+    "lhs": "vert.get('monograph').id",
+    "op": "toBe",
+    "rhs": "monograph"
+   },
+   {
+    "lhs": "edges[0].start",
+    "op": "toBe",
+    "rhs": "default"
+   },
+   {
+    "lhs": "edges[0].end",
+    "op": "toBe",
+    "rhs": "monograph"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a '.'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse text containing \\'_\\'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a ':'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a ','",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse text containing '-'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a '+'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a '*'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a '<'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a '>'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a '='",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be able to parse a '&'",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be possible to use direction in node ids",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be possible to use direction in node ids",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should be possible to use numbers as labels",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should add accTitle and accDescr to flow chart",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should add accTitle and a multi line accDescr to flow chart",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should work with node id ${unsafeProp}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should work with tooltip id ${unsafeProp}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should work with class id ${unsafeProp}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "flow.spec.js",
+  "name": "should work with subgraph id ${unsafeProp}",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraph with tab indentation",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TB\nsubgraph One\n\ta1-->a2\nend",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "a2"
+   },
+   {
+    "lhs": "subgraph.nodes[1]",
+    "op": "toBe",
+    "rhs": "a1"
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "One"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "One"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraph with chaining nodes indentation",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TB\nsubgraph One\n\ta1-->a2-->a3\nend",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 3
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "a3"
+   },
+   {
+    "lhs": "subgraph.nodes[1]",
+    "op": "toBe",
+    "rhs": "a2"
+   },
+   {
+    "lhs": "subgraph.nodes[2]",
+    "op": "toBe",
+    "rhs": "a1"
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "One"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "One"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraph with multiple words in title",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TB\nsubgraph \"Some Title\"\n\ta1-->a2\nend",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "a2"
+   },
+   {
+    "lhs": "subgraph.nodes[1]",
+    "op": "toBe",
+    "rhs": "a1"
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "Some Title"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "subGraph0"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraph with id and title notation",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TB\nsubgraph some-id[Some Title]\n\ta1-->a2\nend",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "a2"
+   },
+   {
+    "lhs": "subgraph.nodes[1]",
+    "op": "toBe",
+    "rhs": "a1"
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "Some Title"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "some-id"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraph id starting with a number",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TD\n    A[Christmas] -->|Get money| B(Go shopping)\n    subgraph 1test\n    A\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.nodes[0]",
+    "op": "toBe",
+    "rhs": "A"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "1test"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs1",
+  "aliases": {},
+  "chart": "graph TD;A-->B;subgraph myTitle;c-->d;end;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs with title in quotes",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TD;A-->B;subgraph \"title in quotes\";c-->d;end;",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "title in quotes"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs in old style that was broken",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TD;A-->B;subgraph old style that is broken;c-->d;end;",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "old style that is broken"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs with dashes in the title",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TD;A-->B;subgraph a-b-c;c-->d;end;",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "a-b-c"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs with id and title in brackets",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TD;A-->B;subgraph uid1[text of doom];c-->d;end;",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "text of doom"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "uid1"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs with id and title in brackets and quotes",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TD;A-->B;subgraph uid2[\"text of doom\"];c-->d;end;",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "text of doom"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "uid2"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs with id and title in brackets without spaces",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "graph TD;A-->B;subgraph uid2[textofdoom];c-->d;end;",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.title",
+    "op": "toBe",
+    "rhs": "textofdoom"
+   },
+   {
+    "lhs": "subgraph.id",
+    "op": "toBe",
+    "rhs": "uid2"
+   },
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs2",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nsubgraph myTitle\n\n c-->d \nend\n",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs3",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nsubgraph myTitle   \n\n    c-->d \nend\n",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle nested subgraphs",
+  "skip": "dynamic input"
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs4",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nsubgraph myTitle\nc-->d\nend;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs5",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nsubgraph myTitle\nc-- text -->d\nd-->e\n end;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle subgraphs with multi node statements in it",
+  "aliases": {},
+  "chart": "graph TD\nA-->B\nsubgraph myTitle\na & b --> c & e\n end;",
+  "expect": [
+   {
+    "lhs": "edges[0].type",
+    "op": "toBe",
+    "rhs": "arrow_point"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle nested subgraphs 1",
+  "aliases": {
+   "subgraphA": "A",
+   "subgraphB": "B"
+  },
+  "chart": "flowchart TB\n    subgraph A\n    b-->B\n    a\n    end\n    a-->c\n    subgraph B\n      c\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraphB.nodes[0]",
+    "op": "toBe",
+    "rhs": "c"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "B"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "b"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "a"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle nested subgraphs 2",
+  "aliases": {
+   "subgraphA": "A",
+   "subgraphB": "B"
+  },
+  "chart": "flowchart TB\n    b-->B\n    a-->c\n    subgraph B\n      c\n    end\n    subgraph A\n        a\n        b\n        B\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraphB.nodes[0]",
+    "op": "toBe",
+    "rhs": "c"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "B"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "b"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "a"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should handle nested subgraphs 3",
+  "aliases": {
+   "subgraphA": "A",
+   "subgraphB": "B"
+  },
+  "chart": "flowchart TB\n    subgraph B\n      c\n    end\n    a-->c\n    subgraph A\n      b-->B\n      a\n    end",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 2
+   },
+   {
+    "lhs": "subgraphB.nodes[0]",
+    "op": "toBe",
+    "rhs": "c"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "B"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "b"
+   },
+   {
+    "lhs": "subgraphA.nodes",
+    "op": "toContain",
+    "rhs": "a"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should correctly parse direction TD inside a subgraph",
+  "aliases": {
+   "subgraph": 0
+  },
+  "chart": "\n      graph LR\n        subgraph WithTD\n          direction TD\n          A1 --> A2\n        end\n    ",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraph.dir",
+    "op": "toBe",
+    "rhs": "TD"
+   },
+   {
+    "lhs": "subgraph.nodes",
+    "op": "toContain",
+    "rhs": "A1"
+   },
+   {
+    "lhs": "subgraph.nodes",
+    "op": "toContain",
+    "rhs": "A2"
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ },
+ {
+  "file": "subgraph.spec.js",
+  "name": "should attach `@{ view: collapsed }` metadata to a subgraph and collapse it",
+  "aliases": {},
+  "chart": "\n      graph TD\n        subgraph one [My Group]\n          A --> B\n        end\n        C --> A\n        one@{ view: collapsed }\n    ",
+  "expect": [
+   {
+    "lhs": "subgraphs.length",
+    "op": "toBe",
+    "rhs": 1
+   },
+   {
+    "lhs": "subgraphs[0].metadata?.view",
+    "op": "toBe",
+    "rhs": "collapsed"
+   },
+   {
+    "lhs": "collapsed?.shape",
+    "op": "toBe",
+    "rhs": "collapsedGroup"
+   },
+   {
+    "lhs": "collapsed?.isGroup",
+    "op": "toBe",
+    "rhs": false
+   }
+  ],
+  "unparsed": 0,
+  "multi": false
+ }
+]

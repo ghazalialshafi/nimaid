@@ -1,0 +1,15 @@
+sequenceDiagram
+    box Aqua Frontend
+        participant U as User
+        participant W as Web
+    end
+    box rgb(255,235,205) Backend
+        participant A as API
+        participant D as DB
+    end
+    U->>W: click
+    W->>A: GET /items
+    A->>D: SELECT
+    D-->>A: rows
+    A-->>W: json
+    W-->>U: render ✅

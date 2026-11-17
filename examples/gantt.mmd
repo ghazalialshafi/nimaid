@@ -1,0 +1,14 @@
+gantt
+    title Release plan
+    dateFormat YYYY-MM-DD
+    axisFormat %b %d
+    section Design
+    Research        :done,   des1, 2025-01-06, 2025-01-17
+    Prototype       :active, des2, after des1, 10d
+    section Build
+    Backend         :crit, b1, after des2, 3w
+    Frontend        :b2, after des2, 15d
+    Integration     :crit, b3, after b1 b2, 7d
+    section Launch
+    Beta            :b4, after b3, 5d
+    Go live         :milestone, m1, after b4, 0d

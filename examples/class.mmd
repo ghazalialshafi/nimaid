@@ -1,0 +1,25 @@
+classDiagram
+    class Animal {
+        <<abstract>>
+        +String name
+        +int age
+        +eat() void
+        +sleep() void
+    }
+    class Dog {
+        +bark() void
+    }
+    class Cat {
+        +purr() void
+    }
+    class Owner {
+        +String name
+        +adopt(Animal a) bool
+    }
+    class Shelter~T~
+    Animal <|-- Dog : inherits
+    Animal <|-- Cat
+    Owner "1" --> "*" Animal : owns
+    Shelter o-- Animal
+    Owner *-- Shelter : runs
+    Dog ..> Owner : notifies

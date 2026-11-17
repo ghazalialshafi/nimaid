@@ -1,0 +1,17 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Idle
+    Idle --> Running : start
+    state Running {
+        [*] --> Working
+        Working --> Paused : pause
+        Paused --> Working : resume
+        Working --> [*]
+    }
+    Running --> Check : done
+    state Check <<choice>>
+    Check --> Idle : ok
+    Check --> Failed : error
+    Failed --> [*]
+    Idle : waits for input
+    note right of Failed : needs a human

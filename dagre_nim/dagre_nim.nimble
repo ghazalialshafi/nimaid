@@ -1,0 +1,6 @@
+version       = "1.0.0"
+author        = "Ghazali"
+description   = "Nim port of dagre (directed graph layout)"
+license       = "MIT"
+srcDir        = "src"
+requires "nim >= 2.0.0"

@@ -1,0 +1,17 @@
+flowchart TD
+    classDef green fill:#9f6,stroke:#333,stroke-width:3px,color:#000
+    classDef warn fill:#fe9,stroke:#c90,stroke-dasharray: 5 5
+    A[Start]:::green --> B(Rounded)
+    B -->|yes| C{Decide}
+    B -.-> D[Dotted]:::warn
+    C ==>|thick| E((Circle))
+    C --x F[Cross end]
+    C --o G[Circle end]
+    D <--> E
+    E x--x F
+    style A fill:#f9f,stroke:#333
+    style G fill:#bbf,stroke:red,stroke-width:4px
+    linkStyle 0 stroke:#f00,stroke-width:4px
+    linkStyle 2,3 stroke:#00f
+    H[Line one<br/>Line two<br/>Line three] ~~~ A
+    I["Unicode: café ✓ — 日本"] --> H

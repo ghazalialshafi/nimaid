@@ -1,0 +1,18 @@
+flowchart TD
+    A[basis default] --> B & C
+    B --> D
+    C --> D
+    D --> E[linear]
+    D --> F[step]
+    D --> G[cardinal]
+    D --> H[natural]
+    D --> I[monotoneX]
+    D --> J[bumpY]
+    D --> K[catmullRom]
+    linkStyle 4 interpolate linear
+    linkStyle 5 interpolate step
+    linkStyle 6 interpolate cardinal
+    linkStyle 7 interpolate natural
+    linkStyle 8 interpolate monotoneX
+    linkStyle 9 interpolate bumpY
+    linkStyle 10 interpolate catmullRom

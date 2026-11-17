@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    participant C as Carol
+    A->>B: Hello Bob, how are you?
+    B-->>A: Great!
+    par to Bob
+        A->>B: Status?
+    and to Carol
+        A->>C: Status?
+    end
+    rect rgb(191, 223, 255)
+        B->>C: Background block
+    end
+    critical Establish connection
+        C->>A: connect
+    option Network timeout
+        C-xA: failed
+    end
+    opt maybe
+        A->>A: think <br/>twice
+    end
+    Note left of A: left note

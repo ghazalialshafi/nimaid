@@ -1,0 +1,25 @@
+---
+title: Order pipeline
+---
+flowchart LR
+    A[Client] & B[Mobile] --> C{Gateway}
+    C -->|ok| D[Auth]
+    C -->|"fail #quot;401#quot;"| E[Reject]
+    D --> D
+    D -->|retry| D
+    D --> F[(Orders DB)]
+    F --> D
+    subgraph Pay["Payments"]
+        direction TB
+        P1[Charge] --> P2[Receipt]
+    end
+    subgraph Ship["Shipping"]
+        S1[Pick] --> S2[Pack] --> S3[Send]
+    end
+    D --> Pay
+    Pay --> Ship
+    Ship -.-> A
+    X["`**Bold** and *italic*
+    markdown`"] --> Y["Heart #9829; and arrow #8594;"]
+    E --- Y
+    click A "https://example.com" "Open site"

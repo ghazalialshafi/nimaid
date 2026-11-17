@@ -1,0 +1,22 @@
+sequenceDiagram
+    title Order flow
+    autonumber
+    actor U as User 😀
+    participant W as Web App
+    participant S as Service
+    U->>+W: Place order
+    W->>S: Create order #35;42
+    activate S
+    S-->>W: Accepted
+    deactivate S
+    loop Every minute
+        W->>W: Poll status
+    end
+    alt paid
+        S-)W: Payment ok
+    else failed
+        S-xW: Payment failed
+    end
+    Note over U,W: Customer sees result
+    Note right of S: Audit log
+    W-->>-U: Done
