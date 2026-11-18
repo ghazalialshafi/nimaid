@@ -1,0 +1,16 @@
+sequenceDiagram
+    title Checkout
+    autonumber
+    actor U as Customer
+    participant W as Web shop
+    participant P as Payments
+    U->>+W: Place order
+    W->>+P: Charge card
+    alt approved
+        P-->>-W: OK
+        W-->>U: Confirmation
+    else declined
+        P-->>W: Declined
+        W-->>-U: Try another card
+    end
+    Note over U,W: Receipt is emailed

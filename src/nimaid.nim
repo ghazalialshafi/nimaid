@@ -5,6 +5,8 @@ from nimaid/purevg import pvg_engine_init, pvg_engine_term
 export gantt, gitgraph, mindmap, diagrams, gfx, svg, gif, config, sequence, detect, emoji, types, theme, flowdb, dagre_adapter, painter,
        label, textmetrics, png
 
+const nimaidVersion* = "0.3.0"
+
 proc parseAndLayoutFlowchart*(chartText: string): LayoutResult =
   let fm = extractFrontMatter(chartText)
   let cleaned = stripAnyComments(stripDirectives(fm.text))

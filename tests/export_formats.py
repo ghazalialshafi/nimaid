@@ -3,7 +3,7 @@
 import glob, os, subprocess, sys, xml.dom.minidom
 from PIL import Image
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-env=dict(os.environ, LD_LIBRARY_PATH=os.path.join(ROOT,'lib')); bad=0; tot={}
+env=dict(os.environ); bad=0; tot={}
 for f in sorted(glob.glob(os.path.join(ROOT,'examples','*.mmd'))):
     base=os.path.basename(f)[:-4]
     for ext,args in (('png',[]),('gif',[]),('svg',[]),('p64.png',['--colors=64'])):

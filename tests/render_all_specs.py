@@ -3,7 +3,7 @@
 import json, subprocess, tempfile, os, sys, collections
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cases=json.load(open(os.path.join(ROOT,'tests/spec_cases.json')))
-env=dict(os.environ, LD_LIBRARY_PATH=os.path.join(ROOT,'lib'))
+env=dict(os.environ)
 res=collections.Counter(); bad=[]
 seen=set()
 for c in cases:

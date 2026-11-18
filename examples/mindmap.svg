@@ -56,7 +56,7 @@
 <path d="M-414.88 108c-35 0-35-27-70-27" fill="none" stroke="rgb(66,215,140)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M-414.88 108c-35 0-35 27-70 27" fill="none" stroke="rgb(66,215,140)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M82.49 0c35 0 35 135 70 135" fill="none" stroke="rgb(215,66,140)" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
-<g transform="translate(0 0)">
+<g>
 <path d="M82.49 0c0 45.56-36.93 82.49-82.49 82.49-45.56 0-82.49-36.93-82.49-82.49 0-45.56 36.93-82.49 82.49-82.49 45.56 0 82.49 36.93 82.49 82.49z" fill="rgb(147,112,219)" stroke="rgb(123,82,196)" stroke-width="1" stroke-linejoin="round"/>
 <g aria-label="Project Nimaid" transform="matrix(0.010417 0 0 0.010417 0 19.8)" fill="rgb(255,255,255)"><use xlink:href="#g1" x="-7439" y="-1192"/><use xlink:href="#g2" x="-6240" y="-1192"/><use xlink:href="#g3" x="-5443" y="-1192"/><use xlink:href="#g4" x="-4190" y="-1192"/><use xlink:href="#g5" x="-3621" y="-1192"/><use xlink:href="#g6" x="-2361" y="-1192"/><use xlink:href="#g7" x="-1235" y="-1192"/><use xlink:href="#g8" x="219" y="-1192"/><use xlink:href="#g9" x="1751" y="-1192"/><use xlink:href="#g10" x="2320" y="-1192"/><use xlink:href="#g11" x="4315" y="-1192"/><use xlink:href="#g9" x="5570" y="-1192"/><use xlink:href="#g12" x="6139" y="-1192"/></g>
 </g>

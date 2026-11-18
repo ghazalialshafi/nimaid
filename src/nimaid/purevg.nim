@@ -352,12 +352,28 @@ proc pack(r, g, b, a: float32, cs: Pvg_Colorspace): uint32 =
     bi or (gi shl 8) or (ri shl 16) or (ai shl 24)
   else: ri or (gi shl 8) or (bi shl 16) or (ai shl 24)
 
+proc unpack(v: uint32, cs: Pvg_Colorspace): array[4, float32] =
+  ## inverse of `pack`: pixel -> premultiplied float RGBA
+  let straight = cs in {PVG_COLORSPACE_ABGR8888S, PVG_COLORSPACE_ARGB8888S}
+  let argb = cs in {PVG_COLORSPACE_ARGB8888, PVG_COLORSPACE_ARGB8888S, PVG_COLORSPACE_XRGB8888}
+  let lo = float32(v and 255) / 255
+  let mid = float32((v shr 8) and 255) / 255
+  let hi = float32((v shr 16) and 255) / 255
+  let a = if cs in {PVG_COLORSPACE_XBGR8888, PVG_COLORSPACE_XRGB8888}: 1'f32 else: float32((v shr 24) and 255) / 255
+  var (r, g, b) = if argb: (hi, mid, lo) else: (lo, mid, hi)
+  if straight: r *= a; g *= a; b *= a
+  [r, g, b, a]
+
 proc pvg_canvas_draw*(c: Pvg_Canvas, clear: bool): Pvg_Result =
   if c.buf == nil: return PVG_RESULT_INSUFFICIENT_CONDITION
   var L = newLayer(c.w, c.h)
   let dst = cast[ptr UncheckedArray[uint32]](c.buf)
-  if not clear:   # start from existing pixels (straight alpha assumed premultiplied for ABGR8888)
-    discard
+  if not clear:   # composite on top of the pixels already in the target buffer
+    for y in 0..<c.h:
+      for x in 0..<c.w:
+        let u = unpack(dst[y * c.stride + x], c.cs)
+        let i = (y * c.w + x) * 4
+        L.px[i] = u[0]; L.px[i + 1] = u[1]; L.px[i + 2] = u[2]; L.px[i + 3] = u[3]
   for p in c.root: render(L, p, Ident)
   for y in 0..<c.h:
     for x in 0..<c.w:

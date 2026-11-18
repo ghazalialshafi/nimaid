@@ -15,7 +15,7 @@ for f in files:
         if '${' in t: continue
         t=unesc(t)
         if t.strip().lower().startswith(prefix): cases.append({'chart':t})
-env=dict(os.environ,LD_LIBRARY_PATH=os.path.join(ROOT,'lib'))
+env=dict(os.environ)
 seen=set(); res=collections.Counter(); errs=collections.defaultdict(list)
 for c in cases:
     ch=c.get('chart')

@@ -92,8 +92,8 @@ proc rgbAttr(c: array[4, uint8], name: string): string =
 
 proc transformStr(n: Node): string =
   var parts: seq[string]
-  if n.hasT: parts.add &"translate({f(n.tx)} {f(n.ty)})"
-  if n.hasS: parts.add &"scale({ff(n.sc)})"
+  if n.hasT and (n.tx != 0 or n.ty != 0): parts.add &"translate({f(n.tx)} {f(n.ty)})"
+  if n.hasS and n.sc != 1: parts.add &"scale({ff(n.sc)})"
   parts.join(" ")
 
 proc transformAttr(n: Node): string =
