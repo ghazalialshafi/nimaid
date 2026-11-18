@@ -1,7 +1,6 @@
 # dagre-nim
 
-A Nim port of [dagre](https://github.com/dagrejs/dagre) (directed graph layout), written
-against the dagre TypeScript sources you supplied. Pure Nim, stdlib only (Nim >= 2.0).
+A Nim port of [dagre](https://github.com/dagrejs/dagre) (directed graph layout). Pure Nim, stdlib only (Nim >= 2.0).
 
 Pipeline (same as dagre): self-edge removal -> acyclic (DFS / greedy FAS) -> nesting graph ->
 network-simplex ranking -> edge-label proxies -> normalize (dummy nodes) -> border segments
