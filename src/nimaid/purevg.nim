@@ -22,6 +22,14 @@ type
   Pvg_Text_Metrics* = object
     ascent*, descent*, linegap*, advance*: cfloat
 
+  Pvg_Stop* = object
+    offset*: float
+    r*, g*, b*, a*: uint8
+  Pvg_Gradient* = ref object
+    ## linear gradient in the shape's own coordinate space (like SVG gradientUnits="userSpaceOnUse")
+    x1*, y1*, x2*, y2*: float
+    stops*: seq[Pvg_Stop]
+    ramp: ref Ramp
   PaintKind = enum pkScene, pkShape, pkText, pkPicture
   PaintObj = object
     kind: PaintKind
@@ -32,6 +40,7 @@ type
     segs: seq[Seg]
     fill: array[4, uint8]
     hasFill: bool
+    fillGrad, strokeGrad: Pvg_Gradient
     stroke: array[4, uint8]
     sw: float
     dash: seq[float]
@@ -50,7 +59,6 @@ type
     cs: Pvg_Colorspace
     root: seq[Pvg_Paint]
   Pvg_Canvas* = ref CanvasObj
-  Pvg_Gradient* = pointer
   Pvg_Animation* = pointer
   Pvg_Saver* = pointer
 
@@ -145,6 +153,45 @@ proc pvg_shape_append_rect*(p: Pvg_Paint, x, y, w, h, rx, ry: cfloat, cw: bool):
   PVG_RESULT_SUCCESS
 proc pvg_shape_set_fill_color*(p: Pvg_Paint, r, g, b, a: uint8): Pvg_Result =
   p.fill = [r, g, b, a]; p.hasFill = true; PVG_RESULT_SUCCESS
+proc pvg_linear_gradient_new*(x1, y1, x2, y2: cfloat): Pvg_Gradient =
+  Pvg_Gradient(x1: x1, y1: y1, x2: x2, y2: y2)
+proc pvg_gradient_add_stop*(g: Pvg_Gradient, offset: cfloat, r, gr, b, a: uint8): Pvg_Result =
+  if g == nil: return PVG_RESULT_INVALID_ARGUMENT
+  g.stops.add Pvg_Stop(offset: offset, r: r, g: gr, b: b, a: a); g.ramp = nil; PVG_RESULT_SUCCESS
+proc pvg_shape_set_fill_gradient*(p: Pvg_Paint, g: Pvg_Gradient): Pvg_Result =
+  p.fillGrad = g; PVG_RESULT_SUCCESS
+proc pvg_shape_set_stroke_gradient*(p: Pvg_Paint, g: Pvg_Gradient): Pvg_Result =
+  p.strokeGrad = g; PVG_RESULT_SUCCESS
+
+proc rampOf(g: Pvg_Gradient): ref Ramp =
+  if g.ramp != nil: return g.ramp
+  new(g.ramp)
+  let n = g.stops.len
+  proc col(st: Pvg_Stop): array[4, float32] = [st.r.float32 / 255, st.g.float32 / 255, st.b.float32 / 255, st.a.float32 / 255]
+  for i in 0 .. 255:
+    let u = i.float / 255
+    if n == 0: g.ramp[][i] = [0'f32, 0, 0, 0]
+    elif u <= g.stops[0].offset: g.ramp[][i] = col(g.stops[0])
+    elif u >= g.stops[n - 1].offset: g.ramp[][i] = col(g.stops[n - 1])
+    else:
+      for k in 0 ..< n - 1:
+        let a = g.stops[k]
+        let b = g.stops[k + 1]
+        if u >= a.offset and u <= b.offset:
+          let t = if b.offset == a.offset: 0.0 else: (u - a.offset) / (b.offset - a.offset)
+          let ca = col(a)
+          let cb = col(b)
+          for c in 0 .. 3: g.ramp[][i][c] = ca[c] + (cb[c] - ca[c]) * t.float32
+          break
+  g.ramp
+
+proc gradientXf(g: Pvg_Gradient): array[6, float] =
+  ## nanosvg-style unit-space transform for a linear gradient: parameter = t1*x + t3*y + t5
+  let dx = g.x2 - g.x1
+  let dy = g.y2 - g.y1
+  let l2 = max(dx * dx + dy * dy, 1e-12)
+  [0.0, dx / l2, 0.0, dy / l2, 0.0, -(g.x1 * dx + g.y1 * dy) / l2]
+
 proc pvg_shape_set_stroke_width*(p: Pvg_Paint, w: cfloat): Pvg_Result = p.sw = w; PVG_RESULT_SUCCESS
 proc pvg_shape_set_stroke_color*(p: Pvg_Paint, r, g, b, a: uint8): Pvg_Result =
   p.stroke = [r, g, b, a]; PVG_RESULT_SUCCESS
@@ -305,16 +352,21 @@ proc render(L: var Layer, p: Pvg_Paint, parent: Mat) =
       compositeGroup(L, g, op)
   of pkShape:
     let polys = flatten(p.segs, m)
-    if p.hasFill and p.fill[3] > 0:
+    if p.fillGrad != nil:
+      L.blendGradient(rasterize(polys, false, L.w, L.h), rampOf(p.fillGrad), false, gradientXf(p.fillGrad), inverse(m), op)
+    elif p.hasFill and p.fill[3] > 0:
       let (r, g, b, a) = cvt(p.fill)
       L.blend(rasterize(polys, false, L.w, L.h), r, g, b, a * op)
-    if p.sw > 0 and p.stroke[3] > 0:
+    if p.sw > 0 and (p.stroke[3] > 0 or p.strokeGrad != nil):
       let sc = scaleOf(m)
       var d: seq[float]
       for v in p.dash: d.add v * sc
       let sp = strokePolys(polys, p.sw * sc, Cap(ord(p.cap)), Join(ord(p.join)), d)
-      let (r, g, b, a) = cvt(p.stroke)
-      L.blend(rasterize(sp, false, L.w, L.h), r, g, b, a * op)
+      if p.strokeGrad != nil:
+        L.blendGradient(rasterize(sp, false, L.w, L.h), rampOf(p.strokeGrad), false, gradientXf(p.strokeGrad), inverse(m), op)
+      else:
+        let (r, g, b, a) = cvt(p.stroke)
+        L.blend(rasterize(sp, false, L.w, L.h), r, g, b, a * op)
   of pkText:
     let t = layoutText(p)
     let polys = flatten(t.segs, m * t.mat)

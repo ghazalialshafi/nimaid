@@ -11,7 +11,7 @@ from PIL import Image
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BIN=os.path.join(ROOT,'bin','nimaid')
 FONT=os.path.join(ROOT,'fonts','DejaVuSans.ttf')
-TOL_MEAN, TOL_BAD = 0.5, 0.05          # mean abs diff (0..255) and % of pixels differing by >64
+TOL_MEAN, TOL_BAD = 1.0, 0.05          # mean abs diff (0..255; large translucent areas such as sankey ribbons differ by ~1/255 between engines) and % of pixels differing by >64
 try:
     import resvg_py
 except ImportError:

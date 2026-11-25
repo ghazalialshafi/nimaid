@@ -67,7 +67,7 @@ try:
 except IOError as e:
   quit "failed: " & e.msg
 except ValueError as e:
-  quit "nimaid: " & pos[0] & ": " & e.msg & "\n  supported: flowchart/graph, sequenceDiagram, stateDiagram(-v2), erDiagram, classDiagram, gantt, gitGraph, mindmap"
+  quit "nimaid: " & pos[0] & ": " & e.msg & "\n  supported: flowchart/graph, sequenceDiagram, stateDiagram(-v2), erDiagram, classDiagram, gantt, gitGraph, mindmap,\n             pie, xychart-beta, timeline, quadrantChart, journey,\n             packet, kanban, radar-beta, treemap, sankey-beta"
 except CatchableError as e:
   quit "nimaid: " & pos[0] & ": " & e.msg
 echo "wrote ", pos[1]

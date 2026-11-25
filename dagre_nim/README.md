@@ -1,6 +1,6 @@
 # dagre-nim
 
-A Nim port of [dagre](https://github.com/dagrejs/dagre) (directed graph layout). Pure Nim, stdlib only (Nim >= 2.0).
+A Nim port of [dagre](https://github.com/dagrejs/dagre) (directed graph layout), Pure Nim, stdlib only (Nim >= 2.0).
 
 Pipeline (same as dagre): self-edge removal -> acyclic (DFS / greedy FAS) -> nesting graph ->
 network-simplex ranking -> edge-label proxies -> normalize (dummy nodes) -> border segments
@@ -65,3 +65,7 @@ cd ../tests && nim c -d:release driver.nim && python3 fuzz.py 0 300
 - Node ids are kept in insertion order. JS objects iterate integer-like ids ("1","2") in numeric order, so purely
   numeric ids can order ties differently. Use non-numeric ids to get identical results.
 - Weights are floats, minlen is int. Nodes a cluster layout leaves unpositioned report 0 instead of undefined.
+
+## License
+MIT License
+Copyright (c) 2026 Ghazali

@@ -12,6 +12,7 @@ This page explains how nimaid turns text into pixels and vectors, and why it is 
    * flowchart: `flowparser` (Mermaid's jison lexer/grammar, ported) → `flowdb` → `dagre_adapter` (Mermaid's cluster/anchor driver on `dagre_nim`).
    * state / ER / class (`diagrams.nim`): line-based parsers that translate into the flowchart layout input, so they share layout, shapes, themes and curves.
    * sequence, Gantt, Git graph, mindmap: own layouts (no graph engine).
+   * pie, XY chart, timeline, quadrant, journey ("chart" diagrams): own parsers and layouts that port Mermaid's renderers; they share `chartkit` (drawing helpers) and `chartheme` (theme variables).
 4. **Paint** — painters (`painter`, `sequence`, `gantt`, `gitgraph`, `mindmap`, helpers in `drawkit`) draw into a **recording scene graph** (`gfx.nim`) using the same `pvg_*` call names as the engine.
 5. **Output** — the recorded scene is either **replayed** into the PureVG rasteriser (then PNG/GIF-encoded), or **serialised** by `svg.nim`.
 
@@ -31,6 +32,10 @@ This page explains how nimaid turns text into pixels and vectors, and why it is 
 | `label`, `textmetrics`, `emoji`, `inflate` | entities, markdown, word-wrap; text measuring through the engine; Noto emoji extraction (cmap, GSUB ligatures, gzip) |
 | `diagrams` | state / ER / class parsers → flowchart layout input |
 | `sequence`, `gantt`, `gitgraph`, `mindmap`, `drawkit` | the non-graph diagrams and their drawing helpers |
+| `pie`, `xychart`, `timeline`, `quadrant`, `journey`, `packet`, `kanban`, `radar`, `treemap`, `sankey` | the chart diagrams (one module each: parse → layout → paint); `treemap` includes d3-hierarchy's squarified tiling and `sankey` a port of d3-sankey |
+| `chartkit` | chart helpers: SVG-style text placement by baseline/anchor (incl. rotation), arcs and wedges, arrowheads, shape styling |
+| `chartheme` | Mermaid's evaluated theme variables for all five themes (embedded JSON), CSS colour parsing (`#hex`, `rgb()`, `hsl()`, names), diagram overrides |
+| `config` | flowchart theme scanner **and** a structured reader (`readConfig`) for nested `%%{init}%%` / YAML front-matter config |
 | `painter` | flowchart painting, `rasterizeScene`, `RenderedImage` |
 | `gfx` | recording scene graph (same API as the engine) |
 | `svg` | scene graph → SVG |
@@ -81,11 +86,23 @@ Both the rasteriser (via `layoutText`) and the SVG writer (via `placeGlyphs`) us
 * **Emoji:** each distinct emoji → `<g id="eN">` of relative-command paths with `<linearGradient>`/`<radialGradient>` defs, then `<use>`; the gradient matrix is the inverse of nanosvg's unit-space transform.
 * **Shapes:** compact relative path data, only non-default stroke attributes emitted.
 
+## Chart diagrams
+
+The five chart types are ports of Mermaid's own renderers rather than ad-hoc drawings: the geometry constants, layout order and defaults come from the renderer sources (pie 450 px canvas / radius 185; xychart's orchestrator that allocates plot space, title, axes and legend in a fixed order; timeline's 150/200 px grid; the quadrant builder's padding rules; the journey drawing code).
+Details worth knowing:
+
+* **Theme data is evaluated, not guessed.** `chartheme` embeds the output of Mermaid's `theme-*.js` for all five themes (`data/chart_themes.json`, ~50 KB). Colours such as `pie1…pie12`, `cScale0…11`, `quadrant*Fill` or `xyChart.plotColorPalette` are therefore exact.
+* **SVG text semantics.** Mermaid positions text by baseline and anchor (`text-anchor`, `dominant-baseline`). `chartkit.drawT` reproduces `top`, `middle` and `hanging` references using the bundled font's metrics, so labels land where Mermaid puts them.
+* **d3 behaviours that matter** are re-implemented: nice ticks (`d3-array` `ticks`), `scaleBand` with inner padding 1, `d3.pie` angle ordering, arcs.
+* **Group opacity.** Pie slices are 70 % opaque as a *group* (CSS `opacity` on the element), so strokes don't double-blend; the scene graph's group opacity replays this exactly in PNG and SVG (`<g opacity>`).
+* **Gradients on shapes** (`pvg_shape_set_fill/stroke_gradient`) go through the same coverage-mask + colour-ramp path as SVG gradients, and the SVG writer emits `<linearGradient>` — this is how sankey ribbons look identical in PNG and SVG.
+* **Rotation** is a first-class paint transform (translate · rotate · scale) in the engine, the scene recorder and the SVG writer — used for y-axis titles.
+
 ## Validation
 
 | What | How | Result |
 |---|---|---|
-| Engine units | `tests/test_purevg.nim` — rasteriser coverage, winding rules, stroker areas, TrueType metrics and kerning, SVG loader, canvas, end-to-end | 23 tests |
+| Engine + charts | `tests/test_purevg.nim` — rasteriser coverage, winding rules, stroker areas, TrueType metrics and kerning, SVG loader, canvas, gradients, end-to-end, colour/config parsing and every chart type | 49 tests |
 | PNG output | `tests/visual_regression.py` vs golden `examples/*.png` (produced by the previous backend) | mean diff ≤ 0.09/255; ≤ 0.001 % of pixels differ visibly |
 | SVG output | same script, SVG rendered by resvg at 2× vs the PNG | mean diff ≤ 0.23/255; ≤ 0.003 % pixels differ visibly; cairosvg also agrees on the examples spot-checked (emoji, basic, nested) |
 | Flowchart parser | `tests/conformance.py` — assertions extracted from Mermaid's own specs | 737/752 checkable pass |

@@ -19,7 +19,7 @@ The `--font` path is wrong or the file is not a TrueType font. By default nimaid
 Only TrueType outlines (`glyf`) are supported. CFF-flavoured `.otf` files and `.ttc` collections are rejected — use a `.ttf`.
 
 ### `nimaid: x.mmd: unsupported diagram type`
-The first keyword isn't one of: `flowchart`/`graph`, `sequenceDiagram`, `stateDiagram`, `erDiagram`, `classDiagram`, `gantt`, `gitGraph`, `mindmap`. Pie, timeline, journey and other types aren't implemented. Make sure nothing precedes the keyword except comments, front matter or an `%%{init}%%` directive.
+The first keyword isn't one of: `flowchart`/`graph`, `sequenceDiagram`, `stateDiagram`, `erDiagram`, `classDiagram`, `gantt`, `gitGraph`, `mindmap`, `pie`, `xychart-beta`, `timeline`, `quadrantChart`, `journey`, `packet`, `kanban`, `radar-beta`, `treemap`, `sankey-beta`. Requirement, C4, block and other types aren't implemented. Make sure nothing precedes the keyword except comments, front matter or an `%%{init}%%` directive.
 
 ### `Parse error: expecting node id, got tGraph` (or `got tNodeString`, `expecting space`)
 A node **id** starts with a Mermaid keyword — `graph…`, `class…`, `style…`, `subgraph…`, or is the bare word `end`. Mermaid itself rejects these. Rename the id (`graphics` → `gfx`); the *label* in brackets is unrestricted.
@@ -43,6 +43,21 @@ It shouldn't: each line has `textLength`. Some editors ignore `textLength`; swit
 
 ### The PNG is too big
 Use `--scale=1`, or `--colors=64` (palette). For the web prefer SVG.
+
+### My pie / XY / timeline / quadrant / journey ignores `primaryColor`
+Those charts use Mermaid's finished theme tables, and derived colours are not recomputed from a base colour. Set the chart's own variables instead (`pie1`, `quadrant1Fill`, `cScale0`, `fillType0`, `themeVariables: {xyChart: {plotColorPalette: …}}`) — see [Tutorial 9](tutorials/09-charts.md#colouring-the-charts).
+
+### My sankey is a tangle of hairlines
+That happens in Mermaid itself when many nodes share a column in the fixed 600×400 canvas. nimaid grows the height automatically unless you set `sankey.height` — remove a fixed `height`, or increase it, or set `showValues: false` to reduce the per-node padding.
+
+### `Packet block … is not contiguous`
+Packet fields must cover every bit in order — write `108: "x"` for every bit you don't name, or use `+n:` relative widths.
+
+### Parse error: `expecting a quoted label` (pie)
+Pie labels must be quoted: `"Dogs" : 386`. Values must be numbers ≥ 0.
+
+### The XY chart's y-axis doesn't start at zero
+Mermaid's automatic y-axis spans your data's minimum to maximum. Write `y-axis "Title" 0 --> 100` for a fixed range.
 
 ### The colours of my `themeVariables` are ignored
 Use hex (`#ffe08a`) or `rgb(…)`; CSS colour names are not accepted in `themeVariables`. Also remember: with `theme: base` the variables apply to the base palette. And a `--theme=` on the command line wins over the theme in the diagram (variables still apply).
@@ -69,7 +84,7 @@ Use the PureVG engine directly — [Tutorial 8](tutorials/08-purevg-engine.md).
 
 ## What is not supported
 
-* **Diagram types:** pie, timeline, journey, quadrant, requirement, C4, sankey, XY, block, packet, kanban, architecture, radar, treemap.
+* **Diagram types:** requirement, C4, block, architecture, treeView, venn, ishikawa and the newest Mermaid additions.
 * **Flowchart:** `@{ view: collapsed }`, icons/images (drawn as plain boxes), clickable links/tooltips (parsed only), `look: handDrawn`, rich HTML labels, KaTeX.
 * **Text:** one font at a time, no bold/italic runs (markdown markers are stripped), no complex-script shaping or ligatures (kerning only).
 * **Formats:** animated GIF, JPEG, WebP, PDF.

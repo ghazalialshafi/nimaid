@@ -59,7 +59,7 @@ When the same setting appears in both places, **the command line wins**. Everyth
 | Input file missing | `failed: cannot open: missing.mmd` | 1 |
 | Font cannot be loaded | `failed: cannot load font /nope.ttf` | 1 |
 | Unknown output extension | `nimaid: output file must end in .png, .gif or .svg (got 'x.xyz')` | 1 |
-| Unsupported diagram type | `nimaid: pie.mmd: unsupported diagram type` + list of supported types | 1 |
+| Unsupported diagram type | `nimaid: sankey.mmd: unsupported diagram type` + list of supported types | 1 |
 | Syntax error | `nimaid: bad.mmd: Parse error: expecting node id, got tEof` | 1 |
 
 See the [FAQ](faq.md) for how to fix each of these.

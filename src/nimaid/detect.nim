@@ -21,4 +21,24 @@ proc detectDiagramType*(rawText: string): string =
     return "er"
   if text.startsWith("classDiagram"):
     return "class"
+  if text.startsWith("packet"):
+    return "packet"
+  if text.startsWith("kanban"):
+    return "kanban"
+  if text.startsWith("radar"):
+    return "radar"
+  if text.startsWith("treemap"):
+    return "treemap"
+  if text.startsWith("sankey"):
+    return "sankey"
+  if text.startsWith("journey"):
+    return "journey"
+  if text.startsWith("quadrantChart"):
+    return "quadrant"
+  if text.startsWith("timeline"):
+    return "timeline"
+  if text.startsWith("xychart"):
+    return "xychart"
+  if text.startsWith("pie"):
+    return "pie"
   return "unknown"

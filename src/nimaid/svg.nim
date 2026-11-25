@@ -83,16 +83,24 @@ proc relPath(segs: openArray[Seg], dec: int): string =
     else:
       result.add "z"; cxp = sx; cyp = sy; last = 'z'
 
+proc f3(v: float): string =
+  ## opacities need 3 decimals so the SVG matches the exact 8-bit alpha used by the rasteriser
+  var s = formatFloat(v, ffDecimal, 3)
+  if '.' in s:
+    s = s.strip(leading = false, chars = {'0'}).strip(leading = false, chars = {'.'})
+  if s == "" or s == "-0": "0" else: s
+
 proc esc(s: string): string =
   s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
 
 proc rgbAttr(c: array[4, uint8], name: string): string =
   result = &" {name}=\"rgb({c[0]},{c[1]},{c[2]})\""
-  if c[3] != 255: result.add &" {name}-opacity=\"{f(float(c[3]) / 255.0)}\""
+  if c[3] != 255: result.add &" {name}-opacity=\"{f3(float(c[3]) / 255.0)}\""
 
 proc transformStr(n: Node): string =
   var parts: seq[string]
   if n.hasT and (n.tx != 0 or n.ty != 0): parts.add &"translate({f(n.tx)} {f(n.ty)})"
+  if n.rot != 0: parts.add &"rotate({f(n.rot)})"
   if n.hasS and n.sc != 1: parts.add &"scale({ff(n.sc)})"
   parts.join(" ")
 
@@ -109,6 +117,17 @@ type Ctx = object
   fontFamily: string
   nGlyph, nPic, nGrad: int
 var cx: Ctx
+
+proc gradAttr(g: real.Pvg_Gradient, name: string): string =
+  inc cx.nGrad
+  let id = &"lg{cx.nGrad}"
+  var stops = ""
+  for st in g.stops:
+    stops.add &"<stop offset=\"{ff(st.offset)}\" stop-color=\"rgb({st.r},{st.g},{st.b})\""
+    if st.a != 255: stops.add &" stop-opacity=\"{f3(float(st.a) / 255.0)}\""
+    stops.add "/>"
+  cx.defs.add &"<linearGradient id=\"{id}\" gradientUnits=\"userSpaceOnUse\" x1=\"{f(g.x1)}\" y1=\"{f(g.y1)}\" x2=\"{f(g.x2)}\" y2=\"{f(g.y2)}\">{stops}</linearGradient>\n"
+  &" {name}=\"url(#{id})\""
 
 # ---------------------------------------------------------------- emoji / pictures
 proc paintAttr(pp: PicPaint, name, picId: string): string =
@@ -200,8 +219,8 @@ proc emitText(n: Node, o: var string, op: string) =
       let ys = if g.y == 0: "" else: &" y=\"{f(g.y)}\""
       uses.add &"<use xlink:href=\"#{id}\"{xs}{ys}/>"
     if uses.len == 0: return
-    let s = pl.scale * sc
-    o.add &"<g aria-label=\"{esc(n.text)}\" transform=\"matrix({ff(s)} 0 0 {ff(s)} {f(tx)} {f(ty + sc * pl.ascentPx)})\"{fill}{op}>{uses}</g>\n"
+    let m = translateM(tx, ty) * rotateM(n.rot) * scaleM(sc) * Mat(a: pl.scale, d: pl.scale, f: pl.ascentPx)
+    o.add &"<g aria-label=\"{esc(n.text)}\" transform=\"matrix({ff(m.a)} {ff(m.b)} {ff(m.c)} {ff(m.d)} {f(m.e)} {f(m.f)})\"{fill}{op}>{uses}</g>\n"
   of stText:
     var t = ""
     for ln in pl.lines:
@@ -216,10 +235,10 @@ proc emitText(n: Node, o: var string, op: string) =
 
 # ---------------------------------------------------------------- scene
 proc emit(n: Node, o: var string) =
-  let op = if n.opacity != 255: &" opacity=\"{f(float(n.opacity) / 255.0)}\"" else: ""
+  let op = if n.opacity != 255: &" opacity=\"{f3(float(n.opacity) / 255.0)}\"" else: ""
   case n.kind
   of nkScene:
-    let open = n.hasT or n.hasS or n.opacity != 255
+    let open = n.hasT or n.hasS or n.rot != 0 or n.opacity != 255
     if open: o.add &"<g{transformAttr(n)}{op}>\n"
     for k in n.kids: emit(k, o)
     if open: o.add "</g>\n"
@@ -228,9 +247,12 @@ proc emit(n: Node, o: var string) =
     var segs: seq[Seg]
     for c in n.cmds: segs.add Seg(op: c.op, v: c.v)
     var a = &"<path d=\"{relPath(segs, 2)}\""
-    if n.hasFill: a.add rgbAttr(n.fill, "fill") else: a.add " fill=\"none\""
+    if n.fillGrad != nil: a.add gradAttr(n.fillGrad, "fill")
+    elif n.hasFill: a.add rgbAttr(n.fill, "fill")
+    else: a.add " fill=\"none\""
     if n.hasStroke and n.sw > 0:
-      a.add rgbAttr(n.stroke, "stroke")
+      if n.strokeGrad != nil: a.add gradAttr(n.strokeGrad, "stroke")
+      else: a.add rgbAttr(n.stroke, "stroke")
       a.add &" stroke-width=\"{f(n.sw)}\""
       if n.join == real.PVG_STROKE_JOIN_ROUND: a.add " stroke-linejoin=\"round\""
       elif n.join == real.PVG_STROKE_JOIN_BEVEL: a.add " stroke-linejoin=\"bevel\""

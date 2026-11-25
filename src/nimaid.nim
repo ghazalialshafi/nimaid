@@ -1,11 +1,11 @@
 import std/strutils
-import nimaid/[gantt, gitgraph, mindmap, diagrams, gfx, svg, gif, config, sequence, detect, emoji, types, preprocess, theme, flowdb,
+import nimaid/[sankey, treemap, radar, kanban, packet, journey, quadrant, timeline, xychart, pie, chartheme, chartkit, gantt, gitgraph, mindmap, diagrams, gfx, svg, gif, config, sequence, detect, emoji, types, preprocess, theme, flowdb,
                 flowparser, dagre_adapter, painter, label, textmetrics, png]
 from nimaid/purevg import pvg_engine_init, pvg_engine_term
-export gantt, gitgraph, mindmap, diagrams, gfx, svg, gif, config, sequence, detect, emoji, types, theme, flowdb, dagre_adapter, painter,
+export sankey, treemap, radar, kanban, packet, journey, quadrant, timeline, xychart, pie, chartheme, chartkit, gantt, gitgraph, mindmap, diagrams, gfx, svg, gif, config, sequence, detect, emoji, types, theme, flowdb, dagre_adapter, painter,
        label, textmetrics, png
 
-const nimaidVersion* = "0.3.0"
+const nimaidVersion* = "0.5.1"
 
 proc parseAndLayoutFlowchart*(chartText: string): LayoutResult =
   let fm = extractFrontMatter(chartText)
@@ -52,6 +52,56 @@ proc buildMermaidScene(text, fontPath: string, scale: float, emojiFontPath, them
     if fm.title.len > 0: chart.title = fm.title
     let layoutRes = runDagreLayout(chart)
     result = composeScene(paintDiagram(layoutRes, th), diagramBounds(layoutRes), th, 16.0, scale)
+  of "packet":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = packetScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 0.0, scale)
+  of "kanban":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = kanbanScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 18.0, scale)
+  of "radar":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = radarScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 0.0, scale)
+  of "treemap":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = treemapScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 8.0, scale)
+  of "sankey":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = sankeyScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 10.0, scale)
+  of "journey":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = journeyScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 0.0, scale)
+  of "quadrant":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = quadrantScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 0.0, scale)
+  of "timeline":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = timelineScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 50.0, scale)
+  of "xychart":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = xychartScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 0.0, scale)
+  of "pie":
+    let fm = extractFrontMatter(text)
+    let cleaned = stripAnyComments(stripDirectives(fm.text))
+    let (scene, bounds) = pieScene(cleaned, chartVars(text, themeName), fm.title)
+    result = composeScene(scene, bounds, th, 0.0, scale)
   else:
     raise newException(ValueError, "unsupported diagram type")
 

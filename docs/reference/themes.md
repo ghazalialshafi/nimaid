@@ -62,6 +62,23 @@ Values are hex (`#rgb`, `#rrggbb`) or `rgb()` colours. CSS colour *names* are no
 
 `actorBkg` `actorBorder` `actorTextColor` `actorLineColor` `signalColor` `signalTextColor` `noteBkgColor` `noteBorderColor` `noteTextColor` `labelBoxBkgColor` `labelBoxBorderColor` `loopTextColor` `activationBkgColor` `activationBorderColor` `sequenceNumberColor`
 
+## Variables of the chart diagrams
+
+Pie, XY chart, timeline, quadrant, journey, packet, radar, kanban and treemap read Mermaid's *finished* theme tables (all five themes, every variable). Set the variable you want directly:
+
+| Chart | Variables |
+|---|---|
+| Pie | `pie1…pie12`, `pieTitleTextColor`, `pieSectionTextColor`, `pieLegendTextColor`, `pieStrokeColor`, `pieStrokeWidth`, `pieOuterStrokeColor`, `pieOuterStrokeWidth`, `pieOpacity`, `pieTitleTextSize`, `pieSectionTextSize`, `pieLegendTextSize` |
+| XY chart | nested `xyChart: { backgroundColor, titleColor, plotColorPalette, dataLabelColor, legendTextColor, xAxisLabelColor, xAxisTitleColor, xAxisTickColor, xAxisLineColor, yAxis… }` (also settable in front matter) |
+| Timeline | `cScale0…11`, `cScaleLabel0…11`, `cScaleInv0…11`, `textColor` |
+| Quadrant | `quadrant1Fill…quadrant4Fill`, `quadrant1TextFill…`, `quadrantPointFill`, `quadrantPointTextFill`, `quadrantTitleFill`, `quadrantXAxisTextFill`, `quadrantYAxisTextFill`, `quadrantInternalBorderStrokeFill`, `quadrantExternalBorderStrokeFill` |
+| Journey | `fillType0…7`, `textColor`, `titleColor` |
+| Packet | nested `packet: { blockFillColor, blockStrokeColor, blockStrokeWidth, labelColor, startByteColor, endByteColor, titleColor }` |
+| Radar | nested `radar: { axisColor, axisStrokeWidth, graticuleColor, graticuleOpacity, graticuleStrokeWidth, curveOpacity, curveStrokeWidth }` |
+| Kanban, treemap | `cScale0…11`, `cScaleLabel0…`, `cScalePeer0…`, `background`, `nodeBorder` |
+
+Derived colours are **not** recomputed: changing `primaryColor` recolours flowchart-family diagrams but not these charts. See [Tutorial 9](../tutorials/09-charts.md#colouring-the-charts).
+
 ## From Nim
 
 ```nim

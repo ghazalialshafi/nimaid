@@ -29,7 +29,7 @@ The project's `nim.cfg` already points Nim at `src/` and the bundled `dagre_nim/
 Check it worked:
 
 ```sh
-bin/nimaid --version        # nimaid 0.3.0
+bin/nimaid --version        # nimaid 0.5.1
 ```
 
 ## 3. Render your first diagram
@@ -96,6 +96,7 @@ Each `examples/NAME.png` is the golden image that the test-suite compares agains
 | If you want to… | Read |
 |---|---|
 | Learn the Mermaid syntax by doing | [Tutorial 1 — your first flowchart](tutorials/01-first-flowchart.md) |
+| Draw pie / XY / timeline / quadrant / journey charts | [Tutorial 9 — charts](tutorials/09-charts.md) |
 | See every command-line flag | [CLI reference](cli.md) |
 | Call nimaid from your own Nim program | [Tutorial 7 — library](tutorials/07-library.md) |
 | Draw your own graphics with the engine | [Tutorial 8 — PureVG](tutorials/08-purevg-engine.md) |

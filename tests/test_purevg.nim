@@ -1,6 +1,6 @@
 ## Unit + end-to-end tests for the PureVG engine and the SVG writer.
 ## Run from the project root:   nim c -r tests/test_purevg.nim
-import std/[unittest, strutils, math, os]
+import std/[unittest, strutils, math, os, json, options]
 import nimaid
 import nimaid/purevg/[core, raster, stroke, ttf, svgload]
 import nimaid/purevg as vg      # qualified: `nimaid` also exports the recording-scene (gfx) pvg_* names
@@ -139,3 +139,144 @@ suite "end to end":
       removeFile(p)
   test "themes change the output":
     check renderMermaidToSvg(chart, fontPath, themeName = "dark") != renderMermaidToSvg(chart, fontPath)
+
+
+suite "chart diagrams":
+  const pie = "pie showData title Pets\n \"Dogs\" : 386\n \"Cats\" : 85\n \"Rats\" : 15\n"
+  const xy = "xychart-beta\n title \"Sales\"\n x-axis [jan, feb, mar]\n y-axis \"Revenue\" 0 --> 100\n bar [10, 50, 100]\n line [20, 40, 90]\n"
+  const tl = "timeline\n title History\n section Early\n 2002 : LinkedIn\n 2004 : Facebook : Google\n"
+  const qd = "quadrantChart\n title Reach\n x-axis Low --> High\n y-axis Bad --> Good\n quadrant-1 A\n quadrant-2 B\n quadrant-3 C\n quadrant-4 D\n P1: [0.3, 0.6]\n"
+  const jr = "journey\n title Day\n section Work\n Make tea: 5: Me\n Do work: 1: Me, Cat\n"
+  test "css colours: hex, rgb, hsl, names":
+    check parseCssColor("#ECECFF").get == rgba(0xEC, 0xEC, 0xFF)
+    check parseCssColor("#f00").get == rgba(255, 0, 0)
+    check parseCssColor("rgb(10, 20, 30)").get == rgba(10, 20, 30)
+    check parseCssColor("hsl(120, 100%, 50%)").get == rgba(0, 255, 0)
+    check parseCssColor("hsl(-120, 100%, 50%)").get == rgba(0, 0, 255)   # negative hues wrap: -120 == 240
+    check parseCssColor("lightgrey").get == rgba(211, 211, 211)
+    check parseCssColor("not-a-colour").isNone
+  test "structured config: front matter + init directive, nested objects":
+    let c = readConfig("---\nconfig:\n  theme: dark\n  xyChart:\n    width: 900\n    xAxis:\n      showLabel: false\n---\n%%{init: {'xyChart': {'height': 400}}}%%\nxychart-beta\n")
+    check c.cfgStr("theme", "") == "dark"
+    check c.cfgSub("xyChart").cfgFloat("width", 0) == 900 and c.cfgSub("xyChart").cfgFloat("height", 0) == 400
+    check not c.cfgSub("xyChart").cfgSub("xAxis").cfgBool("showLabel", true)
+  test "theme variables come from Mermaid's themes and are overridable":
+    check chartVars("pie\n", "dark").str("pie1") != chartVars("pie\n", "default").str("pie1")
+    check chartVars("%%{init: {'themeVariables': {'pie1': '#123456'}}}%%\npie\n").str("pie1") == "#123456"
+  test "detection":
+    check detectDiagramType(pie) == "pie" and detectDiagramType(xy) == "xychart" and detectDiagramType(tl) == "timeline"
+    check detectDiagramType(qd) == "quadrant" and detectDiagramType(jr) == "journey"
+  test "every chart renders to non-blank pixels":
+    for chart in [pie, xy, tl, qd, jr]:
+      let img = renderMermaidToImage(chart, fontPath, 1.0)
+      var ink = 0
+      for i in 0 ..< img.width * img.height:
+        if img.rgba[i * 4 + 3] > 0 and (img.rgba[i * 4] < 235 or img.rgba[i * 4 + 1] < 235): inc ink
+      check img.width > 200 and img.height > 150 and ink > 1000
+  test "pie: slices below 1 % are dropped, percentages use the total, showData appears in the legend":
+    let s = renderMermaidToSvg("pie showData\n \"A\" : 98\n \"B\" : 1\n \"C\" : 100\n", fontPath, svgText = true)
+    check ">49%</text>" in s and ">50%</text>" in s and ">1%</text>" notin s and ">A [98]</text>" in s
+  test "pie: invalid input raises a clear error":
+    expect ChartError: discard renderMermaidToSvg("pie\n \"A\" : -3\n", fontPath)
+    expect ChartError: discard renderMermaidToSvg("pie\n A : 3\n", fontPath)
+  test "xychart: d3-style ticks, rotated y title, legend names":
+    let s = renderMermaidToSvg("xychart-beta\n x-axis [a, b]\n y-axis \"Units\" 0 --> 100\n bar \"Series\" [10, 100]\n", fontPath, svgText = true)
+    for tick in ["0", "10", "50", "100"]: check ">" & tick & "</text>" in s
+    check "rotate(270)" in s and ">Series</text>" in s
+  test "xychart: horizontal orientation and linear x-axis render":
+    check renderMermaidToSvg("xychart-beta horizontal\n x-axis [a, b]\n bar [1, 2]\n", fontPath).len > 500
+    check renderMermaidToSvg("xychart-beta\n x-axis 0 --> 10\n line [1, 5, 2]\n", fontPath).len > 500
+  test "timeline: sections, wrapped period boxes, several events per period":
+    let s = renderMermaidToSvg(tl, fontPath, svgText = true)
+    for w in [">History</text>", ">Early</text>", ">Facebook</text>", ">Google</text>"]: check w in s
+  test "quadrant: labels, points and rotated axis labels":
+    let s = renderMermaidToSvg(qd, fontPath, svgText = true)
+    check ">P1</text>" in s and ">A</text>" in s and "rotate(-90)" in s
+    expect ChartError: discard renderMermaidToSvg("quadrantChart\n P: [1.5, 0.2]\n", fontPath)
+  test "journey: actors, faces, section header":
+    let s = renderMermaidToSvg(jr, fontPath, svgText = true)
+    check ">Me</text>" in s and ">Cat</text>" in s and ">Work</text>" in s
+  test "chart SVGs are well-formed XML and outlined mode has no <text>":
+    for chart in [pie, xy, tl, qd, jr]:
+      let s = renderMermaidToSvg(chart, fontPath)
+      check s.startsWith("<svg") and s.endsWith("</svg>\n") and "<text" notin s
+  test "rotated text is replayed by the rasteriser: a y-axis label forms a tall, narrow strip of ink":
+    let img = renderMermaidToImage("quadrantChart\n y-axis Bottom --> Top\n quadrant-1 A\n", fontPath, 1.0)
+    var rows = 0
+    for y in 0 ..< img.height:
+      var ink = false
+      for x in 0 ..< 24:
+        let i = (y * img.width + x) * 4
+        if img.rgba[i + 3] > 0 and img.rgba[i] < 120 and img.rgba[i + 1] < 120: ink = true
+      if ink: inc rows
+    check rows > 40          # unrotated text would touch only ~15 rows
+
+suite "gradient fills and strokes (engine)":
+  test "linear gradient fill interpolates across the shape":
+    var buf = newSeq[uint32](40 * 10)
+    let cv = vg.pvg_swcanvas_create(vg.PVG_ENGINE_OPTION_DEFAULT)
+    discard vg.pvg_swcanvas_set_target(cv, addr buf[0], 40, 40, 10, vg.PVG_COLORSPACE_ABGR8888S)
+    let sq = vg.pvg_shape_new()
+    discard vg.pvg_shape_append_rect(sq, 0, 0, 40, 10, 0, 0, true)
+    let g = vg.pvg_linear_gradient_new(0, 0, 40, 0)
+    discard vg.pvg_gradient_add_stop(g, 0, 255, 0, 0, 255)
+    discard vg.pvg_gradient_add_stop(g, 1, 0, 0, 255, 255)
+    discard vg.pvg_shape_set_fill_gradient(sq, g)
+    discard vg.pvg_canvas_add(cv, sq)
+    discard vg.pvg_canvas_draw(cv, true)
+    let left = buf[5 * 40 + 1]
+    let right = buf[5 * 40 + 38]
+    check (left and 255) > 230 and ((left shr 16) and 255) < 25          # red end (R low byte, B high)
+    check (right and 255) < 25 and ((right shr 16) and 255) > 230        # blue end
+  test "gradient strokes appear as gradients in the SVG output too":
+    let s = renderMermaidToSvg("sankey-beta\na,b,5\nb,c,5\n", fontPath)
+    check "<linearGradient" in s and "stroke=\"url(#lg" in s
+
+suite "more chart diagrams":
+  test "detection of the newer types":
+    check detectDiagramType("packet-beta\n0-7: \"a\"") == "packet" and detectDiagramType("kanban\n a") == "kanban"
+    check detectDiagramType("radar-beta\n") == "radar" and detectDiagramType("treemap-beta\n") == "treemap"
+    check detectDiagramType("sankey-beta\n") == "sankey"
+  test "packet: fields wider than a row continue on the next row; gaps are rejected":
+    let s = renderMermaidToSvg("packet\n0-31: \"A\"\n32-95: \"B\"\n", fontPath, svgText = true)
+    check ">32</text>" in s and ">64</text>" in s and ">95</text>" in s      # B is split 32-63 / 64-95
+    expect ChartError: discard renderMermaidToSvg("packet\n0-7: \"A\"\n9-15: \"B\"\n", fontPath)
+  test "kanban: sections, cards, tickets, assignees":
+    let s = renderMermaidToSvg("kanban\n  Todo\n    t1[Write docs]@{ ticket: MC-1, assigned: 'ann', priority: 'High' }\n  Done\n    t2[Ship it]\n", fontPath, svgText = true)
+    for w in [">Todo</text>", ">Done</text>", ">Write docs</text>", ">MC-1</text>", ">ann</text>"]: check w in s
+  test "radar: axes, legend and validation":
+    let s = renderMermaidToSvg("radar-beta\n axis a, b, c\n curve x[\"Xs\"]{1, 2, 3}\n max 5\n", fontPath, svgText = true)
+    check ">Xs</text>" in s and ">a</text>" in s and ">c</text>" in s
+    expect ChartError: discard renderMermaidToSvg("radar-beta\n axis a, b\n curve x{1, 2}\n", fontPath)
+  test "treemap: section values are sums, classDef may follow its use":
+    let s = renderMermaidToSvg("treemap\n\"A\"\n  \"x\": 30\n  \"y\": 12:::hot\n\"B\"\n  \"z\": 8\nclassDef hot fill:red\n", fontPath, svgText = true)
+    check ">42</text>" in s and ">8</text>" in s and "rgb(255,0,0)" in s
+  test "sankey: link widths conserve flow, circular links are rejected":
+    let s = renderMermaidToSvg("sankey-beta\nA,B,10\nA,C,30\nB,D,10\nC,D,30\n", fontPath, svgText = true)
+    check ">A</text>" in s and ">D</text>" in s and s.count(">40</text>") >= 2
+    expect ChartError: discard renderMermaidToSvg("sankey-beta\na,b,1\nb,a,1\n", fontPath)
+  test "pie options: bottom legend is taller, donut and highlight render":
+    let base = "pie\n \"A\" : 60\n \"B\" : 40\n"
+    let plain = renderMermaidToImage(base, fontPath, 1.0)
+    let bottom = renderMermaidToImage("%%{init: {'pie': {'legendPosition': 'bottom'}}}%%\n" & base, fontPath, 1.0)
+    check bottom.height > plain.height
+    let donut = renderMermaidToSvg("%%{init: {'pie': {'donutHole': 0.5, 'highlightSlice': 'A'}}}%%\n" & base, fontPath)
+    check donut.len > 500 and "scale(1.05)" in donut
+  test "sankey: busy diagrams get an automatic height (no hairline ribbons), a configured height is respected":
+    var csv = "sankey-beta\n"
+    for i in 1 .. 14: csv.add "src" & $i & ",hub," & $(i * 3) & "\n"
+    csv.add "hub,out,10\nhub,out2,20\n"
+    let auto = renderMermaidToImage(csv, fontPath, 1.0)
+    let fixed = renderMermaidToImage("%%{init: {'sankey': {'height': 400}}}%%\n" & csv, fontPath, 1.0)
+    check auto.height > fixed.height
+  test "kanban and journey support the classic Mermaid colours":
+    let a = renderMermaidToSvg("kanban\n A\n  b\n", fontPath)
+    let b = renderMermaidToSvg("%%{init: {'kanban': {'classicColors': true}}}%%\nkanban\n A\n  b\n", fontPath)
+    check a != b
+    let j1 = renderMermaidToSvg("journey\n section S\n T: 3: Me\n", fontPath)
+    let j2 = renderMermaidToSvg("%%{init: {'journey': {'classicColors': true}}}%%\njourney\n section S\n T: 3: Me\n", fontPath)
+    check j1 != j2
+  test "journey: legend widens the left margin for long actor names":
+    let narrow = renderMermaidToImage("journey\n section S\n T: 3: Me\n", fontPath, 1.0)
+    let wide = renderMermaidToImage("journey\n section S\n T: 3: A really long actor name here\n", fontPath, 1.0)
+    check wide.width > narrow.width

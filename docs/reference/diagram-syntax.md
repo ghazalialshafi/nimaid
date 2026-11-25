@@ -89,6 +89,91 @@ Keyword: `mindmap`.
 
 Indentation tree · node shapes `id[sq] id(round) id((circle)) id))bang(( id)cloud( id{{hexagon}}` · coloured branches · emoji. The layout is a balanced left/right tree, not Mermaid's force-directed layout, so positions differ; icons and `:::classes` are ignored.
 
+## Pie chart
+
+Keyword: `pie` (`showData`, `title …` may follow on the same line). Grammar from Mermaid's `pie.langium`.
+
+`"label" : value` slices (label **quoted**, value ≥ 0, first occurrence of a duplicate label wins) · `title` · `showData` · `accTitle`/`accDescr` (ignored).
+Geometry follows Mermaid's renderer: 450 px canvas, radius 185, outer ring, slices at 70 % opacity with a dark outline, percentage labels at 0.75 of the radius, right-hand legend; slices under 1 % are not drawn and percentages use the total of all values. Colours: `pie1…pie12`, `pieStrokeColor`, `pieOpacity`, `pieSectionTextColor`, … from the theme.
+
+Config under `pie`: `legendPosition` (`right` `left` `top` `bottom` `center`), `textPosition`, `donutHole`, `highlightSlice`. Each slice is its own 70 %-opacity element, as in Mermaid.
+
+**Not yet:** label wrapping.
+
+## XY chart
+
+Keyword: `xychart-beta` / `xychart` (+ `horizontal`).
+
+`title` · `x-axis [categories]` or `x-axis "title" min --> max` · `y-axis "title" min --> max` · `bar [..]` / `line [..]` with optional series names (legend). Band and linear scales, d3 tick generation, Mermaid's orchestrator layout (reserved plot space, title, axes, legend), bar widths, data labels (`showDataLabel`, `showDataLabelOutsideBar`), `chartOrientation`, per-axis options (`showLabel`, `labelRotation`, `tickLength`, …) and `themeVariables.xyChart` (`plotColorPalette`, axis/title colours). Multiple bar series overlap, as in Mermaid.
+
+**Not yet:** markdown strings in titles and labels.
+
+## Timeline
+
+Keyword: `timeline` (`LR`; `TD` is accepted but drawn as LR).
+
+`title` · `section` · `period : event : event` and continuation lines `: event` · `<br>` line breaks. Layout from Mermaid's renderer: 150 px nodes at a 200 px pitch, sections above, events stacked below dashed arrows, axis with arrowhead; colours from `cScale*`/`cScaleLabel*`/`cScaleInv*`, events brightened 20 %.
+
+**Not yet:** vertical (`TD`) layout, `disableMulticolor`, icons, markdown text.
+
+## Quadrant chart
+
+Keyword: `quadrantChart`.
+
+`title` · `x-axis left --> right` · `y-axis bottom --> top` (a lone label names one end) · `quadrant-1…4 text` · points `Name: [x, y]` (0–1) with inline `radius`, `color`, `stroke-color`, `stroke-width` · `classDef` + `Name:::class: [x, y]` · `quadrantChart` config (`chartWidth`, `chartHeight`, `pointRadius`, `xAxisPosition`, `yAxisPosition`, paddings, font sizes, border widths). Points are painted in Mermaid's order (last-written first).
+
+**Not yet:** markdown strings.
+
+## User journey
+
+Keyword: `journey`.
+
+`title` · `section` · `Task: score: Actor, Actor` (score 1–5). Faces (smile / neutral / sad) at score height on dashed lines, actor legend and dots, section headers, journey axis with arrowhead; fills from `fillType0…6`.
+
+Built from Mermaid's own renderer (`journeyRenderer.ts`, `svgDraw.js`, `styles.js`): legend wrapping at `maxLabelWidth`, `leftMargin = config + widest legend line`, theme-coloured score lines and axis, and the `journey` config block (`leftMargin`, `maxLabelWidth`, `width`, `height`, `taskMargin`, `diagramMarginX/Y`, `actorColours`, `titleColor`).
+
+Colours: saturated section headers with tinted task cards, mood-coloured faces with an emotion curve and score guides, distinct actor colours; `journey.classicColors: true` restores Mermaid's palette.
+
+**Not yet:** `rightAngles`.
+
+## Packet diagram
+
+Keyword: `packet` / `packet-beta`. Grammar from `packet.langium`, row splitting from `parser.ts`.
+
+`start-end: "Label"` · `bit: "Label"` · `+bits: "Label"` · `title`. Fields must be contiguous; fields crossing a 32-bit row boundary continue on the next row. Config under `packet` (`rowHeight`, `bitWidth`, `bitsPerRow`, `showBits`, `bitOrder`, `paddingX/Y`) and `themeVariables.packet.*`.
+
+## Kanban
+
+Keyword: `kanban`. Indentation grammar like mindmap: the first line's indentation is the **column** level, deeper lines are cards. `id[text]`, `[text]`, or plain text; metadata `@{ ticket: …, assigned: …, priority: 'Very High'|'High'|'Low'|'Very Low' }` (priority draws a coloured bar). Layout from `kanbanRenderer.ts`: 200 px columns, 190 px cards, tints from `cScale`.
+
+Look: tinted columns with an accent bar and count badge, soft-shadow cards, ticket pill and assignee avatar footer (`kanban.classicColors: true` restores Mermaid's flat columns).
+
+**Not yet:** ticket links (`ticketBaseUrl` is parsed and ignored), markdown in card text.
+
+## Radar chart
+
+Keyword: `radar-beta`.
+
+`axis id["Label"], …` · `curve id["Label"]{v1, v2, …}` or `{axisId: v, …}` (multi-line allowed) · `title` · options `max`, `min`, `ticks`, `showLegend`, `graticule circle|polygon`. Smooth closed curves (`curveTension`), axis labels anchored by angle, legend at the top right; config under `radar`, colours `themeVariables.radar.*` and `cScale*`.
+
+## Treemap
+
+Keyword: `treemap` / `treemap-beta`.
+
+`"Section"` / `"Leaf": value` rows nested by indentation · `:::class` + `classDef` (`fill`, `stroke`, `stroke-width`, `color`) · `title`. d3 squarified layout (padding, header band, rounding), ordinal colour scales reproduced in Mermaid's call order, adaptive label/value font sizes with truncation. Config under `treemap`: `nodeWidth`, `nodeHeight`, `padding`, `showValues`, `valueFormat`.
+
+**Not yet:** `look`-specific styles.
+
+## Sankey
+
+Keyword: `sankey` / `sankey-beta`.
+
+CSV rows `source,target,value` (quotes and `""` escapes) · config under `sankey`: `width`, `height`, `nodeWidth`, `nodePadding`, `nodeAlignment` (`justify` `left` `right` `center`), `showValues`, `prefix`, `suffix`, `linkColor` (`gradient` `source` `target` or a colour), `labelStyle`, `nodeColors`. Layout is a port of d3-sankey 0.12 (six relaxation iterations with collision resolution).
+
+nimaid additions: automatic canvas height when `height` is not configured, labels drawn above the ribbons on soft pills with de-collision (`labelStyle: auto`, default; `legacy` = Mermaid's placement).
+
+**Not yet:** `mix-blend-mode: multiply` on overlapping ribbons (they are plain translucent).
+
 ## Diagram types that are not implemented
 
-Pie, timeline, user journey, quadrant, requirement, C4, sankey, XY chart, block, packet, kanban, architecture, radar, treemap and others. They produce `unsupported diagram type`. See [Adding a diagram type](../extending.md) if you want to contribute one.
+Requirement, C4, block, architecture, treeView, venn, ishikawa, wardley, cynefin, railroad, use-case, event-modeling and others. They produce `unsupported diagram type`. See [Adding a diagram type](../extending.md) if you want to contribute one.

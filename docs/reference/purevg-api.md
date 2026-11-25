@@ -84,6 +84,8 @@ The first font loaded becomes the default for text paints that name an unknown f
 | `pvg_shape_set_stroke_width(p, w)` · `pvg_shape_set_stroke_color(p, r, g, b, a)` | Stroke (a width of 0 disables it). |
 | `pvg_shape_set_stroke_dash(p, ptr cfloat, count, offset)` | Dash lengths (on, off, on, …). An odd count is repeated. `nil` clears. |
 | `pvg_shape_set_stroke_cap(p, cap)` | `BUTT`, `ROUND`, `SQUARE` — default **square**. |
+| `pvg_linear_gradient_new(x1, y1, x2, y2)` · `pvg_gradient_add_stop(g, offset, r, g, b, a)` | Create a linear gradient in the shape's own coordinates (offsets 0–1, per-stop alpha). |
+| `pvg_shape_set_fill_gradient(p, g)` · `pvg_shape_set_stroke_gradient(p, g)` | Use a gradient instead of the solid fill / stroke colour (the stroke gradient follows the outline, e.g. sankey ribbons). The SVG writer emits matching `<linearGradient>` definitions. |
 | `pvg_shape_set_stroke_join(p, join)` | `MITER`, `ROUND`, `BEVEL` — default **bevel**; miter limit is 4. |
 
 Fill is drawn first, then the stroke centred on the outline. Both are anti-aliased.
@@ -129,4 +131,4 @@ These are the building blocks behind the API above. They are importable and cove
 
 * Software rendering, single thread.
 * TrueType (`glyf`) fonts only; no CFF/`.otf`, no `.ttc`, no GPOS/GSUB shaping (kerning comes from the legacy `kern` table; no ligatures, no complex scripts).
-* No gradient fills on shapes through the API (use an SVG picture); no clipping/masking; no blend modes.
+* Linear gradients only (no radial gradients on shapes — use an SVG picture for those); no clipping/masking; no blend modes (e.g. `multiply`).

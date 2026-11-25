@@ -16,7 +16,7 @@ Requirements: Nim ≥ 2.0 and a C compiler. For the optional visual tests: Pytho
 Run everything before sending a change:
 
 ```sh
-nim c -r tests/test_purevg.nim        # engine + SVG writer: 23 unit/end-to-end tests
+nim c -r tests/test_purevg.nim        # engine + SVG writer + chart diagrams: 49 unit/end-to-end tests
 python3 tests/visual_regression.py    # all examples vs golden PNGs; SVG vs PNG
 python3 tests/smoke_examples.py       # every example renders
 python3 tests/conformance.py          # flowchart parser vs Mermaid's own spec assertions
@@ -40,7 +40,7 @@ cd tools/jscheck && npm i dagre-d3-es && node fuzz.mjs 1 300 c
 * Plain Nim, standard library only (no new runtime dependencies — that is a project goal).
 * `nimpretty`-style formatting, 2-space indent, `snake_case` only for the engine's C-style `pvg_*` API; `camelCase` elsewhere.
 * Keep modules small and single-purpose; put each non-obvious algorithm behind a short `##` doc comment that says *why*.
-* Don't commit binaries other than `bin/nimaid` (rebuilt by `build.sh`).
+* Don't commit binaries.
 
 ## Documentation
 
@@ -61,7 +61,7 @@ See [docs/extending.md](docs/extending.md).
 - [ ] `nim c -r tests/test_purevg.nim` passes
 - [ ] `python3 tests/visual_regression.py` prints `OK` (or golden images updated and explained)
 - [ ] New behaviour has a test or an example
-- [ ] Docs and CHANGELOG updated
+- [ ] Docs updated
 - [ ] No new runtime dependencies
 
 ## Reporting bugs

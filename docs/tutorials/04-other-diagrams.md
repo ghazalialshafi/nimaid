@@ -148,6 +148,10 @@ mindmap
 
 The tree is defined purely by **indentation**. Node shapes: `id[square]`, `id(round)`, `id((circle))`, `id))bang((`, `id)cloud(`, `id{{hexagon}}`. Branches are coloured automatically and emoji work everywhere.
 
+## Data charts
+
+Pie, XY (bar/line), timeline, quadrant and user-journey charts are covered in [Tutorial 9](09-charts.md).
+
 ## What each type does not do (yet)
 
 See the [diagram syntax reference](../reference/diagram-syntax.md) for the precise "supported / not yet" list for each type.

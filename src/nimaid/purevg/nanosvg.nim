@@ -1,3 +1,6 @@
+## Copyright (c) 2026 Ghazali
+## SPDX-License-Identifier: MIT
+##
 ## Pure Nim port of NanoSVG (parser) - https://github.com/memononen/nanosvg
 ##
 ## Parses a simple subset of SVG into a list of shapes made of cubic bezier

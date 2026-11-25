@@ -5,6 +5,7 @@ Everything the documentation shows comes from the files in this folder.
 | File | Used by | What it is |
 |---|---|---|
 | `01-first.mmd` … `14-emoji.mmd` | tutorials 1–6 | Mermaid diagrams (flowchart, subgraphs, styling, themes, sequence, state, ER, class, Gantt, Git graph, mindmap, emoji) |
+| `15-pie.mmd` … `26-pie-config.mmd` | tutorial 9 | pie (+ options), XY chart (vertical and horizontal), timeline, quadrant, journey, packet, kanban, radar, treemap, sankey |
 | `arch-pipeline.mmd`, `arch-engine.mmd` | architecture guide | the architecture diagrams, drawn by nimaid itself |
 | `hello.nim` | tutorial 7 | smallest possible program |
 | `in_memory.nim` | tutorial 7 | RGBA pixels, PNG bytes, SVG string |

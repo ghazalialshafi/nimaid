@@ -14,12 +14,14 @@ type
     kids*: seq[Node]
     tx*, ty*, sc*: float
     hasT*, hasS*: bool
+    rot*: float          ## degrees, clockwise on screen; applied after scale, before translate
     opacity*: int
     cmds*: seq[Cmd]
     hasFill*: bool
     fill*: array[4, uint8]
     sw*: float
     hasStroke*: bool
+    fillGrad*, strokeGrad*: real.Pvg_Gradient     ## optional linear gradients (override the solid colours)
     stroke*: array[4, uint8]
     dash*: seq[float]
     join*: Pvg_Stroke_Join
@@ -47,6 +49,8 @@ proc pvg_paint_translate*(n: Node, x, y: cfloat): Pvg_Result =
 proc pvg_paint_scale*(n: Node, s: cfloat): Pvg_Result =
   n.sc = float(s); n.hasS = true
   PVG_RESULT_SUCCESS
+proc pvg_paint_rotate*(n: Node, deg: cfloat): Pvg_Result =
+  n.rot = float(deg); PVG_RESULT_SUCCESS
 proc pvg_paint_set_opacity*(n: Node, o: uint8): Pvg_Result =
   n.opacity = int(o)
   PVG_RESULT_SUCCESS
@@ -111,6 +115,10 @@ proc pvg_shape_set_fill_color*(n: Node, r, g, b, a: uint8): Pvg_Result =
 proc pvg_shape_set_stroke_width*(n: Node, w: cfloat): Pvg_Result =
   n.sw = float(w)
   PVG_RESULT_SUCCESS
+proc pvg_shape_set_fill_gradient*(n: Node, g: real.Pvg_Gradient): Pvg_Result =
+  n.fillGrad = g; PVG_RESULT_SUCCESS
+proc pvg_shape_set_stroke_gradient*(n: Node, g: real.Pvg_Gradient): Pvg_Result =
+  n.strokeGrad = g; n.hasStroke = true; PVG_RESULT_SUCCESS
 proc pvg_shape_set_stroke_color*(n: Node, r, g, b, a: uint8): Pvg_Result =
   n.hasStroke = true
   n.stroke = [r, g, b, a]
@@ -168,9 +176,11 @@ proc toReal(n: Node): real.Pvg_Paint =
       of 'C': discard real.pvg_shape_cubic_to(p, cfloat(c.v[0]), cfloat(c.v[1]), cfloat(c.v[2]), cfloat(c.v[3]), cfloat(c.v[4]), cfloat(c.v[5]))
       else: discard real.pvg_shape_close(p)
     if n.hasFill: discard real.pvg_shape_set_fill_color(p, n.fill[0], n.fill[1], n.fill[2], n.fill[3])
+    if n.fillGrad != nil: discard real.pvg_shape_set_fill_gradient(p, n.fillGrad)
     if n.hasStroke and n.sw > 0:
       discard real.pvg_shape_set_stroke_width(p, cfloat(n.sw))
       discard real.pvg_shape_set_stroke_color(p, n.stroke[0], n.stroke[1], n.stroke[2], n.stroke[3])
+      if n.strokeGrad != nil: discard real.pvg_shape_set_stroke_gradient(p, n.strokeGrad)
       discard real.pvg_shape_set_stroke_join(p, n.join)
       discard real.pvg_shape_set_stroke_cap(p, n.cap)
       if n.dash.len > 0:
@@ -190,6 +200,7 @@ proc toReal(n: Node): real.Pvg_Paint =
       discard real.pvg_picture_set_size(p, cfloat(n.pw), cfloat(n.ph))
   if n.hasT: discard real.pvg_paint_translate(p, cfloat(n.tx), cfloat(n.ty))
   if n.hasS: discard real.pvg_paint_scale(p, cfloat(n.sc))
+  if n.rot != 0: discard real.pvg_paint_rotate(p, cfloat(n.rot))
   if n.opacity != 255: discard real.pvg_paint_set_opacity(p, uint8(n.opacity))
   p
 

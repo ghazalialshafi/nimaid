@@ -42,6 +42,9 @@ proc lineWidth(line: string, size: float): float =
   for r in splitRuns(line):
     result += (if r.isEmoji: size * emojiAdvanceEm else: textWidth(r.text, size))
 
+proc measureLine*(text: string, size: float): float = lineWidth(text, size)
+  ## Width in px of one line of text at `size` (points, like every pvg_* text size); emoji advance included.
+
 proc initTextMetrics*(fontPath: string): bool =
   ## Loads a TTF through PureVG and routes label measurement through it.
   if not fileExists(fontPath): return false

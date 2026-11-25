@@ -22,13 +22,13 @@ bin/nimaid examples/basic.mmd diagram.png        # or .svg / .gif
 
 ## Why nimaid?
 
-Rendering Mermaid normally means JS runtime or launching headless Chrome. nimaid is a from-scratch implementation that parses Mermaid text,
+Rendering Mermaid normally means launching headless Chrome. nimaid is a from-scratch implementation that parses Mermaid text,
 lays it out with the same algorithm Mermaid uses, and draws it with its own vector engine — so it starts in milliseconds, runs
 anywhere Nim compiles, and embeds as an ordinary Nim library.
 
 * **Self-contained.** The whole stack is Nim: parser → layout → **PureVG** (rasteriser, stroker, TrueType reader, SVG loader) → PNG/GIF/SVG encoders. The binary links only libc and libm.
 * **Faithful to Mermaid.** The flowchart parser is a port of Mermaid's `flow.jison`; layout reproduces Mermaid's dagre driver (clusters, anchors, self-loops, multi-edges); themes use Mermaid's exact colours.
-* **Eight diagram types.** Flowchart, sequence, state, ER, class, Gantt, Git graph and mindmap.
+* **Eighteen diagram types.** Flowchart, sequence, state, ER, class, Gantt, Git graph, mindmap — and the data charts **pie, XY (bar/line), timeline, quadrant, user journey, packet, kanban, radar, treemap and sankey**.
 * **Three outputs from one drawing pass.** PNG (own DEFLATE, optional palette), GIF, and SVG that looks identical in every viewer.
 * **Real text.** TrueType outlines with kerning, multi-line layout and alignment — plus **full-colour emoji** (skin tones, flags, ZWJ families, keycaps).
 * **Five themes** (`default`, `dark`, `forest`, `neutral`, `base`) and every `themeVariables` colour you are likely to need.
@@ -52,6 +52,28 @@ anywhere Nim compiles, and embeds as an ordinary Nim library.
 <tr>
 <td align="center"><img src="docs/images/08-state.png" width="400"><br><sub>State machine</sub></td>
 <td align="center"><img src="docs/images/06-dark.png" width="400"><br><sub>Dark theme</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/images/15-pie.png" width="400"><br><sub>Pie chart</sub></td>
+<td align="center"><img src="docs/images/16-xychart.png" width="400"><br><sub>XY chart (bars + line)</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/images/17-timeline.png" width="400"><br><sub>Timeline</sub></td>
+<td align="center"><img src="docs/images/18-quadrant.png" width="400"><br><sub>Quadrant chart</sub></td>
+</tr>
+<tr>
+<td align="center" colspan="2"><img src="docs/images/19-journey.png" width="640"><br><sub>User journey</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/images/22-kanban.png" width="400"><br><sub>Kanban board</sub></td>
+<td align="center"><img src="docs/images/23-radar.png" width="400"><br><sub>Radar chart</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/images/24-treemap.png" width="400"><br><sub>Treemap</sub></td>
+<td align="center"><img src="docs/images/25-sankey.png" width="400"><br><sub>Sankey (gradient ribbons, auto-sized)</sub></td>
+</tr>
+<tr>
+<td align="center" colspan="2"><img src="docs/images/21-packet.png" width="640"><br><sub>Packet diagram (TCP header)</sub></td>
 </tr>
 </table>
 
@@ -116,6 +138,16 @@ Add the repo to your `--path` (or `requires` it from nimble) and `import nimaid`
 | Gantt | `gantt` | sections, dependencies, crit/active/done/milestone |
 | Git graph | `gitGraph` | commit, branch, checkout, merge, cherry-pick, tags |
 | Mindmap | `mindmap` | node shapes, coloured branches, emoji |
+| Pie | `pie` | `showData`, title, Mermaid's 12-colour theme palette, legend, percentage labels |
+| XY chart | `xychart-beta` | bar + line series, category and numeric axes, horizontal orientation, legend, data labels, d3-style ticks |
+| Timeline | `timeline` | sections, multi-event periods, multicolour or per-section colours |
+| Quadrant chart | `quadrantChart` | four labelled quadrants, styled points (`classDef`, inline styles) |
+| User journey | `journey` | sections, scored tasks with faces, actors legend, `journey` config |
+| Packet | `packet` | bit fields over 32-bit rows, spanning fields, `+n` widths, themeable |
+| Kanban | `kanban` | columns, cards, `@{ticket, assigned, priority}` metadata |
+| Radar | `radar-beta` | axes, curves, circle/polygon graticule, legend, `max`/`min`/`ticks` |
+| Treemap | `treemap-beta` | d3 squarified layout, nested sections, `classDef`, value formats |
+| Sankey | `sankey-beta` | d3-sankey layout, gradient/solid ribbons, node alignment, `nodeColors` |
 
 Details and the not-yet-supported list: [Diagram syntax reference](docs/reference/diagram-syntax.md).
 
@@ -141,7 +173,7 @@ All painters draw into a **recording scene graph**; the same drawing is then rep
 | | |
 |---|---|
 | **Start here** | [Getting started](docs/getting-started.md) · [CLI reference](docs/cli.md) |
-| **Tutorials** | [1 First flowchart](docs/tutorials/01-first-flowchart.md) · [2 Shapes, links, subgraphs](docs/tutorials/02-shapes-links-subgraphs.md) · [3 Styling & themes](docs/tutorials/03-styling-and-themes.md) · [4 Other diagram types](docs/tutorials/04-other-diagrams.md) · [5 Text, fonts & emoji](docs/tutorials/05-text-fonts-emoji.md) · [6 PNG, GIF & SVG](docs/tutorials/06-output-formats.md) · [7 Library](docs/tutorials/07-library.md) · [8 Draw with PureVG](docs/tutorials/08-purevg-engine.md) |
+| **Tutorials** | [1 First flowchart](docs/tutorials/01-first-flowchart.md) · [2 Shapes, links, subgraphs](docs/tutorials/02-shapes-links-subgraphs.md) · [3 Styling & themes](docs/tutorials/03-styling-and-themes.md) · [4 Other diagram types](docs/tutorials/04-other-diagrams.md) · [9 Charts](docs/tutorials/09-charts.md) · [5 Text, fonts & emoji](docs/tutorials/05-text-fonts-emoji.md) · [6 PNG, GIF & SVG](docs/tutorials/06-output-formats.md) · [7 Library](docs/tutorials/07-library.md) · [8 Draw with PureVG](docs/tutorials/08-purevg-engine.md) |
 | **Reference** | [Diagram syntax](docs/reference/diagram-syntax.md) · [Themes](docs/reference/themes.md) · [Output formats](docs/reference/output-formats.md) · [Library API](docs/reference/library-api.md) · [PureVG API](docs/reference/purevg-api.md) |
 | **Understand** | [Architecture](docs/architecture.md) · [FAQ & troubleshooting](docs/faq.md) |
 | **Contribute** | [CONTRIBUTING](CONTRIBUTING.md) · [Adding a diagram type](docs/extending.md) · [CHANGELOG](CHANGELOG.md) |
@@ -151,7 +183,7 @@ All painters draw into a **recording scene graph**; the same drawing is then rep
 ```
 src/nimaid_cli.nim        command-line front end
 src/nimaid.nim            public library API
-src/nimaid/               parsers, layout, painters, encoders        (see docs/architecture.md)
+src/nimaid/               parsers, layout, painters, charts, encoders (see docs/architecture.md)
 src/nimaid/purevg.nim     PureVG engine API   ┐
 src/nimaid/purevg/        core · raster · stroke · ttf · svgload     ┘ the vector engine
 dagre_nim/                graph layout library (dagre port)
@@ -164,7 +196,7 @@ tests/                    unit tests, visual regression, Mermaid-spec conformanc
 ## Testing
 
 ```sh
-nim c -r tests/test_purevg.nim        # 23 unit + end-to-end tests of the engine and SVG writer
+nim c -r tests/test_purevg.nim        # 49 unit + end-to-end tests: engine, SVG writer and the chart diagrams
 python3 tests/visual_regression.py    # every example vs. golden PNG, and SVG vs. PNG (needs Pillow, numpy; resvg-py optional)
 python3 tests/conformance.py          # flowchart parser vs. Mermaid's own spec assertions
 python3 tests/smoke_examples.py       # every example renders
@@ -179,10 +211,12 @@ The binary is 1.9 MB and depends only on libc and libm.
 ## Limitations
 
 One text font at a time (no bold/italic runs), no CJK glyphs in the bundled font, no `look: handDrawn`, KaTeX or HTML labels, no click callbacks.
-Pie, timeline, journey, quadrant, C4 and other Mermaid diagram types are not implemented yet.
+Requirement, C4, block, architecture, treeView, venn, ishikawa and the newest Mermaid diagram types are not implemented yet.
 Full list: [FAQ](docs/faq.md#what-is-not-supported).
 
 ## Credits and license
 
-MIT licensed — see [LICENSE](LICENSE). Third-party components (DejaVu Sans, Noto Color Emoji) and their licenses are listed in [THIRD_PARTY.md](THIRD_PARTY.md).
-Mermaid is a project of its maintainers; nimaid is an independent implementation that targets compatibility with its syntax and look.
+MIT licensed — see [LICENSE](LICENSE).
+Copyright (c) 2026 Ghazali
+
+Third-party components (DejaVu Sans, Noto Color Emoji, nanosvg, dagre) and their licenses are listed in [THIRD_PARTY.md](THIRD_PARTY.md).

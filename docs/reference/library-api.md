@@ -1,7 +1,7 @@
 # Library API reference (`import nimaid`)
 
 All signatures below are exported by `import nimaid`. Examples assume the fonts live at `fonts/…`.
-Errors are raised as exceptions: `IOError` (a font cannot be loaded), `ValueError` (unsupported diagram type), and `ParseError` (a `CatchableError`) for syntax errors.
+Errors are raised as exceptions: `IOError` (a font cannot be loaded), `ValueError` (unsupported diagram type), `ParseError` (flowchart-family syntax errors) and `ChartError` (syntax or value errors in pie / XY / timeline / quadrant / journey). All are `CatchableError`s with a readable `msg`.
 
 ## One-call rendering
 
@@ -96,7 +96,7 @@ proc renderToImage*(res: LayoutResult, th: FlowTheme = defaultTheme(),
 proc detectDiagramType*(rawText: string): string
 ```
 
-`detectDiagramType` returns one of `"flowchart" "sequence" "state" "er" "class" "gantt" "gitgraph" "mindmap" "unknown"`.
+`detectDiagramType` returns one of `"flowchart" "sequence" "state" "er" "class" "gantt" "gitgraph" "mindmap" "pie" "xychart" "timeline" "quadrant" "journey" "unknown"`.
 Initialise the engine first (`pvg_engine_init(0)`, imported with `from nimaid/purevg import pvg_engine_init, pvg_engine_term`) and load fonts **before** layout, because text sizes determine node sizes.
 
 ## Scene recording and SVG
@@ -113,6 +113,26 @@ proc toSvg*(root: Node, w, h: int, bg: array[4, uint8],
 ```
 
 See [Tutorial 8](../tutorials/08-purevg-engine.md#draw-once-export-twice-png-and-svg).
+
+## Chart diagrams and config
+
+```nim
+# every chart module exposes <name>Scene(text, cv: ChartVars, fmTitle = ""): (Pvg_Paint, DiagramBounds)
+proc pieScene*(...)  proc xychartScene*(...)  proc timelineScene*(...)  proc quadrantScene*(...)  proc journeyScene*(...)
+
+# nimaid/chartheme
+proc chartVars*(text: string, forcedTheme = ""): ChartVars   # Mermaid's evaluated theme + the diagram's overrides
+proc color*(cv: ChartVars, key: string, default = rgba(0,0,0)): Color
+proc num*(cv: ChartVars, key: string, default: float): float
+proc str*(cv: ChartVars, key: string, default = ""): string
+proc parseCssColor*(s: string): Option[Color]               # #rgb #rrggbb #rrggbbaa rgb() rgba() hsl() hsla() named
+
+# nimaid/config
+proc readConfig*(raw: string): JsonNode                       # merged front-matter `config:` + %%{init: {...}}%% (nested)
+proc cfgFloat*/cfgBool*/cfgStr*/cfgSub*(n: JsonNode, key: string, ...)   # typed accessors
+```
+
+`renderMermaidToFile/Image/Svg` handle all of this for you; these are for building your own diagram types.
 
 ## Global switches
 
