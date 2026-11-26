@@ -1,0 +1,9 @@
+
+# build outputs
+capi/build/
+capi/dist/
+python/dist/
+wasm/nimaid.wasm
+__pycache__/
+bin/
+nimcache/

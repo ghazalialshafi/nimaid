@@ -5,7 +5,14 @@ from nimaid/purevg import pvg_engine_init, pvg_engine_term
 export sankey, treemap, radar, kanban, packet, journey, quadrant, timeline, xychart, pie, chartheme, chartkit, gantt, gitgraph, mindmap, diagrams, gfx, svg, gif, config, sequence, detect, emoji, types, theme, flowdb, dagre_adapter, painter,
        label, textmetrics, png
 
-const nimaidVersion* = "0.5.1"
+const nimaidVersion* = "0.6.0"
+
+const hasEmbeddedFont* = defined(nimaidEmbedFont)
+  ## true when built with -d:nimaidEmbedFont: DejaVu Sans is compiled in and used when no font path is given.
+when hasEmbeddedFont:
+  const embeddedFontData* = staticRead("../fonts/DejaVuSans.ttf")
+else:
+  const embeddedFontData* = ""
 
 proc parseAndLayoutFlowchart*(chartText: string): LayoutResult =
   let fm = extractFrontMatter(chartText)
@@ -21,10 +28,9 @@ proc themeFor*(text: string, forced = ""): FlowTheme =
   result = themeByName(if forced.len > 0: forced else: cfg.name)
   result.applyOverrides(cfg.vars)
 
-proc buildMermaidScene(text, fontPath: string, scale: float, emojiFontPath, themeName: string): Composed =
-  ## Engine must already be initialised. Detects the diagram type, lays out and paints one scene.
-  if emojiFontPath.len > 0: discard loadEmojiFont(emojiFontPath)
-  if not initTextMetrics(fontPath): raise newException(IOError, "cannot load font " & fontPath)
+proc buildMermaidSceneLoaded*(text: string, scale: float, themeName: string): Composed =
+  ## Fonts must already be loaded (initTextMetrics / initTextMetricsData, optionally loadEmojiFont*).
+  ## Detects the diagram type, lays out and paints one scene.
   var th = themeFor(text, themeName)
   th.fontFamily = loadedFontName
   case detectDiagramType(text)
@@ -105,7 +111,15 @@ proc buildMermaidScene(text, fontPath: string, scale: float, emojiFontPath, them
   else:
     raise newException(ValueError, "unsupported diagram type")
 
-proc backgroundOf(text, themeName: string): array[4, uint8] =
+proc buildMermaidScene(text, fontPath: string, scale: float, emojiFontPath, themeName: string): Composed =
+  ## Engine must already be initialised.
+  if emojiFontPath.len > 0: discard loadEmojiFont(emojiFontPath)
+  if fontPath.len == 0 and hasEmbeddedFont:
+    if not initTextMetricsData("DejaVuSans", embeddedFontData): raise newException(IOError, "cannot load embedded font")
+  elif not initTextMetrics(fontPath): raise newException(IOError, "cannot load font " & fontPath)
+  buildMermaidSceneLoaded(text, scale, themeName)
+
+proc backgroundOf*(text, themeName: string): array[4, uint8] =
   let b = themeFor(text, themeName).background
   [b.r, b.g, b.b, b.a]
 

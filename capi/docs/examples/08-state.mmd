@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Working : start
+    state Working {
+        [*] --> Reading
+        Reading --> Writing : data
+        Writing --> Reading : more
+    }
+    Working --> Idle : done
+    Working --> [*] : fatal

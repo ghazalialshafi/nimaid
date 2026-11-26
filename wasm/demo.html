@@ -1,0 +1,28 @@
+<!doctype html>
+<meta charset="utf-8"><title>nimaid wasm demo</title>
+<style>body{font:14px system-ui;margin:2rem;max-width:1100px}textarea{width:100%;height:12rem;font:13px ui-monospace,monospace}
+#out{margin-top:1rem;overflow:auto}select,button{font:inherit;margin:.5rem .5rem .5rem 0}#err{color:#b00020;white-space:pre-wrap}</style>
+<h1>nimaid in WebAssembly</h1>
+<textarea id="src">flowchart LR
+  A[Write Mermaid] --> B{Looks good?}
+  B -->|yes| C[Render in the browser]
+  B -->|no| A</textarea>
+<div><select id="theme"></select><button id="png">Download PNG</button><span id="info"></span></div>
+<div id="err"></div><div id="out"></div>
+<script type="module">
+import { Nimaid } from "./nimaid.mjs";   // serve this folder over http(s); file:// cannot fetch the .wasm
+const n = await Nimaid.load();
+const $ = (id) => document.getElementById(id);
+$("theme").innerHTML = '<option value="">theme: from diagram</option>' + n.themes().map((t) => `<option>${t}</option>`).join("");
+$("info").textContent = `nimaid ${n.version}`;
+const opts = () => ({ theme: $("theme").value || undefined });
+function render() {
+  try { $("out").innerHTML = n.svg($("src").value, opts()); $("err").textContent = ""; }
+  catch (e) { $("err").textContent = e.message; }
+}
+$("png").onclick = () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([n.png($("src").value, opts())], { type: "image/png" })); a.download = "diagram.png"; a.click();
+};
+$("src").oninput = $("theme").onchange = render; render();
+</script>

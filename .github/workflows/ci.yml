@@ -1,0 +1,47 @@
+name: ci
+
+# Fast check on every push / pull request: build the native Linux target and wasm, run all test suites.
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ZIGLANG_VERSION: "0.17.1"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: "2.2.x"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pip install "ziglang==${ZIGLANG_VERSION}" twine
+      - name: Versions are in sync
+        run: python3 tools/bump_version.py
+      - name: Build + test (C API, C++ wrapper, CLI, wasm)
+        run: python3 capi/build.py -t native wasm32-wasi
+      - name: Smoke test the packaged archives
+        run: python3 tools/ci_smoke.py linux-x86_64-gnu
+      - name: Python wheel + tests
+        run: |
+          python3 python/build_wheels.py -t linux-x86_64-gnu
+          twine check python/dist/*
+          python -m venv /tmp/v && . /tmp/v/bin/activate
+          pip install --no-index --find-links python/dist "nimaid[emoji]"
+          NIMAID_TEST_FONT=fonts/DejaVuSans.ttf python -m unittest discover -s python/tests -v

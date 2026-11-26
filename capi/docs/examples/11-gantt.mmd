@@ -1,0 +1,9 @@
+gantt
+    title Release plan
+    dateFormat YYYY-MM-DD
+    section Build
+    Design        :done, des, 2026-01-05, 7d
+    Implementation:active, impl, after des, 14d
+    section Ship
+    Testing       :crit, after impl, 7d
+    Launch        :milestone, 2026-02-09, 0d

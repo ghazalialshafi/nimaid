@@ -45,16 +45,26 @@ proc lineWidth(line: string, size: float): float =
 proc measureLine*(text: string, size: float): float = lineWidth(text, size)
   ## Width in px of one line of text at `size` (points, like every pvg_* text size); emoji advance included.
 
-proc initTextMetrics*(fontPath: string): bool =
-  ## Loads a TTF through PureVG and routes label measurement through it.
-  if not fileExists(fontPath): return false
-  if purevg.pvg_font_load(fontPath.cstring) != purevg.PVG_RESULT_SUCCESS: return false
-  loadedFontName = splitFile(fontPath).name
+proc installMeasurer() =
   setTextMeasurer(proc(text: string, fontSize: float32, isTitle: bool): tuple[w, h: float32] =
     let lines = text.splitLines()
     var w = 0.0
     for l in lines: w = max(w, lineWidth(l, float(fontSize)))
     (float32(w), float32(float(fontSize) * 1.5 * float(max(1, lines.len)))))
+
+proc initTextMetrics*(fontPath: string): bool =
+  ## Loads a TTF through PureVG and routes label measurement through it.
+  if not fileExists(fontPath): return false
+  if purevg.pvg_font_load(fontPath.cstring) != purevg.PVG_RESULT_SUCCESS: return false
+  loadedFontName = splitFile(fontPath).name
+  installMeasurer()
+  true
+
+proc initTextMetricsData*(name, data: string): bool =
+  ## Like initTextMetrics, but the TrueType font is already in memory; it is registered as `name`.
+  if purevg.pvg_font_load_data(name.cstring, data.cstring, uint32(data.len), "ttf", true) != purevg.PVG_RESULT_SUCCESS: return false
+  loadedFontName = name
+  installMeasurer()
   true
 
 proc drawLabel*(scene: Pvg_Paint, text: string, cx, cy, size: float, color: Color, alignTop = false, alignLeft = false) =

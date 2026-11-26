@@ -1,0 +1,14 @@
+classDiagram
+    class Animal {
+        +String name
+        +eat() void
+    }
+    class Dog {
+        +bark() void
+    }
+    class Cat {
+        +purr() void
+    }
+    Animal <|-- Dog
+    Animal <|-- Cat
+    Dog --> Bone : chews

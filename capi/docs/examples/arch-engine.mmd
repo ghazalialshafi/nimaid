@@ -1,0 +1,16 @@
+flowchart TB
+    subgraph input[Paints]
+        sh[Shapes and paths]
+        tx[Text]
+        pic[SVG pictures]
+    end
+    tx --> ttf["ttf.nim<br/>cmap · glyf · kern"] --> sh2[Glyph outlines]
+    pic --> svgl["svgload.nim<br/>use-inliner + nanosvg"] --> sh3[Paths and gradients]
+    sh --> flat
+    sh2 --> flat
+    sh3 --> flat
+    flat["core.nim<br/>transform + flatten curves"] --> fill & stroke
+    stroke["stroke.nim<br/>caps · joins · dashes"] --> ras
+    fill[Fill polygons] --> ras
+    ras["raster.nim<br/>16 sub-scanlines · exact coverage"] --> comp["Compositor<br/>premultiplied layers · groups · gradients"]
+    comp --> px[RGBA pixels]

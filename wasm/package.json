@@ -1,0 +1,19 @@
+{
+  "name": "nimaid",
+  "version": "0.6.0",
+  "description": "Mermaid diagrams to PNG, GIF and SVG in WebAssembly. Pure Nim core, no dependencies, no browser needed.",
+  "keywords": ["mermaid", "diagram", "flowchart", "svg", "png", "wasm", "webassembly", "render"],
+  "license": "MIT",
+  "author": "Ghazali",
+  "homepage": "https://github.com/ghazalialshafi/nimaid",
+  "repository": { "type": "git", "url": "git+https://github.com/ghazalialshafi/nimaid.git" },
+  "bugs": { "url": "https://github.com/ghazalialshafi/nimaid/issues" },
+  "type": "module",
+  "main": "./nimaid.mjs",
+  "module": "./nimaid.mjs",
+  "types": "./index.d.ts",
+  "exports": { ".": { "types": "./index.d.ts", "default": "./nimaid.mjs" }, "./nimaid.wasm": "./nimaid.wasm" },
+  "files": ["nimaid.mjs", "nimaid.wasm", "index.d.ts", "demo.html", "README.md", "LICENSE", "THIRD_PARTY.md"],
+  "engines": { "node": ">=16" },
+  "scripts": { "test": "node test.mjs" }
+}

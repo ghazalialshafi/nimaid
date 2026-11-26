@@ -1,0 +1,12 @@
+flowchart LR
+    src[".mmd text"] --> pre["preprocess<br/>front matter, init directive, comments"]
+    pre --> det{"detect<br/>diagram type"}
+    det --> gr["flowchart · state · ER · class<br/>parse → dagre layout"]
+    det --> seq["sequence<br/>parse → layout"]
+    det --> own["gantt · gitGraph · mindmap<br/>own layouts"]
+    gr --> scene
+    seq --> scene
+    own --> scene
+    scene[("recording scene graph<br/>gfx.nim")]
+    scene --> ras["PureVG rasteriser"] --> enc["PNG / GIF encoders"] --> out1[".png  .gif"]
+    scene --> svgw["svg.nim writer"] --> out2[".svg"]

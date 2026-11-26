@@ -1,4 +1,4 @@
-version     = "0.5.1"
+version     = "0.6.0"
 author      = "Ghazali"
 description = "nimaid: Mermaid diagrams (flowchart, sequence, ...) to PNG / GIF / SVG in pure Nim"
 license     = "MIT"

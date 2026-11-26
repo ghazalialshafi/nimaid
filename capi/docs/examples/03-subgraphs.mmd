@@ -1,0 +1,12 @@
+flowchart LR
+    U[User] --> LB
+    subgraph Cloud[Cloud platform]
+        direction TB
+        LB[Load balancer] --> W1[Web 1] & W2[Web 2]
+        subgraph Data[Data tier]
+            W1 --> DB[(Primary)]
+            W2 --> DB
+            DB --> R[(Replica)]
+        end
+    end
+    R --> M[Monitoring]

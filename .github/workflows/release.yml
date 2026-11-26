@@ -1,0 +1,353 @@
+name: release
+
+# Tag a version (git tag v0.6.0 && git push --tags) and this workflow will:
+#   build every target with Zig  ->  test on real runners / containers / QEMU  ->  GitHub Release + PyPI (+ npm)
+# Run it by hand (Actions -> release -> Run workflow) for a dry run that only builds and tests.
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+  workflow_dispatch:
+    inputs:
+      testpypi:
+        description: "Also upload the wheels to TestPyPI"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NIM_VERSION: "2.2.x"
+  ZIGLANG_VERSION: "0.17.1"      # pip package `ziglang`; pinned so builds are reproducible
+
+jobs:
+  # ------------------------------------------------------------------------------------------------ checks
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        name: Versions agree (nimble, header, python, npm) and match the tag
+        run: |
+          python3 tools/bump_version.py
+          V=$(python3 -c "import re;print(re.search(r'version\s*=\s*\"([^\"]+)\"', open('nimaid.nimble').read()).group(1))")
+          echo "version=$V" >> "$GITHUB_OUTPUT"
+          if [[ "$GITHUB_REF" == refs/tags/v* && "$GITHUB_REF_NAME" != "v$V" ]]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match version $V in nimaid.nimble (run tools/bump_version.py)"; exit 1
+          fi
+      - name: CHANGELOG has a section for this version
+        run: python3 tools/release_notes.py "${{ steps.v.outputs.version }}" > /dev/null
+
+  # ------------------------------------------------------------------------------------------------ build
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - linux-x86_64-gnu
+          - linux-aarch64-gnu
+          - linux-armv7-gnueabihf
+          - linux-x86-gnu
+          - linux-riscv64-gnu
+          - linux-x86_64-musl
+          - linux-aarch64-musl
+          - linux-armv7-musleabihf
+          - windows-x86_64
+          - windows-aarch64
+          - windows-x86
+          - macos-x86_64
+          - macos-aarch64
+          - freebsd-x86_64
+          - wasm32-wasi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: ${{ env.NIM_VERSION }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Zig (pip)
+        run: pip install "ziglang==${ZIGLANG_VERSION}"
+      - name: Build ${{ matrix.target }}
+        run: python3 capi/build.py -t ${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.target }}
+          path: |
+            capi/dist/nimaid-*
+          if-no-files-found: error
+
+  # ------------------------------------------------------------------------------------------------ wheels
+  wheels:
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: capi/dist
+      - name: Build wheels from the cross-compiled libraries
+        run: |
+          python3 python/build_wheels.py
+          pip install twine
+          twine check python/dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels
+          path: python/dist/*.whl
+          if-no-files-found: error
+
+  # ------------------------------------------------------------------------------------------------ tests on real machines
+  test-native:
+    needs: [check, build, wheels]
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental == true }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest,    target: linux-x86_64-gnu }
+          - { os: ubuntu-24.04-arm, target: linux-aarch64-gnu }
+          - { os: macos-15-intel,   target: macos-x86_64 }
+          - { os: macos-latest,     target: macos-aarch64 }
+          - { os: windows-latest,   target: windows-x86_64 }
+          - { os: windows-11-arm,   target: windows-aarch64, experimental: true }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-${{ matrix.target }}
+          merge-multiple: true
+          path: capi/dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: wheels
+      - name: Install Zig (pip)
+        run: pip install "ziglang==${{ env.ZIGLANG_VERSION }}"
+      - name: C API + CLI archives (unpack, run both CLIs, compile and run the C test suite)
+        run: python tools/ci_smoke.py ${{ matrix.target }}
+      - name: Python wheel (pip picks the matching wheel itself)
+        shell: bash
+        run: |
+          python -m venv venv
+          if [ -f venv/Scripts/activate ]; then . venv/Scripts/activate; else . venv/bin/activate; fi
+          pip install --no-index --find-links wheels "nimaid[emoji]"
+          NIMAID_TEST_FONT=fonts/DejaVuSans.ttf python -m unittest discover -s python/tests -v
+          nimaid --version
+
+  test-containers:
+    needs: [check, wheels]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: "manylinux2014 (glibc 2.17, Python 3.8)", platform: linux/amd64, image: "quay.io/pypa/manylinux2014_x86_64", python: /opt/python/cp38-cp38/bin/python, setup: "true" }
+          - { name: "Alpine x86_64 (musl)",     platform: linux/amd64,  image: "alpine:3",           python: python3, setup: "apk add --no-cache python3 py3-pip" }
+          - { name: "Debian arm64 (QEMU)",      platform: linux/arm64,  image: "python:3.12-slim",   python: python,  setup: "true" }
+          - { name: "Alpine arm64 (QEMU)",      platform: linux/arm64,  image: "python:3.12-alpine", python: python,  setup: "true" }
+          - { name: "Debian armv7 (QEMU)",      platform: linux/arm/v7, image: "python:3.12-slim",   python: python,  setup: "true" }
+          - { name: "Alpine armv7 (QEMU)",      platform: linux/arm/v7, image: "python:3.12-alpine", python: python,  setup: "true" }
+          - { name: "Debian i386 (QEMU)",       platform: linux/386,    image: "python:3.12-slim",   python: python,  setup: "true" }
+    name: test-containers (${{ matrix.name }})
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: wheels
+      - name: Install the wheel in ${{ matrix.name }} and run the tests
+        run: |
+          docker run --rm --platform ${{ matrix.platform }} -v "$PWD":/w -w /w ${{ matrix.image }} sh -euxc '
+            ${{ matrix.setup }}
+            ${{ matrix.python }} -m venv /tmp/v
+            . /tmp/v/bin/activate
+            pip install --no-index --find-links wheels "nimaid[emoji]"
+            NIMAID_TEST_FONT=fonts/DejaVuSans.ttf python -m unittest discover -s python/tests -v
+          '
+
+  test-wasm:
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-wasm32-wasi
+          path: wasm-dist
+      - name: Run the wasm test suite on Node ${{ matrix.node }}
+        run: |
+          tar xzf wasm-dist/nimaid-wasm-*.tar.gz
+          cd nimaid-wasm-*/ && node test.mjs "" ../fonts/NotoColorEmoji-Regular.ttf
+
+  # ------------------------------------------------------------------------------------------------ publish
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [check, build, wheels, test-native, test-containers, test-wasm]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: release
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: release
+      - name: Fonts archive, checksums, release notes
+        run: |
+          V=${{ needs.check.outputs.version }}
+          tar czf release/nimaid-fonts-$V.tar.gz fonts
+          (cd release && sha256sum * > ../SHA256SUMS) && mv SHA256SUMS release/
+          python3 tools/release_notes.py "$V" > notes.md
+          ls -la release
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: nimaid ${{ needs.check.outputs.version }}
+          body_path: notes.md
+          files: release/*
+          fail_on_unmatched_files: true
+
+  # Trusted Publishing matches ONE environment per job, so each PyPI project gets its own job + environment:
+  #   nimaid-noto-emoji -> environment "pypi-emoji",  nimaid -> environment "pypi"
+  publish-pypi-emoji:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [check, wheels, test-native, test-containers]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi-emoji
+      url: https://pypi.org/project/nimaid-noto-emoji/
+    permissions:
+      id-token: write          # PyPI Trusted Publishing (no token needed); see docs/releasing.md
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: all
+      - run: mkdir dist && mv all/nimaid_noto_emoji-*.whl dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          skip-existing: true
+          password: ${{ secrets.PYPI_API_TOKEN }}     # optional fallback; leave the secret unset to use Trusted Publishing
+
+  publish-pypi:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [check, wheels, test-native, test-containers, publish-pypi-emoji]   # nimaid[emoji] depends on the emoji package
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/nimaid/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: all
+      - run: mkdir dist && mv all/nimaid-*.whl dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          skip-existing: true
+          password: ${{ secrets.PYPI_API_TOKEN }}
+
+  publish-testpypi-emoji:
+    if: github.event_name == 'workflow_dispatch' && inputs.testpypi
+    needs: [check, wheels, test-native, test-containers]
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi-emoji
+      url: https://test.pypi.org/project/nimaid-noto-emoji/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: all
+      - run: mkdir dist && mv all/nimaid_noto_emoji-*.whl dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist
+          skip-existing: true
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+
+  publish-testpypi:
+    if: github.event_name == 'workflow_dispatch' && inputs.testpypi
+    needs: [check, wheels, test-native, test-containers, publish-testpypi-emoji]
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/project/nimaid/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: all
+      - run: mkdir dist && mv all/nimaid-*.whl dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist
+          skip-existing: true
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+
+  publish-npm:
+    if: startsWith(github.ref, 'refs/tags/v') && vars.PUBLISH_NPM == 'true'     # opt in: repository variable PUBLISH_NPM=true + secret NPM_TOKEN
+    needs: [check, test-wasm]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-wasm32-wasi
+          path: wasm-dist
+      - run: |
+          tar xzf wasm-dist/nimaid-wasm-*.tar.gz
+          cd nimaid-wasm-*/ && npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -49,9 +49,9 @@ proc parseLigSubtable(f: EmojiFont, o: int) =
       for k in 0 ..< cc - 1: comps.add u16(d, lo + 4 + 2 * k)
       f.ligs.mgetOrPut(first, @[]).add Lig(comps: comps, glyph: lg)
 
-proc loadEmojiFont*(path: string): bool =
-  var d: string
-  try: d = readFile(path) except IOError: return false
+proc unloadEmojiFont*() = gFont = nil   ## disable colour emoji again
+
+proc loadEmojiFontData*(d: string): bool =
   let f = EmojiFont(d: d)
   var tables = initTable[string, (int, int)]()
   for i in 0 ..< u16(d, 4):
@@ -87,6 +87,11 @@ proc loadEmojiFont*(path: string): bool =
         elif typ == 7 and u16(d, sub + 2) == 4: f.parseLigSubtable(sub + u32(d, sub + 4))
   gFont = f
   true
+
+proc loadEmojiFont*(path: string): bool =
+  var d: string
+  try: d = readFile(path) except IOError: return false
+  loadEmojiFontData(d)
 
 proc emojiReady*(): bool = not gFont.isNil
 

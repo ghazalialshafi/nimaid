@@ -14,8 +14,8 @@ options:
   --svg-text=MODE     paths | text                                   (default: paths)
                         paths = outlined glyphs, looks identical everywhere
                         text  = live <text>, selectable/searchable, needs a similar font installed
-  --font=FILE.ttf     text font, TrueType (glyf) outlines             (default: fonts/DejaVuSans.ttf)
-  --emoji=FILE.ttf    colour emoji font (Noto, OpenType-SVG)          (default: fonts/NotoColorEmoji-Regular.ttf)
+  --font=FILE.ttf     text font, TrueType (glyf) outlines             (default: fonts/DejaVuSans.ttf, else built-in)
+  --emoji=FILE.ttf    colour emoji font (Noto, OpenType-SVG)          (default: fonts/NotoColorEmoji-Regular.ttf if found)
   --dagre=MODE        legacy | modern  graph layout tie-breaking      (default: legacy = matches Mermaid)
   -h, --help          show this help
   -v, --version       show the version
@@ -31,6 +31,7 @@ proc usage() =
   quit(1)
 
 var font = getAppDir() / ".." / "fonts" / "DejaVuSans.ttf"
+if not fileExists(font) and hasEmbeddedFont: font = ""   # release builds carry DejaVu Sans
 var emojiFont = getAppDir() / ".." / "fonts" / "NotoColorEmoji-Regular.ttf"
 var themeName = ""
 var colors = 0

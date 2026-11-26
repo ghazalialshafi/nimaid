@@ -79,6 +79,19 @@ anywhere Nim compiles, and embeds as an ordinary Nim library.
 
 Every image in these docs was produced by nimaid itself (`docs/build_images.sh`).
 
+## Install
+
+| You want | Do this |
+|---|---|
+| the **command-line tool** | download `nimaid-cli-<version>-<platform>` from [Releases](https://github.com/ghazalialshafi/nimaid/releases) — one static binary, no dependencies, font built in |
+| **Python** | `pip install nimaid` (`pip install "nimaid[emoji]"` for colour emoji) |
+| **C / C++ / any FFI language** | `nimaid-capi-<version>-<platform>` from Releases: header, static + shared library; see [capi/README.md](capi/README.md) |
+| **JavaScript / browser / Node** | `npm install nimaid` (WebAssembly, ~0.8 MB gzipped) or `nimaid-wasm-<version>.tar.gz` from Releases; see [wasm/README.md](wasm/README.md) |
+| **Nim** | `nimble install https://github.com/ghazalialshafi/nimaid`, or build from source (below) |
+
+Releases cover Linux (glibc + musl; x86_64, aarch64, armv7, x86, riscv64), macOS (Intel, Apple Silicon), Windows (x64, ARM64, x86), FreeBSD and WebAssembly,
+all cross-compiled by [one GitHub Actions workflow](docs/releasing.md) with Zig.
+
 ## Quick start
 
 **1. Build** (needs Nim ≥ 2.0 and a C compiler — nothing else):
@@ -125,6 +138,11 @@ let svg = renderMermaidToSvg(chart, "fonts/DejaVuSans.ttf")                   # 
 ```
 
 Add the repo to your `--path` (or `requires` it from nimble) and `import nimaid`. Full walk-through: [Using nimaid as a library](docs/tutorials/07-library.md).
+
+## Use it from C (and other languages)
+
+`capi/` contains a stable C API (`nimaid.h`), a C++ wrapper, and a one-command cross-build for Linux, Windows, macOS and FreeBSD
+(`pip install ziglang && python3 capi/build.py`). DejaVu Sans is embedded, so no font files are needed. See [capi/README.md](capi/README.md).
 
 ## Supported diagrams
 

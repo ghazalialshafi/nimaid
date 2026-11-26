@@ -60,7 +60,7 @@ Pie labels must be quoted: `"Dogs" : 386`. Values must be numbers ≥ 0.
 Mermaid's automatic y-axis spans your data's minimum to maximum. Write `y-axis "Title" 0 --> 100` for a fixed range.
 
 ### The colours of my `themeVariables` are ignored
-Use hex (`#ffe08a`) or `rgb(…)`; CSS colour names are not accepted in `themeVariables`. Also remember: with `theme: base` the variables apply to the base palette. And a `--theme=` on the command line wins over the theme in the diagram (variables still apply).
+Use hex (`#ffe08a`), `rgb(…)`, `hsl(…)` or a CSS colour name (`tomato`); anything else is ignored. Also remember: with `theme: base` the variables apply to the base palette. And a `--theme=` on the command line wins over the theme in the diagram (variables still apply).
 
 ### Layout differs from mermaid.js
 Flowchart layout is validated against Mermaid's dagre driver and matches in all but rare cases, but **mindmaps** (balanced tree instead of force layout) and **Git graph** commit labels intentionally differ. Try `--dagre=legacy` (default, matches Mermaid) vs `--dagre=modern`.

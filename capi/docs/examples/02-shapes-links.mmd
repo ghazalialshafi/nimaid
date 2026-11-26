@@ -1,0 +1,13 @@
+flowchart TD
+    A[Rectangle] --> B(Rounded)
+    B --> C([Stadium])
+    C --> D[(Database)]
+    D --> E((Circle))
+    E --> F{Decision}
+    F -->|solid| G[Solid]
+    F -.->|dotted| H[Dotted]
+    F ==>|thick| I[Thick]
+    G --- J[No arrow]
+    H --o K[Circle end]
+    I --x L[Cross end]
+    M@{ shape: hex, label: "Hexagon via @{ }" } --> A
