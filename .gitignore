@@ -7,3 +7,9 @@ wasm/nimaid.wasm
 __pycache__/
 bin/
 nimcache/
+
+# generated at deploy time by .github/workflows/pages.yml (or by hand, see site/README.md)
+site/nimaid.mjs
+site/nimaid.wasm
+site/gallery/
+site/fonts/

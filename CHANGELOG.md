@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.6.1] - 2026-11-26
+
+### Fixed
+- **Kanban crashed on 32-bit targets** (wasm32, armv7, i386) with `over- or underflow` when a card had an `assigned:` name longer than 6 characters:
+  the avatar-colour hash used `int`, which is 32 bits there. It now uses wrapping `uint64` arithmetic (same colours as before on 64-bit).
+
+### Added
+- The wasm test suite renders every shipped example on wasm32 (it previously rendered only tiny diagrams), plus a kanban regression test.
+- **Website + playground** (`site/`, deployed to GitHub Pages by `.github/workflows/pages.yml`): a home page with a gallery of all 18 diagram types, and a live playground
+  (editor, pan/zoom preview, 26 examples, SVG/PNG export, shareable links, colour emoji loaded on demand). New logo; README and package READMEs link to it.
+
 ## [0.6.0] - 2026-11-26
 
 First release with the C API, Python wheels, WebAssembly build and automated cross-platform releases, on top of all eighteen diagram types

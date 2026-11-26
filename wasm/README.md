@@ -4,6 +4,8 @@
 The renderer is [nimaid](https://github.com/ghazalialshafi/nimaid) (pure Nim) compiled to a 2 MB WebAssembly module (≈ 0.8 MB gzipped).
 DejaVu Sans is built in; colour emoji are opt-in.
 
+**[Try it in your browser](https://ghazalialshafi.github.io/nimaid/playground/)** · [Website](https://ghazalialshafi.github.io/nimaid/) · [Source and docs](https://github.com/ghazalialshafi/nimaid)
+
 ```sh
 npm install nimaid
 ```

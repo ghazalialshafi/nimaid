@@ -16,7 +16,7 @@ from typing import List, NamedTuple, Optional, Union
 
 from . import _native
 
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 __all__ = [
     "Context", "Diagram", "Image", "png", "gif", "svg", "rgba", "render_file", "detect_type", "themes",
     "encode_png", "encode_gif", "native_version", "NimaidError", "InvalidArgumentError", "FontError",

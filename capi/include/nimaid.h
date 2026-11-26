@@ -22,8 +22,8 @@
 
 #define NIMAID_VERSION_MAJOR 0
 #define NIMAID_VERSION_MINOR 6
-#define NIMAID_VERSION_PATCH 0
-#define NIMAID_VERSION_STRING "0.6.0"
+#define NIMAID_VERSION_PATCH 1
+#define NIMAID_VERSION_STRING "0.6.1"
 /* Bumped only when the binary interface changes incompatibly. Compare with nimaid_abi_version(). */
 #define NIMAID_ABI_VERSION 1
 
@@ -81,7 +81,7 @@ typedef struct nimaid_image {
 
 /* ------------------------------------------------------------------ info */
 NIMAID_API int         nimaid_abi_version(void);
-NIMAID_API const char *nimaid_version(void);              /* "0.6.0" */
+NIMAID_API const char *nimaid_version(void);              /* "0.6.1" */
 NIMAID_API const char *nimaid_status_string(int status);  /* static text for a nimaid_status */
 NIMAID_API int         nimaid_has_embedded_font(void);    /* 1 if DejaVu Sans is compiled in (default) */
 NIMAID_API int         nimaid_theme_count(void);

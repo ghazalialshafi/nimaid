@@ -105,7 +105,7 @@ nimaid_status nimaid_encode_gif(…same…);
 
 ```c
 int         nimaid_abi_version(void);          /* compare with NIMAID_ABI_VERSION from the header you compiled against */
-const char *nimaid_version(void);              /* "0.6.0"; the header also has NIMAID_VERSION_MAJOR/MINOR/PATCH/STRING */
+const char *nimaid_version(void);              /* "0.6.1"; the header also has NIMAID_VERSION_MAJOR/MINOR/PATCH/STRING */
 int         nimaid_has_embedded_font(void);    /* 1 unless built with -d:nimaidNoEmbeddedFont */
 int         nimaid_theme_count(void);          /* 5 */
 const char *nimaid_theme_name(int index);      /* "default" "dark" "forest" "neutral" "base"; NULL if out of range */

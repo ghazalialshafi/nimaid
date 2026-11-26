@@ -5,7 +5,7 @@ from nimaid/purevg import pvg_engine_init, pvg_engine_term
 export sankey, treemap, radar, kanban, packet, journey, quadrant, timeline, xychart, pie, chartheme, chartkit, gantt, gitgraph, mindmap, diagrams, gfx, svg, gif, config, sequence, detect, emoji, types, theme, flowdb, dagre_adapter, painter,
        label, textmetrics, png
 
-const nimaidVersion* = "0.6.0"
+const nimaidVersion* = "0.6.1"
 
 const hasEmbeddedFont* = defined(nimaidEmbedFont)
   ## true when built with -d:nimaidEmbedFont: DejaVu Sans is compiled in and used when no font path is given.

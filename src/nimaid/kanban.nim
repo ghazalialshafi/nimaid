@@ -168,9 +168,10 @@ proc kanbanScene*(text: string, cv: ChartVars, fmTitle = ""): (Pvg_Paint, Diagra
         var tw = 0.0
         if c.item.ticket.len > 0: tw = min(textW(c.item.ticket, 11.5) + 14, (right - tx) * 0.55)
         if c.item.assigned.len > 0:
-          var hash = 0
-          for ch in c.item.assigned: hash = hash * 31 + int(ch)
-          let ac = parseCssColor(avatarPal[abs(hash) mod avatarPal.len]).get
+          # uint64 wraps instead of raising; `int` is only 32 bits on wasm32 and overflowed on names > 6 chars
+          var hash = 0'u64
+          for ch in c.item.assigned: hash = hash * 31'u64 + uint64(ord(ch))
+          let ac = parseCssColor(avatarPal[int(hash mod uint64(avatarPal.len))]).get
           let room = right - tx - (if tw > 0: tw + 10 else: 0.0) - 24
           let name = ellipsize(c.item.assigned, max(28.0, room), 12)
           let nw = textW(name, 12)

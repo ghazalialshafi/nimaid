@@ -1,6 +1,6 @@
 // node wasm/test.mjs [path/to/native_reference.png]   - exercises the wasm build end to end
 import assert from "node:assert/strict";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { Nimaid, NimaidError } from "./nimaid.mjs";
 
 const FLOW = "flowchart LR\n  A[Hello] --> B{Ok?}\n  B -->|yes| C[World]\n  B -->|no| A\n";
@@ -34,6 +34,12 @@ for (const t of ["sequenceDiagram\n A->>B: hi", "stateDiagram-v2\n [*] --> S\n S
   'pie\n "A" : 1\n "B" : 2', "xychart-beta\n bar [1, 2]", "timeline\n 2020 : x", "quadrantChart\n P: [0.3, 0.6]",
   "journey\n section S\n T: 3: Me", 'packet\n 0-7: "a"', "kanban\n Todo\n  t[Task]", "radar-beta\n axis a, b, c\n curve x{1, 2, 3}",
   'treemap-beta\n "R"\n  "A": 1', "sankey-beta\n\nA,B,1"]) assert.ok(sig(n.png(t), "\x89PNG"), t);
+
+// regression: 32-bit `int` overflow in kanban's avatar hash (names longer than 6 chars)
+assert.ok(sig(n.png("kanban\n  Todo\n    t[Task]@{ assigned: 'K.Sveidqvist' }"), "\x89PNG"));
+for (const f of readdirSync(new URL("./examples/", import.meta.url))) if (f.endsWith(".mmd") && !f.includes("emoji")) {
+  assert.ok(n.svg(readFileSync(new URL("./examples/" + f, import.meta.url), "utf8")).startsWith("<svg"), f);   // every shipped example renders on wasm32
+}
 
 // emoji (optional font path as 2nd argument)
 const emojiFont = process.argv[3];

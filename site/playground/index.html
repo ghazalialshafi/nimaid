@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nimaid playground — Mermaid to SVG/PNG in your browser, no server</title>
+<meta name="description" content="Live Mermaid playground powered by nimaid: pure Nim compiled to a 2 MB WebAssembly module. 18 diagram types, 5 themes, PNG/SVG export. No Chromium, no server.">
+<meta property="og:title" content="nimaid playground"><meta property="og:description" content="Render Mermaid diagrams in the browser with a 2 MB WebAssembly module. No headless browser.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#f6f7fb;--panel:#fff;--ink:#1c2033;--mute:#6b7190;--line:#dfe2ee;--acc:#6d5efc;--acc2:#00c2a8;--chip:#eef0fb;--err:#d93a52;--code:#fbfbfe;--dot:#d4d8ea;--sh:0 8px 30px rgba(40,44,90,.10)}
+:root[data-theme=dark]{--bg:#0e1020;--panel:#161934;--ink:#e8eaff;--mute:#8d93bd;--line:#262a52;--acc:#8b7dff;--acc2:#2de0c4;--chip:#20244a;--err:#ff6b81;--code:#11142b;--dot:#262a52;--sh:0 8px 30px rgba(0,0,0,.4)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column}
+button,select{font:inherit;color:inherit}
+header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;letter-spacing:-.3px}
+.brand i{font-style:normal;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--chip);color:var(--mute);white-space:nowrap}
+.badge.ok{color:var(--acc2)}
+.sp{flex:1}
+.btn{border:1px solid var(--line);background:var(--panel);padding:6px 12px;border-radius:9px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.btn:hover{border-color:var(--acc)}.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+select.btn{padding-right:6px}
+label.chk{display:inline-flex;gap:5px;align-items:center;color:var(--mute);cursor:pointer;font-size:13px}
+.chips{display:flex;gap:6px;align-items:center;padding:8px 16px;overflow-x:auto;background:var(--panel);border-bottom:1px solid var(--line);scrollbar-width:thin}
+.chips b{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:0 2px 0 10px;white-space:nowrap}
+.chips b:first-child{margin-left:0}
+.chip{border:0;background:var(--chip);padding:5px 11px;border-radius:99px;cursor:pointer;white-space:nowrap;font-size:13px}
+.chip:hover{outline:2px solid var(--acc)}.chip.on{background:var(--acc);color:#fff}
+main{flex:1;min-height:0;display:grid;grid-template-columns:var(--split,42%) 8px 1fr;padding:12px 12px 4px;gap:0}
+.pane{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh);display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.ph{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.gut{width:8px;cursor:col-resize;border-radius:4px;margin:0 1px;position:relative}.gut:hover::after,.gut.drag::after{content:"";position:absolute;inset:40% 3px;background:var(--acc);border-radius:2px}
+.ed{flex:1;display:flex;min-height:0;background:var(--code)}
+#ln{padding:12px 8px 12px 12px;text-align:right;color:var(--mute);opacity:.6;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow:hidden;user-select:none;white-space:pre}
+#src{flex:1;border:0;outline:0;resize:none;background:transparent;color:var(--ink);padding:12px 12px 12px 4px;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:2;white-space:pre;overflow:auto}
+#err{display:none;padding:8px 12px;background:color-mix(in srgb,var(--err) 14%,transparent);color:var(--err);font:12.5px ui-monospace,Menlo,Consolas,monospace;border-top:1px solid var(--err);white-space:pre-wrap;max-height:30%;overflow:auto}
+#err.on{display:block}
+.view{flex:1;position:relative;overflow:hidden;cursor:grab;background:radial-gradient(var(--dot) 1px,transparent 1px) 0 0/18px 18px}
+.view.pan{cursor:grabbing}
+#img{position:absolute;left:0;top:0;transform-origin:0 0;user-select:none;-webkit-user-drag:none;max-width:none;border-radius:6px;box-shadow:0 6px 28px rgba(20,24,60,.18);transition:opacity .15s}
+#img.stale{opacity:.35}
+.tools{position:absolute;right:10px;bottom:10px;display:flex;gap:6px;z-index:2}
+.tools .btn{padding:4px 10px;box-shadow:var(--sh)}
+#load{position:absolute;inset:0;display:grid;place-items:center;background:var(--panel);z-index:5;color:var(--mute);text-align:center}
+#load .bar{width:180px;height:4px;border-radius:4px;background:var(--chip);margin:12px auto 0;overflow:hidden}#load .bar i{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--acc),var(--acc2));animation:sl 1s infinite ease-in-out}
+@keyframes sl{0%{transform:translateX(-100%)}100%{transform:translateX(250%)}}
+footer{padding:6px 16px 8px;color:var(--mute);font-size:12px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--acc)}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);max-width:560px;width:92%;box-shadow:var(--sh)}dialog::backdrop{background:rgba(10,12,30,.5)}
+dialog h3{margin:0 0 6px}dialog pre{background:var(--code);border:1px solid var(--line);padding:10px 12px;border-radius:10px;overflow:auto;font-size:12.5px;margin:6px 0 14px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:99px;opacity:0;transition:.25s;pointer-events:none;z-index:20}#toast.on{opacity:1;transform:translateX(-50%)}
+@media(max-width:820px){main{grid-template-columns:1fr;grid-template-rows:42% 1fr;gap:8px}.gut{display:none}header .hide-s{display:none}}
+svg.i{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.brand{color:inherit;text-decoration:none}.brand svg{width:28px;height:28px}
+.view{touch-action:none}#zl{cursor:default;min-width:56px;justify-content:center;color:var(--mute)}
+#stat.load{color:var(--acc)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="logo" viewBox="0 0 64 64"><defs><linearGradient id="lgp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d5efc"/><stop offset="1" stop-color="#00c2a8"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#lgp)"/><rect x="9" y="13" width="20" height="14" rx="4" fill="#fff"/><rect x="35" y="37" width="20" height="14" rx="4" fill="#fff"/><path d="M29 20h8a6 6 0 0 1 6 6v5" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M38 31h10l-5 6z" fill="#fff"/></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 20h16"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+<symbol id="i-mode" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+<symbol id="i-shuf" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol>
+</defs></svg>
+<header>
+  <a class="brand" href="../" title="nimaid home"><svg viewBox="0 0 64 64"><use href="#logo"/></svg><span><i>nimaid</i> playground</span></a>
+  <span class="badge" id="ver">loading…</span><span class="badge ok" id="type">—</span><span class="badge" id="stat"></span>
+  <span class="sp"></span>
+  <select class="btn" id="theme" title="Theme"></select>
+  <select class="btn hide-s" id="scale" title="PNG scale"><option value="1">PNG 1×</option><option value="2" selected>PNG 2×</option><option value="3">PNG 3×</option><option value="4">PNG 4×</option></select>
+  <label class="chk hide-s" title="Keep text selectable in the SVG"><input type="checkbox" id="live"> live text</label>
+  <button class="btn" id="dSvg"><svg class="i"><use href="#i-dl"/></svg> SVG</button><button class="btn pri" id="dPng"><svg class="i"><use href="#i-dl"/></svg> PNG</button>
+  <button class="btn" id="cPng" title="Copy PNG to clipboard"><svg class="i"><use href="#i-copy"/></svg> Copy</button>
+  <button class="btn" id="share" title="Copy a link containing this diagram"><svg class="i"><use href="#i-link"/></svg> Share</button>
+  <button class="btn" id="mode" title="Toggle light/dark page" aria-label="Toggle light or dark page"><svg class="i"><use href="#i-mode"/></svg></button>
+  <button class="btn" id="about" aria-label="About and install"><svg class="i"><use href="#i-info"/></svg></button>
+</header>
+<nav class="chips" id="chips"></nav>
+<main id="main">
+  <section class="pane">
+    <div class="ph"><span>Mermaid</span><span class="sp"></span><button class="btn" id="rand" style="padding:2px 9px;text-transform:none;letter-spacing:0"><svg class="i"><use href="#i-shuf"/></svg> Surprise me</button></div>
+    <div class="ed"><div id="ln">1</div><textarea id="src" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Mermaid source"></textarea></div>
+    <div id="err" role="alert"></div>
+  </section>
+  <div class="gut" id="gut" title="Drag to resize"></div>
+  <section class="pane">
+    <div class="ph"><span>Preview</span><span class="sp"></span><span id="dims"></span></div>
+    <div class="view" id="view">
+      <img id="img" alt="Rendered diagram" draggable="false">
+      <div class="tools"><button class="btn" id="zo" aria-label="Zoom out">-</button><span class="btn" id="zl">100%</span><button class="btn" id="zi" aria-label="Zoom in">+</button><button class="btn" id="fit" title="Fit the whole diagram">Fit</button><button class="btn" id="z1" title="Actual size (1 SVG px = 1 CSS px)">1:1</button></div>
+      <div id="load"><div>Loading the 2 MB WebAssembly renderer…<div class="bar"><i></i></div></div></div>
+    </div>
+  </section>
+</main>
+<footer><span>Rendered entirely in your browser by <b>nimaid</b> — pure Nim → WebAssembly. No server, no Chromium.</span><span class="sp"></span>
+<a href="https://github.com/ghazalialshafi/nimaid" target="_blank" rel="noopener">GitHub</a><a href="https://pypi.org/project/nimaid/" target="_blank" rel="noopener">PyPI</a><a href="https://www.npmjs.com/package/nimaid" target="_blank" rel="noopener">npm</a><span>Ctrl/⌘+Enter re-renders · scroll = zoom · drag = pan</span></footer>
+<dialog id="dlg"><h3>Use nimaid anywhere</h3><p style="margin:0 0 8px;color:var(--mute)">Same renderer, byte-identical output. Pure Nim, zero dependencies.</p>
+<pre>pip install nimaid          # Python
+npm install nimaid          # Node / Deno / Bun / browsers
+nimaid diagram.mmd out.png  # CLI &amp; C API on GitHub Releases</pre>
+<pre>import { Nimaid } from "nimaid";
+const n = await Nimaid.load();
+const png = n.png("flowchart LR\n A --> B", { theme: "dark", scale: 2 });</pre>
+<form method="dialog"><button class="btn pri">Close</button></form></dialog>
+<div id="toast"></div>
+<script type="module">
+import { Nimaid } from "../nimaid.mjs";
+const EXAMPLES = [{"g": "Flowchart", "n": "Basic", "k": "flowchart-basic", "c": "flowchart TD\n    A[Start] --> B{Is it working?}\n    B -- Yes --> C[Great!]\n    B -- No --> D[Debug<br/>and retry]\n    D --> B\n    C --> E((Done))\n"}, {"g": "Flowchart", "n": "Complex", "k": "flowchart", "c": "flowchart LR\n    subgraph Frontend\n        UI([Web UI]) --> API[[API Client]]\n    end\n    subgraph Backend\n        GW{{Gateway}} ==> SVC[/Service/]\n        SVC -.-> DB[(Database)]\n        SVC --> Q>Queue]\n    end\n    API -->|HTTPS| GW\n    Q --> W[\\Worker\\]\n    W --> W\n    W --- DB\n    DB --> F(((Archive)))\n"}, {"g": "Flowchart", "n": "Curves", "k": "curves", "c": "flowchart TD\n    A[basis default] --> B & C\n    B --> D\n    C --> D\n    D --> E[linear]\n    D --> F[step]\n    D --> G[cardinal]\n    D --> H[natural]\n    D --> I[monotoneX]\n    D --> J[bumpY]\n    D --> K[catmullRom]\n    linkStyle 4 interpolate linear\n    linkStyle 5 interpolate step\n    linkStyle 6 interpolate cardinal\n    linkStyle 7 interpolate natural\n    linkStyle 8 interpolate monotoneX\n    linkStyle 9 interpolate bumpY\n    linkStyle 10 interpolate catmullRom\n"}, {"g": "Flowchart", "n": "Nested", "k": "nested", "c": "flowchart TB\n    subgraph Cloud[\"Cloud Platform\"]\n        direction TB\n        subgraph Net[Network]\n            LB[Load Balancer] --> W1[Web 1]\n            LB --> W2[Web 2]\n        end\n        subgraph Data[Data Tier]\n            DB[(Primary)] --> R[(Replica)]\n        end\n        W1 --> DB\n        W2 --> DB\n    end\n    User((User)) --> LB\n    Admin --> Cloud\n    Cloud --> Mon[Monitoring]\n"}, {"g": "Flowchart", "n": "Styled", "k": "styles", "c": "flowchart TD\n    classDef green fill:#9f6,stroke:#333,stroke-width:3px,color:#000\n    classDef warn fill:#fe9,stroke:#c90,stroke-dasharray: 5 5\n    A[Start]:::green --> B(Rounded)\n    B -->|yes| C{Decide}\n    B -.-> D[Dotted]:::warn\n    C ==>|thick| E((Circle))\n    C --x F[Cross end]\n    C --o G[Circle end]\n    D <--> E\n    E x--x F\n    style A fill:#f9f,stroke:#333\n    style G fill:#bbf,stroke:red,stroke-width:4px\n    linkStyle 0 stroke:#f00,stroke-width:4px\n    linkStyle 2,3 stroke:#00f\n    H[Line one<br/>Line two<br/>Line three] ~~~ A\n    I[\"Unicode: café ✓ — 日本\"] --> H\n"}, {"g": "Flowchart", "n": "All shapes", "k": "shapes", "c": "flowchart LR\n    n1@{ shape: rect, label: \"rect\" }\n    n2@{ shape: rounded, label: \"rounded\" }\n    n3@{ shape: terminal, label: \"terminal\" }\n    n4@{ shape: fr-rect, label: \"fr-rect\" }\n    n5@{ shape: cyl, label: \"cyl\" }\n    n6@{ shape: data-store, label: \"data-store\" }\n    n7@{ shape: directory, label: \"directory\" }\n    n8@{ shape: bucket, label: \"bucket\" }\n    n9@{ shape: console, label: \"console\" }\n    n10@{ shape: browser, label: \"browser\" }\n    n11@{ shape: person, label: \"person\" }\n    n12@{ shape: circ, label: \"circ\" }\n    n13@{ shape: bang, label: \"bang\" }\n    n14@{ shape: cloud, label: \"cloud\" }\n    n15@{ shape: diam, label: \"diam\" }\n    n16@{ shape: hex, label: \"hex\" }\n    n17@{ shape: lean-r, label: \"lean-r\" }\n    n18@{ shape: lean-l, label: \"lean-l\" }\n    n19@{ shape: trap-b, label: \"trap-b\" }\n    n20@{ shape: trap-t, label: \"trap-t\" }\n    n21@{ shape: dbl-circ, label: \"dbl-circ\" }\n    n22@{ shape: text, label: \"text\" }\n    n23@{ shape: notch-rect, label: \"notch-rect\" }\n    n24@{ shape: lin-rect, label: \"lin-rect\" }\n    n25@{ shape: sm-circ, label: \"sm-circ\" }\n    n26@{ shape: fr-circ, label: \"fr-circ\" }\n    n27@{ shape: fork, label: \"fork\" }\n    n28@{ shape: collate, label: \"collate\" }\n    n29@{ shape: brace, label: \"brace\" }\n    n30@{ shape: brace-r, label: \"brace-r\" }\n    n31@{ shape: braces, label: \"braces\" }\n    n32@{ shape: bolt, label: \"bolt\" }\n    n33@{ shape: doc, label: \"doc\" }\n    n34@{ shape: delay, label: \"delay\" }\n    n35@{ shape: h-cyl, label: \"h-cyl\" }\n    n36@{ shape: lin-cyl, label: \"lin-cyl\" }\n    n37@{ shape: curv-trap, label: \"curv-trap\" }\n    n38@{ shape: div-rect, label: \"div-rect\" }\n    n39@{ shape: tri, label: \"tri\" }\n    n40@{ shape: win-pane, label: \"win-pane\" }\n    n41@{ shape: f-circ, label: \"f-circ\" }\n    n42@{ shape: notch-pent, label: \"notch-pent\" }\n    n43@{ shape: flip-tri, label: \"flip-tri\" }\n    n44@{ shape: sl-rect, label: \"sl-rect\" }\n    n45@{ shape: docs, label: \"docs\" }\n    n46@{ shape: st-rect, label: \"st-rect\" }\n    n47@{ shape: bow-rect, label: \"bow-rect\" }\n    n48@{ shape: cross-circ, label: \"cross-circ\" }\n    n49@{ shape: tag-doc, label: \"tag-doc\" }\n    n50@{ shape: tag-rect, label: \"tag-rect\" }\n    n51@{ shape: flag, label: \"flag\" }\n    n52@{ shape: lin-doc, label: \"lin-doc\" }\n    n53@{ shape: state, label: \"state\" }\n    n54@{ shape: choice, label: \"choice\" }\n    n55@{ shape: note, label: \"note\" }\n    n56@{ shape: anchor, label: \"anchor\" }\n    n57@{ shape: ellipse, label: \"ellipse\" }\n    n1 --> n2\n    n2 --> n3\n    n3 --> n4\n    n4 --> n5\n    n5 --> n6\n    n6 --> n7\n    n7 --> n8\n    n9 --> n10\n    n10 --> n11\n    n11 --> n12\n    n12 --> n13\n    n13 --> n14\n    n14 --> n15\n    n15 --> n16\n    n17 --> n18\n    n18 --> n19\n    n19 --> n20\n    n20 --> n21\n    n21 --> n22\n    n22 --> n23\n    n23 --> n24\n    n25 --> n26\n    n26 --> n27\n    n27 --> n28\n    n28 --> n29\n    n29 --> n30\n    n30 --> n31\n    n31 --> n32\n    n33 --> n34\n    n34 --> n35\n    n35 --> n36\n    n36 --> n37\n    n37 --> n38\n    n38 --> n39\n    n39 --> n40\n    n41 --> n42\n    n42 --> n43\n    n43 --> n44\n    n44 --> n45\n    n45 --> n46\n    n46 --> n47\n    n47 --> n48\n    n49 --> n50\n    n50 --> n51\n    n51 --> n52\n    n52 --> n53\n    n53 --> n54\n    n54 --> n55\n    n55 --> n56"}, {"g": "Flowchart", "n": "Emoji", "k": "emoji", "c": "flowchart LR\n    A[\"😀 Happy path\"] -->|\"✅ ok 👍🏽\"| B{\"Ship it? 🚀\"}\n    B -->|\"🏁 Finish line\"| C[\"Family 👨‍👩‍👧<br/>Call 1️⃣ ❤️\"]\n    B -->|\"no 🙅\"| D[Retry ♥ text arrow →]\n    D -->|\"fix 🔧\"| A\n    A -->|\"long label between arrows\"| C\n"}, {"g": "Behaviour", "n": "Sequence", "k": "sequence", "c": "sequenceDiagram\n    title Order flow\n    autonumber\n    actor U as User 😀\n    participant W as Web App\n    participant S as Service\n    U->>+W: Place order\n    W->>S: Create order #35;42\n    activate S\n    S-->>W: Accepted\n    deactivate S\n    loop Every minute\n        W->>W: Poll status\n    end\n    alt paid\n        S-)W: Payment ok\n    else failed\n        S-xW: Payment failed\n    end\n    Note over U,W: Customer sees result\n    Note right of S: Audit log\n    W-->>-U: Done\n"}, {"g": "Behaviour", "n": "Sequence 2", "k": "sequence2", "c": "sequenceDiagram\n    participant A as Alice\n    participant B as Bob\n    participant C as Carol\n    A->>B: Hello Bob, how are you?\n    B-->>A: Great!\n    par to Bob\n        A->>B: Status?\n    and to Carol\n        A->>C: Status?\n    end\n    rect rgb(191, 223, 255)\n        B->>C: Background block\n    end\n    critical Establish connection\n        C->>A: connect\n    option Network timeout\n        C-xA: failed\n    end\n    opt maybe\n        A->>A: think <br/>twice\n    end\n    Note left of A: left note\n"}, {"g": "Behaviour", "n": "State", "k": "state", "c": "stateDiagram-v2\n    direction LR\n    [*] --> Idle\n    Idle --> Running : start\n    state Running {\n        [*] --> Working\n        Working --> Paused : pause\n        Paused --> Working : resume\n        Working --> [*]\n    }\n    Running --> Check : done\n    state Check <<choice>>\n    Check --> Idle : ok\n    Check --> Failed : error\n    Failed --> [*]\n    Idle : waits for input\n    note right of Failed : needs a human\n"}, {"g": "Data & code", "n": "ER", "k": "er", "c": "erDiagram\n    CUSTOMER ||--o{ ORDER : places\n    ORDER ||--|{ LINE_ITEM : contains\n    PRODUCT ||--o{ LINE_ITEM : \"ordered in\"\n    CUSTOMER {\n        int id PK\n        string name\n        string email UK \"login address\"\n    }\n    ORDER {\n        int id PK\n        int customer_id FK\n        date placed_at\n    }\n    LINE_ITEM {\n        int order_id FK\n        int product_id FK\n        int qty\n    }\n    PRODUCT {\n        int id PK\n        string title\n        float price\n    }\n    CUSTOMER }o..o| ADDRESS : \"lives at\"\n"}, {"g": "Data & code", "n": "Class", "k": "class", "c": "classDiagram\n    class Animal {\n        <<abstract>>\n        +String name\n        +int age\n        +eat() void\n        +sleep() void\n    }\n    class Dog {\n        +bark() void\n    }\n    class Cat {\n        +purr() void\n    }\n    class Owner {\n        +String name\n        +adopt(Animal a) bool\n    }\n    class Shelter~T~\n    Animal <|-- Dog : inherits\n    Animal <|-- Cat\n    Owner \"1\" --> \"*\" Animal : owns\n    Shelter o-- Animal\n    Owner *-- Shelter : runs\n    Dog ..> Owner : notifies\n"}, {"g": "Planning", "n": "Gantt", "k": "gantt", "c": "gantt\n    title Release plan\n    dateFormat YYYY-MM-DD\n    axisFormat %b %d\n    section Design\n    Research        :done,   des1, 2025-01-06, 2025-01-17\n    Prototype       :active, des2, after des1, 10d\n    section Build\n    Backend         :crit, b1, after des2, 3w\n    Frontend        :b2, after des2, 15d\n    Integration     :crit, b3, after b1 b2, 7d\n    section Launch\n    Beta            :b4, after b3, 5d\n    Go live         :milestone, m1, after b4, 0d\n"}, {"g": "Planning", "n": "Git graph", "k": "gitgraph", "c": "gitGraph\n    commit id: \"init\"\n    commit id: \"setup\"\n    branch develop\n    checkout develop\n    commit id: \"feat-a\"\n    branch feature\n    checkout feature\n    commit id: \"feat-b\" tag: \"wip\"\n    commit id: \"feat-c\"\n    checkout develop\n    merge feature id: \"merge-feature\"\n    checkout main\n    commit id: \"hotfix\" type: HIGHLIGHT\n    merge develop id: \"release\" tag: \"v1.0\"\n    commit id: \"oops\" type: REVERSE\n"}, {"g": "Planning", "n": "Timeline", "k": "timeline", "c": "timeline\n    title History of Social Media Platform\n    2002 : LinkedIn\n    2004 : Facebook : Google\n    2005 : YouTube\n    2006 : Twitter\n"}, {"g": "Planning", "n": "Kanban", "k": "kanban", "c": "---\nconfig:\n  kanban:\n    ticketBaseUrl: 'https://example.org/issues/#TICKET#'\n---\nkanban\n  Todo\n    [Create Documentation]\n    docs[Create Blog about the new diagram]\n  [In progress]\n    id6[Create renderer so that it works in all cases. We also add some extra text here for testing purposes. And some more just for the extra flare.]\n  id9[Ready for deploy]\n    id8[Design grammar]@{ assigned: 'knsv' }\n  id10[Ready for test]\n    id4[Create parsing tests]@{ ticket: MC-2038, assigned: 'K.Sveidqvist', priority: 'High' }\n    id66[last item]@{ priority: 'Very Low', assigned: 'knsv' }\n  id11[Done]\n    id5[define getData]\n    id2[Title of diagram is more than 100 chars when user duplicates diagram with 100 char]@{ ticket: MC-2036, priority: 'Very High'}\n    id3[Update DB function]@{ ticket: MC-2037, assigned: knsv, priority: 'High' }\n  id12[Can't reproduce]\n    id3[Weird flickering in Firefox]\n"}, {"g": "Planning", "n": "Journey", "k": "journey", "c": "journey\n    title My working day\n    section Go to work\n      Make tea: 5: Me\n      Go upstairs: 3: Me\n      Do work: 1: Me, Cat\n    section Go home\n      Go downstairs: 5: Me\n      Sit down: 5: Me\n"}, {"g": "Planning", "n": "Mindmap", "k": "mindmap", "c": "mindmap\n  root((Project Nimaid))\n    Diagrams\n      Flowchart\n      Sequence\n      State\n      ER\n      Class\n    Exports\n      PNG\n      GIF\n      SVG\n    Quality\n      Tests\n      Themes\n        Dark\n        Forest\n    Emoji 😀\n"}, {"g": "Charts", "n": "Pie", "k": "pie", "c": "pie showData title Key elements in Product X\n    \"Calcium\" : 42.96\n    \"Potassium\" : 50.05\n    \"Magnesium\" : 10.01\n    \"Iron\" :  5\n"}, {"g": "Charts", "n": "Donut", "k": "donut", "c": "%%{init: {'pie': {'legendPosition': 'bottom', 'donutHole': 0.45, 'highlightSlice': 'Cats', 'textPosition': 0.8}}}%%\npie title Pets adopted\n    \"Dogs\" : 386\n    \"Cats\" : 85\n    \"Rats\" : 15\n"}, {"g": "Charts", "n": "XY chart", "k": "xychart", "c": "xychart-beta\n    title \"Sales Revenue\"\n    x-axis [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]\n    y-axis \"Revenue (in $)\" 4000 --> 11000\n    bar [5000, 6000, 7500, 8200, 9500, 10500, 11000, 10200, 9200, 8500, 7000, 6000]\n    line [5000, 6000, 7500, 8200, 9500, 10500, 11000, 10200, 9200, 8500, 7000, 6000]\n"}, {"g": "Charts", "n": "Quadrant", "k": "quadrant", "c": "quadrantChart\n    title Reach and engagement of campaigns\n    x-axis Low Reach --> High Reach\n    y-axis Low Engagement --> High Engagement\n    quadrant-1 We should expand\n    quadrant-2 Need to promote\n    quadrant-3 Re-evaluate\n    quadrant-4 May be improved\n    Campaign A: [0.3, 0.6]\n    Campaign B: [0.45, 0.23]\n    Campaign C: [0.57, 0.69]\n    Campaign D: [0.78, 0.34] radius: 12\n    Campaign E: [0.40, 0.34] color: #ff3300, radius: 8\n    Campaign F: [0.35, 0.78]\n"}, {"g": "Charts", "n": "Radar", "k": "radar", "c": "---\ntitle: \"Grades\"\n---\nradar-beta\n  axis m[\"Math\"], s[\"Science\"], e[\"English\"]\n  axis h[\"History\"], g[\"Geography\"], a[\"Art\"]\n  curve a[\"Alice\"]{85, 90, 80, 70, 75, 90}\n  curve b[\"Bob\"]{70, 75, 85, 80, 90, 85}\n\n  max 100\n  min 0\n"}, {"g": "Charts", "n": "Treemap", "k": "treemap", "c": "treemap-beta\n\"Section 1\"\n    \"Leaf 1.1\": 12\n    \"Section 1.2\":::class1\n      \"Leaf 1.2.1\": 12\n\"Section 2\"\n    \"Leaf 2.1\": 20\n    \"Leaf 2.2\": 25\n    \"Leaf 2.3\": 8\n\nclassDef class1 fill:red,color:blue,stroke:#FFD600;\n"}, {"g": "Charts", "n": "Sankey", "k": "sankey", "c": "---\nconfig:\n  sankey:\n    showValues: false\n---\nsankey-beta\n\n%% source,target,value\nAgricultural 'waste',Bio-conversion,124.729\nBio-conversion,Liquid,0.597\nBio-conversion,Losses,26.862\nBio-conversion,Solid,280.322\nBio-conversion,Gas,81.144\nBiofuel imports,Liquid,35\nBiomass imports,Solid,35\nCoal imports,Coal,11.606\nCoal reserves,Coal,63.965\nCoal,Solid,75.571\nDistrict heating,Industry,10.639\nDistrict heating,Heating and cooling - commercial,22.505\nDistrict heating,Heating and cooling - homes,46.184\nElectricity grid,Over generation / exports,104.453\nElectricity grid,Heating and cooling - homes,113.726\nElectricity grid,H2 conversion,27.14\nElectricity grid,Industry,342.165\nElectricity grid,Road transport,37.797\nElectricity grid,Agriculture,4.412\nElectricity grid,Heating and cooling - commercial,40.858\nElectricity grid,Losses,56.691\nElectricity grid,Rail transport,7.863\nElectricity grid,Lighting & appliances - commercial,90.008\nElectricity grid,Lighting & appliances - homes,93.494\nGas imports,Ngas,40.719\nGas reserves,Ngas,82.233\nGas,Heating and cooling - commercial,0.129\nGas,Losses,1.401\nGas,Thermal generation,151.891\nGas,Agriculture,2.096\nGas,Industry,48.58\nGeothermal,Electricity grid,7.013\nH2 conversion,H2,20.897\nH2 conversion,Losses,6.242\nH2,Road transport,20.897\nHydro,Electricity grid,6.995\nLiquid,Industry,121.066\nLiquid,International shipping,128.69\nLiquid,Road transport,135.835\nLiquid,Domestic aviation,14.458\nLiquid,International aviation,206.267\nLiquid,Agriculture,3.64\nLiquid,National navigation,33.218\nLiquid,Rail transport,4.413\nMarine algae,Bio-conversion,4.375\nNgas,Gas,122.952\nNuclear,Thermal generation,839.978\nOil imports,Oil,504.287\nOil reserves,Oil,107.703\nOil,Liquid,611.99\nOther waste,Solid,56.587\nOther waste,Bio-conversion,77.81\nPumped heat,Heating and cooling - homes,193.026\nPumped heat,Heating and cooling - commercial,70.672\nSolar PV,Electricity grid,59.901\nSolar Thermal,Heating and cooling - homes,19.263\nSolar,Solar Thermal,19.263\nSolar,Solar PV,59.901\nSolid,Agriculture,0.882\nSolid,Thermal generation,400.12\nSolid,Industry,46.477\nThermal generation,Electricity grid,525.531\nThermal generation,Losses,787.129\nThermal generation,District heating,79.329\nTidal,Electricity grid,9.452\nUK land based bioenergy,Bio-conversion,182.01\nWave,Electricity grid,19.013\nWind,Electricity grid,289.366\n"}, {"g": "Charts", "n": "Packet", "k": "packet", "c": "---\ntitle: \"TCP Packet\"\n---\npacket\n0-15: \"Source Port\"\n16-31: \"Destination Port\"\n32-63: \"Sequence Number\"\n64-95: \"Acknowledgment Number\"\n96-99: \"Data Offset\"\n100-105: \"Reserved\"\n106: \"URG\"\n107: \"ACK\"\n108: \"PSH\"\n109: \"RST\"\n110: \"SYN\"\n111: \"FIN\"\n112-127: \"Window\"\n128-143: \"Checksum\"\n144-159: \"Urgent Pointer\"\n160-191: \"(Options and Padding)\"\n192-255: \"Data (variable length)\"\n"}];
+const $ = (s) => document.getElementById(s);
+const src = $("src"), img = $("img"), view = $("view"), errEl = $("err");
+let n, url = "", cur = "", W = 1, H = 1, k = 1, tx = 0, ty = 0, auto = true, last = "", timer, seq = 0;
+
+const toast = (m) => { const t = $("toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 1600); };
+const download = (blob, name) => { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); };
+const b64 = (s) => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+const unb64 = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0)));
+
+// ---- chips
+const chips = $("chips"); let group = "";
+EXAMPLES.forEach((e, i) => {
+  if (e.g !== group) { group = e.g; const b = document.createElement("b"); b.textContent = group; chips.append(b); }
+  const c = document.createElement("button"); c.className = "chip"; c.textContent = e.n; c.dataset.i = i;
+  c.onclick = () => load(i); chips.append(c);
+});
+function load(i) {
+  cur = i; src.value = EXAMPLES[i].c; render(true); gutter();
+  [...chips.querySelectorAll(".chip")].forEach((c) => c.classList.toggle("on", +c.dataset.i === i));
+  const on = chips.querySelector(".chip.on"); on && on.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+}
+
+// ---- editor
+function gutter() { const c = src.value.split("\n").length; $("ln").textContent = Array.from({ length: c }, (_, i) => i + 1).join("\n"); $("ln").scrollTop = src.scrollTop; }
+src.addEventListener("scroll", () => ($("ln").scrollTop = src.scrollTop));
+src.addEventListener("input", () => { cur = ""; chips.querySelectorAll(".chip.on").forEach((c) => c.classList.remove("on")); gutter(); clearTimeout(timer); timer = setTimeout(() => render(false), 160); });
+src.addEventListener("keydown", (e) => {
+  if (e.key === "Tab") { e.preventDefault(); const s = src.selectionStart; src.setRangeText("  ", s, src.selectionEnd, "end"); src.dispatchEvent(new Event("input")); }
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); render(false); }
+});
+
+// ---- colour emoji: the 25 MB Noto font is fetched only the first time a diagram contains an emoji
+const EMOJI_RE = /\p{Extended_Pictographic}|\p{Regional_Indicator}|\u20E3/u;
+let emojiState = 0;
+async function ensureEmoji() {
+  emojiState = 1; const st = $("stat"); st.classList.add("load");
+  try {
+    const res = await fetch("../fonts/NotoColorEmoji-Regular.ttf"); if (!res.ok) throw new Error("HTTP " + res.status);
+    const rd = res.body.getReader(), parts = []; let got = 0;
+    for (;;) { const { done, value } = await rd.read(); if (done) break; parts.push(value); got += value.length; st.textContent = `Loading emoji font (once): ${(got / 1048576).toFixed(1)} / 25 MB`; }
+    const all = new Uint8Array(got); let o = 0; for (const p of parts) { all.set(p, o); o += p.length; }
+    n.setEmojiFont(all); emojiState = 2; st.classList.remove("load"); render(false);
+  } catch (e) { emojiState = 0; st.classList.remove("load"); toast("Emoji font could not be loaded: " + e.message); }
+}
+
+// ---- rendering
+const opts = () => ({ theme: $("theme").value || undefined });
+function render(fit) {
+  if (!n) return; const text = src.value, my = ++seq;
+  if (!text.trim()) { errEl.classList.remove("on"); return; }
+  if (emojiState === 0 && EMOJI_RE.test(text)) ensureEmoji();
+  try {
+    const t0 = performance.now();
+    const svg = n.svg(text, { ...opts(), liveText: $("live").checked });
+    const ms = performance.now() - t0; if (my !== seq) return;
+    last = svg; const m = svg.match(/<svg[^>]*?\swidth="([\d.]+)[^"]*"[^>]*?\sheight="([\d.]+)/) || [];
+    const vb = svg.match(/viewBox="[\d.\-]+ [\d.\-]+ ([\d.]+) ([\d.]+)"/);
+    W = +(m[1] || (vb && vb[1]) || 600); H = +(m[2] || (vb && vb[2]) || 400);
+    const prev = url; url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })); img.src = url; prev && setTimeout(() => URL.revokeObjectURL(prev), 500);
+    img.style.width = W + "px"; img.style.height = H + "px"; img.classList.remove("stale"); errEl.classList.remove("on");
+    $("type").textContent = n.detectType(text); $("stat").textContent = `${ms.toFixed(0)} ms · ${(svg.length / 1024).toFixed(0)} KB SVG`; $("dims").textContent = `${Math.round(W)} × ${Math.round(H)} px`;
+    img.dataset.sized = 1; if (fit || auto) fitView(); else apply();
+  } catch (e) {
+    img.classList.add("stale"); errEl.textContent = (e.status === 4 ? "Unsupported or unrecognised diagram type.\n" : "") + e.message; errEl.classList.add("on");
+    $("type").textContent = "error";
+  }
+}
+
+// ---- pan / zoom: k = scale, (tx,ty) = translation. `auto` keeps the diagram fitted until the user zooms or pans.
+const vr = () => view.getBoundingClientRect();
+const apply = (anim) => { img.style.transition = anim ? "transform .18s ease" : "none"; img.style.transform = `translate(${tx}px,${ty}px) scale(${k})`; $("zl").textContent = Math.round(k * 100) + "%"; };
+function fitView(anim) { const r = vr(); k = Math.min(2, (r.width - 56) / W, (r.height - 56) / H); if (!(k > 0)) k = 1; tx = (r.width - W * k) / 2; ty = (r.height - H * k) / 2; auto = true; apply(anim); }
+function zoomAt(nk, cx, cy, anim) { nk = Math.min(10, Math.max(0.05, nk)); tx = cx - (cx - tx) * (nk / k); ty = cy - (cy - ty) * (nk / k); k = nk; auto = false; apply(anim); }
+const center = () => { const r = vr(); return [r.width / 2, r.height / 2]; };
+view.addEventListener("wheel", (e) => { e.preventDefault(); const r = vr(); zoomAt(k * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.002)), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+const pts = new Map(), dist = () => { const [a, b] = [...pts.values()]; return Math.hypot(a[0] - b[0], a[1] - b[1]); };
+view.addEventListener("pointerdown", (e) => { if (e.target.closest(".tools")) return; pts.set(e.pointerId, [e.clientX, e.clientY]); view.setPointerCapture(e.pointerId); view.classList.add("pan"); });
+view.addEventListener("pointermove", (e) => {
+  const p = pts.get(e.pointerId); if (!p) return;
+  const d0 = pts.size === 2 ? dist() : 0, dx = e.clientX - p[0], dy = e.clientY - p[1]; p[0] = e.clientX; p[1] = e.clientY;
+  if (pts.size === 1) { tx += dx; ty += dy; auto = false; apply(); }
+  else if (pts.size === 2 && d0 > 0) { const [a, b] = [...pts.values()], r = vr(); zoomAt(k * dist() / d0, (a[0] + b[0]) / 2 - r.left, (a[1] + b[1]) / 2 - r.top); }
+});
+const up = (e) => { pts.delete(e.pointerId); if (!pts.size) view.classList.remove("pan"); };
+["pointerup", "pointercancel", "lostpointercapture"].forEach((t) => view.addEventListener(t, up));
+view.addEventListener("dblclick", (e) => { if (!e.target.closest(".tools")) fitView(true); });
+$("fit").onclick = () => fitView(true); $("zi").onclick = () => zoomAt(k * 1.25, ...center(), true); $("zo").onclick = () => zoomAt(k / 1.25, ...center(), true);
+$("z1").onclick = () => zoomAt(1, ...center(), true);
+new ResizeObserver(() => { if (n && auto && img.dataset.sized) fitView(); }).observe(view);
+
+// ---- toolbar
+$("theme").onchange = () => render(false); $("live").onchange = () => render(false);
+$("dSvg").onclick = () => { if (!last) return; download(new Blob([last], { type: "image/svg+xml" }), "diagram.svg"); };
+const png = () => n.png(src.value, { ...opts(), scale: +$("scale").value });
+$("dPng").onclick = () => { try { download(new Blob([png()], { type: "image/png" }), "diagram.png"); } catch (e) { toast(e.message); } };
+$("cPng").onclick = async () => { try { await navigator.clipboard.write([new ClipboardItem({ "image/png": new Blob([png()], { type: "image/png" }) })]); toast("PNG copied"); } catch (e) { toast("Clipboard not available here"); } };
+$("share").onclick = async () => { const u = location.origin + location.pathname + "#c=" + b64(src.value) + ($("theme").value ? "&t=" + $("theme").value : ""); history.replaceState(null, "", u); try { await navigator.clipboard.writeText(u); toast("Link copied"); } catch { toast("Link is in the address bar"); } };
+$("rand").onclick = () => { let i; do i = Math.floor(Math.random() * EXAMPLES.length); while (i === cur); load(i); };
+$("about").onclick = () => $("dlg").showModal();
+const root = document.documentElement, saved = localStorage.getItem("nimaid-mode");
+root.dataset.theme = saved || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
+$("mode").onclick = () => { root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark"; try { localStorage.setItem("nimaid-mode", root.dataset.theme); } catch {} };
+
+// ---- splitter
+const gut = $("gut"), main = $("main");
+gut.addEventListener("pointerdown", (e) => { gut.setPointerCapture(e.pointerId); gut.classList.add("drag"); });
+gut.addEventListener("pointermove", (e) => { if (!gut.classList.contains("drag")) return; const r = main.getBoundingClientRect(); main.style.setProperty("--split", Math.min(75, Math.max(20, ((e.clientX - r.left) / r.width) * 100)) + "%"); });
+gut.addEventListener("pointerup", () => gut.classList.remove("drag"));
+
+// ---- boot
+try {
+  n = await Nimaid.load("../nimaid.wasm");
+  $("ver").textContent = "v" + n.version + " · wasm";
+  const sel = $("theme"); sel.innerHTML = '<option value="">Theme: from diagram</option>' + n.themes().map((t) => `<option value="${t}">${t}</option>`).join("");
+  $("load").remove();
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get("t")) sel.value = h.get("t");
+  if (h.get("c")) { try { src.value = unb64(h.get("c")); gutter(); render(true); } catch { load(0); } }
+  else { const i = EXAMPLES.findIndex((e) => e.k === h.get("ex")); load(i >= 0 ? i : 0); }
+} catch (e) {
+  $("load").innerHTML = "<div>Could not load nimaid.wasm.<br><small>" + e.message + "<br>Serve the site folder over http(s); opening the file from disk will not work.</small></div>";
+}
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "name": "nimaid",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Mermaid diagrams to PNG, GIF and SVG in WebAssembly. Pure Nim core, no dependencies, no browser needed.",
   "keywords": ["mermaid", "diagram", "flowchart", "svg", "png", "wasm", "webassembly", "render"],
   "license": "MIT",

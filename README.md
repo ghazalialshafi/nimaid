@@ -1,21 +1,28 @@
 <div align="center">
 
+<img src="docs/images/logo.svg" width="84" alt="nimaid logo">
+
 # nimaid
 
-**Mermaid diagrams → PNG, GIF and SVG, in pure Nim.**
-No browser. No Node. No shared libraries. One 1.9 MB binary.
+**Mermaid diagrams → PNG, GIF and SVG, without a browser.**<br>
+Pure Nim · 18 diagram types · CLI, C API, Python and WebAssembly · zero runtime dependencies
 
-[![Nim](https://img.shields.io/badge/Nim-%E2%89%A5%202.0-yellow)](https://nim-lang.org)
+[**Live playground**](https://ghazalialshafi.github.io/nimaid/playground/) · [Website](https://ghazalialshafi.github.io/nimaid/) · [Install](#install) · [Docs](docs/README.md) · [Releases](https://github.com/ghazalialshafi/nimaid/releases)
+
+[![CI](https://github.com/ghazalialshafi/nimaid/actions/workflows/ci.yml/badge.svg)](https://github.com/ghazalialshafi/nimaid/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/nimaid?label=PyPI)](https://pypi.org/project/nimaid/)
+[![npm](https://img.shields.io/npm/v/nimaid?label=npm)](https://www.npmjs.com/package/nimaid)
 [![dependencies](https://img.shields.io/badge/runtime%20dependencies-none-brightgreen)](#why-nimaid)
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-<img src="docs/images/14-emoji.png" width="820" alt="A flowchart with colour emoji rendered by nimaid">
+<a href="https://ghazalialshafi.github.io/nimaid/playground/"><img src="docs/images/14-emoji.png" width="820" alt="A flowchart with colour emoji rendered by nimaid"></a>
 
 </div>
 
 ```sh
-./build.sh
-bin/nimaid examples/basic.mmd diagram.png        # or .svg / .gif
+pip install nimaid                                   # Python
+npm install nimaid                                   # Node, Deno, Bun, browsers (WebAssembly)
+nimaid diagram.mmd diagram.png                       # CLI: download from Releases, or build with ./build.sh
 ```
 
 ---

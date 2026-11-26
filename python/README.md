@@ -4,6 +4,8 @@
 No browser, no Node.js, no Cairo, no system fonts. The renderer is [nimaid](https://github.com/ghazalialshafi/nimaid) (pure Nim),
 shipped as a small native library inside the wheel. DejaVu Sans is built in, so it works the moment it is installed.
 
+**[Try it in your browser](https://ghazalialshafi.github.io/nimaid/playground/)** · [Website](https://ghazalialshafi.github.io/nimaid/) · [Source and docs](https://github.com/ghazalialshafi/nimaid)
+
 ```sh
 pip install nimaid              # add colour emoji:  pip install "nimaid[emoji]"
 ```

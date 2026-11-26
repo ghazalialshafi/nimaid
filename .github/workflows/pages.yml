@@ -1,0 +1,47 @@
+name: pages
+
+# Deploys site/ (the online playground) to GitHub Pages. One-time setup: repo Settings -> Pages -> Source: "GitHub Actions".
+# The wasm module is taken from the latest GitHub Release, so the playground always runs a published build.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["site/**", ".github/workflows/pages.yml"]
+  workflow_run:
+    workflows: [release]
+    types: [completed]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch nimaid.wasm from the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo "$GITHUB_REPOSITORY" --pattern 'nimaid-wasm-*.tar.gz' --dir /tmp/w
+          tar xzf /tmp/w/nimaid-wasm-*.tar.gz -C /tmp/w
+          cp /tmp/w/nimaid-wasm-*/nimaid.mjs /tmp/w/nimaid-wasm-*/nimaid.wasm site/
+          mkdir -p site/fonts && cp fonts/NotoColorEmoji-Regular.ttf fonts/OFL-NotoColorEmoji.txt site/fonts/   # lazy-loaded by the playground when a diagram has emoji
+          (cd site && node gen_gallery.mjs ../examples gallery)                                                  # landing-page images, rendered by nimaid itself
+          ls -la site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

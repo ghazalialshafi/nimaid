@@ -218,7 +218,8 @@ class Builder:
             shutil.copy(os.path.join(ROOT, "wasm", f), pkg)
         for f in ("LICENSE", "THIRD_PARTY.md"): shutil.copy(os.path.join(ROOT, f), pkg)
         os.makedirs(os.path.join(pkg, "examples"), exist_ok=True)
-        shutil.copy(os.path.join(ROOT, "docs", "examples", "07-sequence.mmd"), os.path.join(pkg, "examples"))
+        for ex in sorted(os.listdir(os.path.join(ROOT, "docs", "examples"))):      # every example: test.mjs renders them all on wasm32
+            if ex.endswith(".mmd"): shutil.copy(os.path.join(ROOT, "docs", "examples", ex), os.path.join(pkg, "examples"))
         info = "built"
         node = shutil.which("node")
         if node:
