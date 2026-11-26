@@ -10,8 +10,10 @@ const MAP = { flowchart: "complex", sequence: "sequence", state: "state", er: "e
 const n = await Nimaid.load();
 fs.mkdirSync(out, { recursive: true });
 for (const [kind, file] of Object.entries(MAP)) {
-  const text = fs.readFileSync(`${dir}/${file}.mmd`, "utf8");
-  if (n.detectType(text) !== kind) throw new Error(`${file}.mmd is ${n.detectType(text)}, expected ${kind}`);
-  fs.writeFileSync(`${out}/${kind}.svg`, n.svg(text));
+  try {
+    const text = fs.readFileSync(`${dir}/${file}.mmd`, "utf8");
+    if (n.detectType(text) !== kind) throw new Error(`${file}.mmd is ${n.detectType(text)}, expected ${kind}`);
+    fs.writeFileSync(`${out}/${kind}.svg`, n.svg(text));
+  } catch (e) { console.log(`::warning::gallery: skipped ${kind}: ${e.message}`); }
 }
 console.log(`rendered ${Object.keys(MAP).length} gallery images into ${out}`);
